@@ -84,37 +84,28 @@ body {
    COPIA DEL LIBRO
    ========================= */
 
-#libro-in-movimento {
-    position: absolute;
+#libro-animato{
 
-    left: 34.5%;
-    top: 37%;
-    width: 17%;
-    height: 36%;
+    position:absolute;
 
-    overflow: hidden;
-    pointer-events: none;
+    left:34.5%;
+    top:37%;
 
-    opacity: 0;
-    z-index: 3;
+    width:17%;
 
-    transform-origin: center;
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:3;
 
     transition:
-        left 900ms cubic-bezier(.22, .8, .25, 1),
-        top 900ms cubic-bezier(.22, .8, .25, 1),
-        width 900ms cubic-bezier(.22, .8, .25, 1),
-        height 900ms cubic-bezier(.22, .8, .25, 1),
-        transform 900ms cubic-bezier(.22, .8, .25, 1),
-        filter 900ms ease,
-        opacity 120ms ease;
-}
+        all 900ms cubic-bezier(.22,.8,.25,1);
 
+    filter:
+        drop-shadow(0 0 0 rgba(0,0,0,0));
 
-/* Dentro il ritaglio rimettiamo la libreria
-   nella sua posizione originale */
-
-#libro-in-movimento img {
+} {
     position: absolute;
 
     left: -34.5vw;
