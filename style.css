@@ -139,8 +139,7 @@ textarea {
     left: 50%;
     top: 50%;
 
-    width:
-        min(70vw, 50vh);
+    width: min(70vw, 50vh);
 
     opacity: 0;
     visibility: hidden;
@@ -152,8 +151,7 @@ textarea {
         translate(-50%, -50%)
         scale(.96);
 
-    transform-origin:
-        left center;
+    transform-origin: left center;
 
     transition:
         opacity 700ms ease,
@@ -178,7 +176,9 @@ textarea {
 }
 
 
-/* Angolo sollevato */
+/* ========================================
+   ANGOLO DELLA PAGINA
+   ======================================== */
 
 .angolo-pagina {
     position: absolute;
@@ -243,9 +243,7 @@ textarea {
     left: 50%;
     top: 50%;
 
-    width:
-        min(88vw, 62vh);
-
+    width: min(88vw, 62vh);
     max-height: 94vh;
 
     opacity: 0;
@@ -282,6 +280,7 @@ textarea {
 
 .pagina-carta {
     width: 100%;
+
     min-height:
         min(88vh, 780px);
 
@@ -410,7 +409,7 @@ textarea {
 
 
 /* ========================================
-   SEZIONI DELLA CASA
+   ELENCHI DELLE SEZIONI
    ======================================== */
 
 .elenco-sezioni {
@@ -423,7 +422,8 @@ textarea {
         clamp(9px, 1.5vh, 16px);
 }
 
-.sezione-casa {
+.sezione-casa,
+.sezione-entrate {
     display: flex;
     align-items: center;
 
@@ -452,12 +452,22 @@ textarea {
         transparent;
 }
 
-.sezione-casa span {
+.sezione-casa span,
+.sezione-entrate span {
     font-size: 22px;
 }
 
-.sezione-casa strong {
+.sezione-casa strong,
+.sezione-entrate strong {
     font-weight: normal;
+}
+
+.elenco-sezioni-entrate {
+    max-width: 430px;
+    margin: 0 auto;
+
+    grid-template-columns:
+        1fr;
 }
 
 
@@ -584,7 +594,8 @@ textarea {
    STATO VUOTO
    ======================================== */
 
-#stato-vuoto {
+#casa-stato-vuoto,
+#entrate-stato-vuoto {
     display: flex;
 
     flex: 1;
@@ -608,7 +619,8 @@ textarea {
         clamp(42px, 7vh, 72px);
 }
 
-#messaggio-vuoto {
+#casa-messaggio-vuoto,
+#entrate-messaggio-vuoto {
     max-width: 31ch;
 
     margin-bottom: 24px;
@@ -621,10 +633,11 @@ textarea {
 
 
 /* ========================================
-   TABELLA
+   TABELLE
    ======================================== */
 
-#elenco-registrazioni {
+#casa-elenco-registrazioni,
+#entrate-elenco-registrazioni {
     padding-top:
         clamp(18px, 2.8vh, 30px);
 }
@@ -711,7 +724,8 @@ td:last-child {
     opacity: .62;
 }
 
-#aggiungi-altra-voce {
+#casa-aggiungi-altra-voce,
+#entrate-aggiungi-altra-voce {
     display: block;
 
     margin:
@@ -720,15 +734,17 @@ td:last-child {
 
 
 /* ========================================
-   MODULO
+   MODULI
    ======================================== */
 
-#contenitore-modulo {
+#casa-contenitore-modulo,
+#entrate-contenitore-modulo {
     padding-top:
         clamp(18px, 2.8vh, 30px);
 }
 
-#modulo-registrazione {
+#casa-modulo-registrazione,
+#entrate-modulo-registrazione {
     display: grid;
 
     gap:
@@ -739,7 +755,8 @@ td:last-child {
     margin: 0 auto;
 }
 
-#modulo-registrazione label {
+#casa-modulo-registrazione label,
+#entrate-modulo-registrazione label {
     display: grid;
 
     gap: 7px;
@@ -795,7 +812,7 @@ textarea {
 
 
 /* ========================================
-   RIEPILOGO
+   RIEPILOGHI
    ======================================== */
 
 .gruppo-riepilogo {
@@ -849,7 +866,7 @@ textarea {
     justify-content: space-between;
     align-items: center;
 
-    margin-top: 12px;
+    margin-top: 24px;
 
     padding: 16px 13px;
 
@@ -969,7 +986,7 @@ body.dedica-visibile #schermata-dedica {
 }
 
 
-/* Giro della pagina */
+/* Giro pagina */
 
 body.dedica-in-giro #schermata-dedica {
     opacity: .05;
@@ -988,7 +1005,7 @@ body.dedica-in-giro #schermata-dedica {
 }
 
 
-/* Libro interno visibile */
+/* Libro interno */
 
 body.libro-interno-visibile
 #schermata-dedica {
@@ -1021,6 +1038,11 @@ body.libro-interno-visibile
         grid-template-columns:
             repeat(3, 1fr);
     }
+
+    .elenco-sezioni-entrate {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 }
 
 
@@ -1036,7 +1058,8 @@ body.libro-interno-visibile
             34px 22px;
     }
 
-    .elenco-sezioni {
+    .elenco-sezioni,
+    .elenco-sezioni-entrate {
         grid-template-columns:
             1fr;
     }
