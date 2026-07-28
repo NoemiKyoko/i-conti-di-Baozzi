@@ -1,5 +1,7 @@
-const libroBaozzi = document.querySelector("#libro-baozzi");
+const libro = document.querySelector("#libro-baozzi");
 
-libroBaozzi.addEventListener("click", () => {
-    alert("Hai trovato I Conti di Baozzi 📖");
+libro.addEventListener("click", () => {
+
+    document.body.classList.add("apertura");
+
 });
