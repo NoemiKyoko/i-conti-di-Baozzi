@@ -1,26 +1,13 @@
 const libro = document.querySelector("#libro-baozzi");
-const libroInMovimento = document.querySelector("#libro-in-movimento");
 
-let aperturaInCorso = false;
+let aperto = false;
 
 libro.addEventListener("click", () => {
-    if (aperturaInCorso) {
-        return;
-    }
 
-    aperturaInCorso = true;
+    if (aperto) return;
 
-    /* Prima facciamo apparire la copia esattamente sopra il libro. */
-    libroInMovimento.style.opacity = "1";
+    aperto = true;
 
-    /*
-     * Aspettiamo due fotogrammi:
-     * il browser registra prima la posizione iniziale,
-     * poi può animarla verso il centro.
-     */
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            document.body.classList.add("apertura");
-        });
-    });
+    document.body.classList.add("apertura");
+
 });
