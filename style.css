@@ -1,27 +1,30 @@
-/* Elimina gli spazi automatici aggiunti dal browser */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-/* Imposta la pagina intera */
 html,
 body {
     width: 100%;
     height: 100%;
-    margin: 0;
-}
-
-/* La schermata che contiene la libreria */
-body {
-    background-color: #f8f3e9;
     overflow: hidden;
+    background: #f8f3e9;
+    font-family: Georgia, serif;
 }
 
-/* L'immagine della libreria */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Libreria */
+
 #libreria {
-    display: block;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
-    object-position: center;
+    user-select: none;
+    -webkit-user-drag: none;
 }
