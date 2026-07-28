@@ -152,3 +152,27 @@ body.apertura #libro-animato {
 body.apertura #libro-baozzi {
     pointer-events: none;
 }
+/* Quando è arrivato davanti, il libro può essere toccato */
+
+#libro-animato.cliccabile {
+    pointer-events: auto;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Prima prova dell'apertura della copertina */
+
+body.libro-aperto #libro-animato {
+    transform:
+        translate(-50%, -50%)
+        perspective(1200px)
+        rotateY(-18deg);
+
+    filter:
+        drop-shadow(22px 30px 32px rgba(0, 0, 0, .38));
+
+    transition:
+        transform 700ms cubic-bezier(.22, .8, .25, 1),
+        filter 700ms ease;
+}
