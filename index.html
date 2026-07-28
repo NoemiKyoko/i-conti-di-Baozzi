@@ -208,7 +208,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="luce">
+                            data-categoria-casa="luce">
 
                             <span>💡</span>
                             <strong>Luce</strong>
@@ -218,7 +218,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="acqua">
+                            data-categoria-casa="acqua">
 
                             <span>💧</span>
                             <strong>Acqua</strong>
@@ -228,7 +228,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="gas">
+                            data-categoria-casa="gas">
 
                             <span>🔥</span>
                             <strong>Gas</strong>
@@ -238,7 +238,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="internet">
+                            data-categoria-casa="internet">
 
                             <span>📶</span>
                             <strong>Internet</strong>
@@ -248,7 +248,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="condominio">
+                            data-categoria-casa="condominio">
 
                             <span>🏢</span>
                             <strong>Condominio</strong>
@@ -258,7 +258,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="manutenzione">
+                            data-categoria-casa="manutenzione">
 
                             <span>🛠️</span>
                             <strong>Manutenzione</strong>
@@ -268,7 +268,7 @@
                         <button
                             class="sezione-casa"
                             type="button"
-                            data-categoria="altro">
+                            data-categoria-casa="altro">
 
                             <span>🪴</span>
                             <strong>Altro</strong>
@@ -327,16 +327,18 @@
 
                         <div class="titolo-categoria">
 
-                            <span id="icona-categoria">💡</span>
+                            <span id="casa-icona-categoria">
+                                💡
+                            </span>
 
-                            <h1 id="titolo-categoria">
+                            <h1 id="casa-titolo-categoria">
                                 Luce
                             </h1>
 
                         </div>
 
                         <button
-                            id="apri-modulo-alto"
+                            id="casa-apri-modulo-alto"
                             class="pulsante-testo"
                             type="button">
 
@@ -347,24 +349,24 @@
                     </header>
 
 
-                    <!-- STATO VUOTO -->
+                    <!-- Stato vuoto -->
 
-                    <div id="stato-vuoto">
+                    <div id="casa-stato-vuoto">
 
                         <div
-                            id="icona-stato-vuoto"
+                            id="casa-icona-stato-vuoto"
                             class="icona-vuota">
 
                             💡
 
                         </div>
 
-                        <p id="messaggio-vuoto">
+                        <p id="casa-messaggio-vuoto">
                             Non hai ancora registrato nessuna voce.
                         </p>
 
                         <button
-                            id="aggiungi-prima-voce"
+                            id="casa-aggiungi-prima-voce"
                             class="pulsante-libro"
                             type="button">
 
@@ -375,10 +377,10 @@
                     </div>
 
 
-                    <!-- ELENCO REGISTRAZIONI -->
+                    <!-- Elenco -->
 
                     <div
-                        id="elenco-registrazioni"
+                        id="casa-elenco-registrazioni"
                         class="nascosto">
 
                         <div class="tabella-scroll">
@@ -396,7 +398,7 @@
 
                                 </thead>
 
-                                <tbody id="righe-registrazioni">
+                                <tbody id="casa-righe-registrazioni">
                                 </tbody>
 
                             </table>
@@ -404,7 +406,7 @@
                         </div>
 
                         <button
-                            id="aggiungi-altra-voce"
+                            id="casa-aggiungi-altra-voce"
                             class="pulsante-libro"
                             type="button">
 
@@ -415,20 +417,20 @@
                     </div>
 
 
-                    <!-- MODULO -->
+                    <!-- Modulo -->
 
                     <div
-                        id="contenitore-modulo"
+                        id="casa-contenitore-modulo"
                         class="nascosto">
 
-                        <form id="modulo-registrazione">
+                        <form id="casa-modulo-registrazione">
 
                             <label>
 
                                 Data
 
                                 <input
-                                    id="campo-data"
+                                    id="casa-campo-data"
                                     type="date"
                                     required>
 
@@ -439,7 +441,7 @@
                                 Descrizione
 
                                 <input
-                                    id="campo-descrizione"
+                                    id="casa-campo-descrizione"
                                     type="text"
                                     maxlength="70"
                                     placeholder="Per esempio: bolletta di luglio"
@@ -456,7 +458,7 @@
                                     <span>€</span>
 
                                     <input
-                                        id="campo-importo"
+                                        id="casa-campo-importo"
                                         type="number"
                                         min="0.01"
                                         step="0.01"
@@ -473,7 +475,7 @@
                                 Nota facoltativa
 
                                 <textarea
-                                    id="campo-nota"
+                                    id="casa-campo-nota"
                                     rows="3"
                                     maxlength="180"
                                     placeholder="Un dettaglio utile da ricordare"></textarea>
@@ -491,7 +493,7 @@
                                 </button>
 
                                 <button
-                                    id="annulla-registrazione"
+                                    id="casa-annulla-registrazione"
                                     class="pulsante-secondario"
                                     type="button">
 
@@ -535,60 +537,35 @@
                         <h2>Spese ricorrenti</h2>
 
                         <div class="riga-riepilogo">
-
                             <span>💡 Luce</span>
-
-                            <strong id="totale-luce">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-luce">€ 0,00</strong>
                         </div>
 
                         <div class="riga-riepilogo">
-
                             <span>💧 Acqua</span>
-
-                            <strong id="totale-acqua">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-acqua">€ 0,00</strong>
                         </div>
 
                         <div class="riga-riepilogo">
-
                             <span>🔥 Gas</span>
-
-                            <strong id="totale-gas">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-gas">€ 0,00</strong>
                         </div>
 
                         <div class="riga-riepilogo">
-
                             <span>📶 Internet</span>
-
-                            <strong id="totale-internet">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-internet">€ 0,00</strong>
                         </div>
 
                         <div class="riga-riepilogo">
-
                             <span>🏢 Condominio</span>
-
-                            <strong id="totale-condominio">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-condominio">€ 0,00</strong>
                         </div>
 
                         <div class="totale-parziale">
 
                             <span>Totale ricorrenti</span>
 
-                            <strong id="totale-ricorrenti">
+                            <strong id="totale-casa-ricorrenti">
                                 € 0,00
                             </strong>
 
@@ -601,30 +578,20 @@
                         <h2>Spese straordinarie</h2>
 
                         <div class="riga-riepilogo">
-
                             <span>🛠️ Manutenzione</span>
-
-                            <strong id="totale-manutenzione">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-manutenzione">€ 0,00</strong>
                         </div>
 
                         <div class="riga-riepilogo">
-
                             <span>🪴 Altro</span>
-
-                            <strong id="totale-altro">
-                                € 0,00
-                            </strong>
-
+                            <strong id="totale-altro">€ 0,00</strong>
                         </div>
 
                         <div class="totale-parziale">
 
                             <span>Totale straordinarie</span>
 
-                            <strong id="totale-straordinarie">
+                            <strong id="totale-casa-straordinarie">
                                 € 0,00
                             </strong>
 
@@ -670,38 +637,364 @@
 
 
             <!-- ====================================
-                 CAPITOLI IN DECANTAZIONE
+                 CAPITOLO II — ENTRATE
                  ==================================== -->
 
             <section
                 id="entrate"
                 class="pagina">
 
-                <div class="pagina-carta pagina-decantazione">
+                <div class="pagina-carta">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Entrate</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
-                    <p>
-                        Questo capitolo è pronto a crescere.
-                    </p>
+                    <div class="elenco-sezioni elenco-sezioni-entrate">
 
-                    <button
-                        class="pulsante-secondario"
-                        type="button"
-                        data-vai="indice">
+                        <button
+                            class="sezione-entrate"
+                            type="button"
+                            data-categoria-entrate="stipendio">
 
-                        Torna all’indice
+                            <span>💼</span>
+                            <strong>Stipendio</strong>
 
-                    </button>
+                        </button>
+
+                        <button
+                            class="sezione-entrate"
+                            type="button"
+                            data-categoria-entrate="extra">
+
+                            <span>🎁</span>
+                            <strong>Entrate extra</strong>
+
+                        </button>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-libro"
+                            type="button"
+                            data-vai="riepilogo-entrate">
+
+                            Riepilogo del capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
 
                 </div>
 
             </section>
 
+
+            <!-- ====================================
+                 SEZIONE RIUTILIZZABILE DELLE ENTRATE
+                 ==================================== -->
+
+            <section
+                id="entrate-sezione"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="barra-interna">
+
+                        <button
+                            class="pulsante-testo"
+                            type="button"
+                            data-vai="entrate">
+
+                            ← Sezioni
+
+                        </button>
+
+                        <div class="titolo-categoria">
+
+                            <span id="entrate-icona-categoria">
+                                💼
+                            </span>
+
+                            <h1 id="entrate-titolo-categoria">
+                                Stipendio
+                            </h1>
+
+                        </div>
+
+                        <button
+                            id="entrate-apri-modulo-alto"
+                            class="pulsante-testo"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </header>
+
+
+                    <!-- Stato vuoto -->
+
+                    <div id="entrate-stato-vuoto">
+
+                        <div
+                            id="entrate-icona-stato-vuoto"
+                            class="icona-vuota">
+
+                            💼
+
+                        </div>
+
+                        <p id="entrate-messaggio-vuoto">
+                            Non hai ancora registrato nessuna entrata.
+                        </p>
+
+                        <button
+                            id="entrate-aggiungi-prima-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            Aggiungi la prima
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Elenco -->
+
+                    <div
+                        id="entrate-elenco-registrazioni"
+                        class="nascosto">
+
+                        <div class="tabella-scroll">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Descrizione</th>
+                                        <th>Importo</th>
+                                        <th></th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="entrate-righe-registrazioni">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <button
+                            id="entrate-aggiungi-altra-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Modulo -->
+
+                    <div
+                        id="entrate-contenitore-modulo"
+                        class="nascosto">
+
+                        <form id="entrate-modulo-registrazione">
+
+                            <label>
+
+                                Data
+
+                                <input
+                                    id="entrate-campo-data"
+                                    type="date"
+                                    required>
+
+                            </label>
+
+                            <label
+                                id="entrate-label-descrizione">
+
+                                Descrizione
+
+                                <input
+                                    id="entrate-campo-descrizione"
+                                    type="text"
+                                    maxlength="70"
+                                    placeholder="Per esempio: rimborso scuola">
+
+                            </label>
+
+                            <label>
+
+                                Importo
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="entrate-campo-importo"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <label>
+
+                                Nota facoltativa
+
+                                <textarea
+                                    id="entrate-campo-nota"
+                                    rows="3"
+                                    maxlength="180"
+                                    placeholder="Un dettaglio utile da ricordare"></textarea>
+
+                            </label>
+
+                            <div class="azioni-modulo">
+
+                                <button
+                                    class="pulsante-libro"
+                                    type="submit">
+
+                                    Salva
+
+                                </button>
+
+                                <button
+                                    id="entrate-annulla-registrazione"
+                                    class="pulsante-secondario"
+                                    type="button">
+
+                                    Annulla
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 RIEPILOGO DELLE ENTRATE
+                 ==================================== -->
+
+            <section
+                id="riepilogo-entrate"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>Riepilogo delle entrate</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <div class="riga-riepilogo">
+
+                        <span>💼 Stipendio</span>
+
+                        <strong id="totale-stipendio">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🎁 Entrate extra</span>
+
+                        <strong id="totale-extra">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="totale-capitolo">
+
+                        <span>Totale entrate</span>
+
+                        <strong id="totale-entrate">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="entrate">
+
+                            Torna al capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 CAPITOLI IN DECANTAZIONE
+                 ==================================== -->
 
             <section
                 id="spese-quotidiane"
