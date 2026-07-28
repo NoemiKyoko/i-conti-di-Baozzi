@@ -1,3 +1,7 @@
+/* =========================
+   RESET GENERALE
+   ========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -13,23 +17,11 @@ body {
     font-family: Georgia, serif;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-/* Libreria */
+/* =========================
+   SCENA DELLA LIBRERIA
+   ========================= */
 
-#libreria {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-/* Contenitore della scena */
 #libreria-scena {
     position: relative;
     width: 100vw;
@@ -37,7 +29,30 @@ body {
     overflow: hidden;
 }
 
-/* Zona invisibile sopra il libro marrone */
+
+/* Immagine principale della libreria */
+
+#libreria {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: cover;
+    object-position: center;
+
+    user-select: none;
+    -webkit-user-drag: none;
+
+    transition:
+        filter 900ms ease,
+        transform 900ms ease;
+}
+
+
+/* =========================
+   ZONA CLICCABILE INVISIBILE
+   ========================= */
+
 #libro-baozzi {
     position: absolute;
 
@@ -52,33 +67,106 @@ body {
     cursor: pointer;
     border-radius: 8%;
 
-    -webkit-tap-highlight-color: transparent;
+    z-index: 4;
 
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Piccolo segnale quando lo tocchi */
+
+/* Piccolo segnale al tocco */
+
 #libro-baozzi:active {
     background: rgba(255, 224, 155, 0.18);
 }
 
-/* Libreria che va sullo sfondo */
 
-body.apertura #libreria{
+/* =========================
+   COPIA DEL LIBRO
+   ========================= */
 
-    filter: brightness(.55) blur(3px);
+#libro-in-movimento {
+    position: absolute;
 
-    transition: 800ms;
+    left: 34.5%;
+    top: 37%;
+    width: 17%;
+    height: 36%;
 
+    overflow: hidden;
+    pointer-events: none;
+
+    opacity: 0;
+    z-index: 3;
+
+    transform-origin: center;
+
+    transition:
+        left 900ms cubic-bezier(.22, .8, .25, 1),
+        top 900ms cubic-bezier(.22, .8, .25, 1),
+        width 900ms cubic-bezier(.22, .8, .25, 1),
+        height 900ms cubic-bezier(.22, .8, .25, 1),
+        transform 900ms cubic-bezier(.22, .8, .25, 1),
+        filter 900ms ease,
+        opacity 120ms ease;
 }
 
-/* Il libro esce */
 
-body.apertura #libro-baozzi{
+/* Dentro il ritaglio rimettiamo la libreria
+   nella sua posizione originale */
+
+#libro-in-movimento img {
+    position: absolute;
+
+    left: -34.5vw;
+    top: -37vh;
+
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: cover;
+    object-position: center;
+
+    max-width: none;
+
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* =========================
+   STATO DI APERTURA
+   ========================= */
+
+/* La libreria arretra e si sfoca */
+
+body.apertura #libreria {
+    filter: brightness(.48) blur(4px);
+    transform: scale(1.02);
+}
+
+
+/* La copia del libro viene verso il centro */
+
+body.apertura #libro-in-movimento {
+    opacity: 1;
+
+    left: 50%;
+    top: 50%;
+
+    width: 17%;
+    height: 36%;
 
     transform:
-        translate(-6%,-5%)
-        scale(1.8);
+        translate(-50%, -50%)
+        scale(1.75);
 
-    transition:800ms;
+    filter:
+        drop-shadow(0 28px 26px rgba(30, 18, 8, .45));
+}
 
+
+/* Durante l’animazione il libro non può essere cliccato di nuovo */
+
+body.apertura #libro-baozzi {
+    pointer-events: none;
 }
