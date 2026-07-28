@@ -53,9 +53,31 @@ body {
     border-radius: 8%;
 
     -webkit-tap-highlight-color: transparent;
+
 }
 
 /* Piccolo segnale quando lo tocchi */
 #libro-baozzi:active {
     background: rgba(255, 224, 155, 0.18);
+}
+/* Libreria che va sullo sfondo */
+
+body.apertura #libreria{
+
+    filter: brightness(.55) blur(3px);
+
+    transition: 800ms;
+
+}
+
+/* Il libro esce */
+
+body.apertura #libro-baozzi{
+
+    transform:
+        translate(-6%,-5%)
+        scale(1.8);
+
+    transition:800ms;
+
 }
