@@ -28,3 +28,34 @@ body {
     user-select: none;
     -webkit-user-drag: none;
 }
+
+/* Contenitore della scena */
+#libreria-scena {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Zona invisibile sopra il libro marrone */
+#libro-baozzi {
+    position: absolute;
+
+    left: 34.5%;
+    top: 37%;
+    width: 17%;
+    height: 36%;
+
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8%;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Piccolo segnale quando lo tocchi */
+#libro-baozzi:active {
+    background: rgba(255, 224, 155, 0.18);
+}
