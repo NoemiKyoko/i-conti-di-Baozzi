@@ -19,130 +19,871 @@
 
     <main id="scena">
 
-        <!-- Libreria -->
+        <!-- ========================================
+             INGRESSO: LIBRERIA E LIBRO
+             ======================================== -->
+
         <img
+            id="libreria"
             src="libreria.png.PNG"
-            alt="Libreria Baozzi"
-            id="libreria">
+            alt="Libreria Baozzi">
 
-        <!-- Libro che esce dallo scaffale -->
         <img
+            id="libro"
             src="libro-baozzi.png"
-            alt="I Conti di Baozzi"
-            id="libro">
+            alt="I Conti di Baozzi">
 
-        <!-- Dedica illustrata -->
+        <button
+            id="prendi-libro"
+            type="button"
+            aria-label="Prendi I Conti di Baozzi">
+        </button>
+
+
+        <!-- ========================================
+             DEDICA
+             ======================================== -->
+
         <section
-            id="pagina-dedica"
-            class="pagina"
+            id="schermata-dedica"
             aria-hidden="true">
 
             <img
+                id="dedica"
                 src="dedica.png"
-                alt="Dedica alla nostra squadra"
-                id="dedica">
+                alt="Dedica alla nostra squadra">
 
             <button
+                id="gira-dedica"
                 class="angolo-pagina"
-                id="vai-indice"
                 type="button"
-                aria-label="Vai all’indice">
+                aria-label="Gira la pagina e vai all’indice">
             </button>
 
         </section>
 
-        <!-- Indice -->
-        <section
-            id="pagina-indice"
-            class="pagina"
+
+        <!-- ========================================
+             LIBRO INTERNO
+             ======================================== -->
+
+        <div
+            id="libro-interno"
             aria-hidden="true">
 
-            <div class="pagina-carta">
 
-                <header class="intestazione-indice">
-                    <p class="ornamento">❦</p>
-                    <h1>Indice</h1>
-                    <p class="ornamento">❦</p>
-                </header>
+            <!-- ====================================
+                 INDICE
+                 ==================================== -->
 
-                <nav aria-label="Capitoli del libro">
+            <section
+                id="indice"
+                class="pagina">
+
+                <div class="pagina-carta">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>Indice</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <nav
+                        class="indice-capitoli"
+                        aria-label="Indice dei capitoli">
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="casa">
+
+                            <span>I.</span>
+                            <strong>La nostra casa</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="entrate">
+
+                            <span>II.</span>
+                            <strong>Entrate</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="spese-quotidiane">
+
+                            <span>III.</span>
+                            <strong>Spese quotidiane</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="desideri">
+
+                            <span>IV.</span>
+                            <strong>Desideri e coccole</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="risparmi">
+
+                            <span>V.</span>
+                            <strong>Risparmi e obiettivi</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="protezione">
+
+                            <span>VI.</span>
+                            <strong>Protezione e serenità</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="abbonamenti">
+
+                            <span>VII.</span>
+                            <strong>Abbonamenti</strong>
+
+                        </button>
+
+                        <button
+                            class="voce-indice"
+                            type="button"
+                            data-vai="note">
+
+                            <span>VIII.</span>
+                            <strong>Note e idee</strong>
+
+                        </button>
+
+                    </nav>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 CAPITOLO I — LA NOSTRA CASA
+                 ==================================== -->
+
+            <section
+                id="casa"
+                class="pagina">
+
+                <div class="pagina-carta">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>La nostra casa</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <div class="elenco-sezioni">
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="luce">
+
+                            <span>💡</span>
+                            <strong>Luce</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="acqua">
+
+                            <span>💧</span>
+                            <strong>Acqua</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="gas">
+
+                            <span>🔥</span>
+                            <strong>Gas</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="internet">
+
+                            <span>📶</span>
+                            <strong>Internet</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="condominio">
+
+                            <span>🏢</span>
+                            <strong>Condominio</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="manutenzione">
+
+                            <span>🛠️</span>
+                            <strong>Manutenzione</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
+                            data-categoria="altro">
+
+                            <span>🪴</span>
+                            <strong>Altro</strong>
+
+                        </button>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-libro"
+                            type="button"
+                            data-vai="riepilogo-casa">
+
+                            Riepilogo del capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 SEZIONE RIUTILIZZABILE DELLA CASA
+                 ==================================== -->
+
+            <section
+                id="casa-sezione"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="barra-interna">
+
+                        <button
+                            class="pulsante-testo"
+                            type="button"
+                            data-vai="casa">
+
+                            ← Sezioni
+
+                        </button>
+
+                        <div class="titolo-categoria">
+
+                            <span id="icona-categoria">💡</span>
+
+                            <h1 id="titolo-categoria">
+                                Luce
+                            </h1>
+
+                        </div>
+
+                        <button
+                            id="apri-modulo-alto"
+                            class="pulsante-testo"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </header>
+
+
+                    <!-- STATO VUOTO -->
+
+                    <div id="stato-vuoto">
+
+                        <div
+                            id="icona-stato-vuoto"
+                            class="icona-vuota">
+
+                            💡
+
+                        </div>
+
+                        <p id="messaggio-vuoto">
+                            Non hai ancora registrato nessuna voce.
+                        </p>
+
+                        <button
+                            id="aggiungi-prima-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            Aggiungi la prima
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- ELENCO REGISTRAZIONI -->
+
+                    <div
+                        id="elenco-registrazioni"
+                        class="nascosto">
+
+                        <div class="tabella-scroll">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Descrizione</th>
+                                        <th>Importo</th>
+                                        <th></th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="righe-registrazioni">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <button
+                            id="aggiungi-altra-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- MODULO -->
+
+                    <div
+                        id="contenitore-modulo"
+                        class="nascosto">
+
+                        <form id="modulo-registrazione">
+
+                            <label>
+
+                                Data
+
+                                <input
+                                    id="campo-data"
+                                    type="date"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Descrizione
+
+                                <input
+                                    id="campo-descrizione"
+                                    type="text"
+                                    maxlength="70"
+                                    placeholder="Per esempio: bolletta di luglio"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Importo
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="campo-importo"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <label>
+
+                                Nota facoltativa
+
+                                <textarea
+                                    id="campo-nota"
+                                    rows="3"
+                                    maxlength="180"
+                                    placeholder="Un dettaglio utile da ricordare"></textarea>
+
+                            </label>
+
+                            <div class="azioni-modulo">
+
+                                <button
+                                    class="pulsante-libro"
+                                    type="submit">
+
+                                    Salva
+
+                                </button>
+
+                                <button
+                                    id="annulla-registrazione"
+                                    class="pulsante-secondario"
+                                    type="button">
+
+                                    Annulla
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 RIEPILOGO DELLA CASA
+                 ==================================== -->
+
+            <section
+                id="riepilogo-casa"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>Riepilogo della casa</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <section class="gruppo-riepilogo">
+
+                        <h2>Spese ricorrenti</h2>
+
+                        <div class="riga-riepilogo">
+
+                            <span>💡 Luce</span>
+
+                            <strong id="totale-luce">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="riga-riepilogo">
+
+                            <span>💧 Acqua</span>
+
+                            <strong id="totale-acqua">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="riga-riepilogo">
+
+                            <span>🔥 Gas</span>
+
+                            <strong id="totale-gas">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="riga-riepilogo">
+
+                            <span>📶 Internet</span>
+
+                            <strong id="totale-internet">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="riga-riepilogo">
+
+                            <span>🏢 Condominio</span>
+
+                            <strong id="totale-condominio">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="totale-parziale">
+
+                            <span>Totale ricorrenti</span>
+
+                            <strong id="totale-ricorrenti">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                    </section>
+
+                    <section class="gruppo-riepilogo">
+
+                        <h2>Spese straordinarie</h2>
+
+                        <div class="riga-riepilogo">
+
+                            <span>🛠️ Manutenzione</span>
+
+                            <strong id="totale-manutenzione">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="riga-riepilogo">
+
+                            <span>🪴 Altro</span>
+
+                            <strong id="totale-altro">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                        <div class="totale-parziale">
+
+                            <span>Totale straordinarie</span>
+
+                            <strong id="totale-straordinarie">
+                                € 0,00
+                            </strong>
+
+                        </div>
+
+                    </section>
+
+                    <div class="totale-capitolo">
+
+                        <span>Totale casa</span>
+
+                        <strong id="totale-casa">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="casa">
+
+                            Torna al capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 CAPITOLI IN DECANTAZIONE
+                 ==================================== -->
+
+            <section
+                id="entrate"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Entrate</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Questo capitolo è pronto a crescere.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="casa">
-                        <span>I.</span>
-                        <strong>La nostra casa</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="spese-quotidiane"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Spese quotidiane</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Questo capitolo è pronto a crescere.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="entrate">
-                        <span>II.</span>
-                        <strong>Entrate</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="desideri"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Desideri e coccole</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Qui Baozzi avrà qualcosa da dire.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="quotidiane">
-                        <span>III.</span>
-                        <strong>Spese quotidiane</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="risparmi"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Risparmi e obiettivi</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Qui nasceranno le barre dei vostri obiettivi.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="coccole">
-                        <span>IV.</span>
-                        <strong>Desideri e coccole</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="protezione"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Protezione e serenità</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Questo capitolo è pronto a crescere.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="risparmi">
-                        <span>V.</span>
-                        <strong>Risparmi e obiettivi</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="abbonamenti"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Abbonamenti</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Questo capitolo è pronto a crescere.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="protezione">
-                        <span>VI.</span>
-                        <strong>Protezione e serenità</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="note"
+                class="pagina">
+
+                <div class="pagina-carta pagina-decantazione">
+
+                    <header class="titolo-pagina">
+                        <span class="ornamento">❦</span>
+                        <h1>Note e idee</h1>
+                        <span class="ornamento">❦</span>
+                    </header>
+
+                    <p>
+                        Questo capitolo è pronto a raccogliere
+                        idee, garanzie e ricordi.
+                    </p>
 
                     <button
-                        class="voce-indice"
+                        class="pulsante-secondario"
                         type="button"
-                        data-capitolo="abbonamenti">
-                        <span>VII.</span>
-                        <strong>Abbonamenti</strong>
+                        data-vai="indice">
+
+                        Torna all’indice
+
                     </button>
 
-                    <button
-                        class="voce-indice"
-                        type="button"
-                        data-capitolo="note">
-                        <span>VIII.</span>
-                        <strong>Note e idee</strong>
-                    </button>
+                </div>
 
-                </nav>
+            </section>
 
-            </div>
-
-        </section>
-
-        <!-- Zona invisibile sul libro nello scaffale -->
-        <button
-            id="apri-libro"
-            type="button"
-            aria-label="Prendi I Conti di Baozzi">
-        </button>
+        </div>
 
     </main>
 
