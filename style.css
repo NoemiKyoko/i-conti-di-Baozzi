@@ -138,21 +138,20 @@ body.apertura #libreria {
 
 /* La copia del libro viene verso il centro */
 
-body.apertura #libro-in-movimento {
-    opacity: 1;
+body.apertura #libro-animato{
 
-    left: 50%;
-    top: 50%;
+    opacity:1;
 
-    width: 17%;
-    height: 36%;
+    left:50%;
+    top:50%;
 
     transform:
-        translate(-50%, -50%)
+        translate(-50%,-50%)
         scale(1.75);
 
     filter:
-        drop-shadow(0 28px 26px rgba(30, 18, 8, .45));
+        drop-shadow(0 28px 30px rgba(0,0,0,.35));
+
 }
 
 
