@@ -139,7 +139,14 @@ max-width: 90vw;
     filter:
         drop-shadow(0 28px 30px rgba(0, 0, 0, .35));
 }
-
+transition:
+    left 900ms cubic-bezier(.22, .8, .25, 1),
+    top 900ms cubic-bezier(.22, .8, .25, 1),
+    width 900ms cubic-bezier(.22, .8, .25, 1),
+    height 900ms cubic-bezier(.22, .8, .25, 1),
+    transform 900ms cubic-bezier(.22, .8, .25, 1),
+    filter 900ms ease,
+    opacity 120ms ease;
 
 /* Durante l’animazione il libro non può essere cliccato di nuovo */
 
