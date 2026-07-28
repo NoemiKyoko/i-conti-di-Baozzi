@@ -2,24 +2,24 @@
    RESET
    ========================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
-body{
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 
-    width:100%;
-    height:100%;
+    background: #f8f3e9;
+    font-family: Georgia, "Times New Roman", serif;
+}
 
-    overflow:hidden;
-
-    background:#f8f3e9;
-
-    font-family:Georgia,serif;
-
+button {
+    font: inherit;
 }
 
 
@@ -27,15 +27,13 @@ body{
    SCENA
    ========================= */
 
-#scena{
+#scena {
+    position: relative;
 
-    position:relative;
+    width: 100vw;
+    height: 100vh;
 
-    width:100vw;
-    height:100vh;
-
-    overflow:hidden;
-
+    overflow: hidden;
 }
 
 
@@ -43,26 +41,22 @@ body{
    LIBRERIA
    ========================= */
 
-#libreria{
+#libreria {
+    position: absolute;
+    inset: 0;
 
-    position:absolute;
+    width: 100%;
+    height: 100%;
 
-    inset:0;
+    object-fit: cover;
+    object-position: center;
 
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-    object-position:center;
-
-    user-select:none;
-    -webkit-user-drag:none;
+    user-select: none;
+    -webkit-user-drag: none;
 
     transition:
-
-        filter .9s,
-        transform .9s;
-
+        filter 900ms ease,
+        transform 900ms ease;
 }
 
 
@@ -70,38 +64,82 @@ body{
    LIBRO
    ========================= */
 
-#libro{
+#libro {
+    position: absolute;
 
-    position:absolute;
+    left: 34.5%;
+    top: 37%;
 
-    left:34.5%;
-    top:37%;
+    width: 17%;
+    height: auto;
 
-    width:17%;
+    opacity: 0;
+    pointer-events: none;
 
-    opacity:0;
+    z-index: 5;
 
-    pointer-events:none;
-
-    z-index:5;
-
-    user-select:none;
-    -webkit-user-drag:none;
+    user-select: none;
+    -webkit-user-drag: none;
 
     transition:
+        left 900ms cubic-bezier(.22, .8, .25, 1),
+        top 900ms cubic-bezier(.22, .8, .25, 1),
+        width 900ms cubic-bezier(.22, .8, .25, 1),
+        opacity 550ms ease,
+        transform 800ms cubic-bezier(.22, .8, .25, 1),
+        filter 800ms ease;
+}
 
-        left .9s cubic-bezier(.22,.8,.25,1),
 
-        top .9s cubic-bezier(.22,.8,.25,1),
+/* =========================
+   ZONA CLICCABILE INIZIALE
+   ========================= */
 
-        width .9s cubic-bezier(.22,.8,.25,1),
+#apri-libro {
+    position: absolute;
 
-        opacity .5s,
+    left: 34.5%;
+    top: 37%;
 
-        transform .8s,
+    width: 22%;
+    height: 36%;
 
-        filter .8s;
+    border: 0;
+    background: transparent;
 
+    cursor: pointer;
+    z-index: 8;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================
+   PAGINE
+   ========================= */
+
+.pagina {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(70vw, 50vh);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 7;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.96);
+
+    transition:
+        opacity 650ms ease,
+        transform 800ms cubic-bezier(.22, .8, .25, 1),
+        visibility 0s linear 800ms;
 }
 
 
@@ -109,132 +147,293 @@ body{
    DEDICA
    ========================= */
 
-#dedica{
+#pagina-dedica {
+    perspective: 1400px;
+    transform-style: preserve-3d;
+}
 
-    position:absolute;
+#dedica {
+    display: block;
 
-    left:50%;
-    top:50%;
-
-    width:min(70vw,50vh);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    z-index:6;
-
-    transform:
-
-        translate(-50%,-48%)
-        scale(.95);
+    width: 100%;
+    height: auto;
 
     filter:
+        drop-shadow(0 24px 30px rgba(0, 0, 0, .28));
 
-        drop-shadow(0 24px 30px rgba(0,0,0,.28));
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* Angolo della pagina */
+
+.angolo-pagina {
+    position: absolute;
+
+    right: 3%;
+    bottom: 2.5%;
+
+    width: 15%;
+    aspect-ratio: 1;
+
+    border: 0;
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 48%,
+            rgba(113, 73, 38, .22) 49%,
+            rgba(238, 215, 166, .96) 52%
+        );
+
+    clip-path:
+        polygon(100% 0, 100% 100%, 0 100%);
+
+    filter:
+        drop-shadow(-4px -4px 5px rgba(50, 30, 10, .18));
+
+    -webkit-tap-highlight-color: transparent;
 
     transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
 
-        opacity .7s,
+.angolo-pagina:active {
+    transform:
+        translate(-4px, -4px)
+        rotate(-2deg);
 
-        transform .8s;
-
+    filter:
+        drop-shadow(-7px -7px 7px rgba(50, 30, 10, .25));
 }
 
 
 /* =========================
-   ZONA CLICCABILE
+   INDICE
    ========================= */
 
-#apri-libro{
+.pagina-carta {
+    width: 100%;
+    aspect-ratio: 2 / 3;
 
-    position:absolute;
+    padding:
+        clamp(42px, 7vh, 86px)
+        clamp(28px, 5vw, 68px);
 
-    left:34.5%;
-    top:37%;
+    background-image: url("pagina.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 
-    width:22%;
-    height:36%;
+    color: #4b321f;
 
-    border:0;
+    filter:
+        drop-shadow(0 24px 30px rgba(0, 0, 0, .28));
+}
 
-    background:transparent;
+.intestazione-indice {
+    margin-bottom:
+        clamp(20px, 3vh, 36px);
 
-    cursor:pointer;
+    text-align: center;
+}
 
-    z-index:8;
+.intestazione-indice h1 {
+    margin: 4px 0;
 
-    -webkit-tap-highlight-color:transparent;
+    font-size:
+        clamp(28px, 4.5vh, 52px);
 
+    font-weight: normal;
+    letter-spacing: .08em;
+}
+
+.ornamento {
+    font-size:
+        clamp(18px, 2.5vh, 28px);
+
+    opacity: .72;
+}
+
+
+/* Voci dell’indice */
+
+.voce-indice {
+    display: grid;
+    grid-template-columns: 2.8em 1fr;
+    align-items: center;
+
+    width: 100%;
+
+    padding:
+        clamp(7px, 1.15vh, 13px)
+        clamp(7px, 1vw, 12px);
+
+    border: 0;
+    border-bottom:
+        1px solid rgba(79, 50, 27, .18);
+
+    background: transparent;
+    color: #4b321f;
+
+    text-align: left;
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 180ms ease,
+        color 180ms ease,
+        background 180ms ease;
+}
+
+.voce-indice span {
+    opacity: .72;
+}
+
+.voce-indice strong {
+    font-size:
+        clamp(15px, 2.05vh, 23px);
+
+    font-weight: normal;
+}
+
+.voce-indice:active {
+    color: #7b4c28;
+
+    background:
+        rgba(133, 91, 48, .08);
+
+    transform:
+        translateX(5px);
 }
 
 
 /* =========================
-   STATO 1
+   STATO 1:
    LIBRO DAVANTI
    ========================= */
 
-body.libro-aperto #libreria{
-
+body.libro-davanti #libreria {
     filter:
-
         brightness(.48)
         blur(4px);
 
-    transform:scale(1.02);
-
+    transform:
+        scale(1.02);
 }
 
+body.libro-davanti #libro {
+    opacity: 1;
 
-body.libro-aperto #libro{
+    left: 50%;
+    top: 50%;
 
-    opacity:1;
-
-    left:50%;
-    top:50%;
-
-    height:65vh;
-width:auto;
+    width:
+        min(85vw, 66vh);
 
     transform:
-
-        translate(-50%,-50%);
+        translate(-50%, -50%);
 
     filter:
+        drop-shadow(
+            0 28px 30px
+            rgba(0, 0, 0, .35)
+        );
 
-        drop-shadow(0 28px 30px rgba(0,0,0,.35));
+    pointer-events: auto;
+    cursor: pointer;
+}
 
-    pointer-events:auto;
-
-    cursor:pointer;
-
+body.libro-davanti #apri-libro {
+    pointer-events: none;
 }
 
 
 /* =========================
-   STATO 2
+   STATO 2:
    DEDICA
    ========================= */
 
-body.dedica-aperta #libro{
-
-    opacity:0;
+body.dedica-visibile #libro {
+    opacity: 0;
 
     transform:
+        translate(-70%, -50%)
+        rotateY(-45deg)
+        scale(.94);
 
-        translate(-70%,-50%)
-        scale(.92);
+    pointer-events: none;
+}
 
+body.dedica-visibile #pagina-dedica {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+    transition-delay:
+        180ms, 180ms, 0s;
 }
 
 
-body.dedica-aperta #dedica{
+/* =========================
+   GIRO DELLA DEDICA
+   ========================= */
 
-    opacity:1;
+body.pagina-in-giro #pagina-dedica {
+    transform:
+        translate(-50%, -50%)
+        perspective(1400px)
+        rotateY(-88deg);
+
+    transform-origin: left center;
+
+    opacity: .15;
+}
+
+
+/* =========================
+   STATO 3:
+   INDICE
+   ========================= */
+
+body.indice-visibile #pagina-dedica {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+body.indice-visibile #pagina-indice {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 
     transform:
-
-        translate(-50%,-50%)
+        translate(-50%, -50%)
         scale(1);
 
+    transition-delay:
+        100ms, 100ms, 0s;
+}
+
+
+/* =========================
+   ACCESSIBILITÀ
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #libreria,
+    #libro,
+    .pagina,
+    .angolo-pagina {
+        transition-duration: 1ms;
+    }
 }
