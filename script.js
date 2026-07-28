@@ -62,6 +62,35 @@ const categorieCasa = {
 
 
 /* ========================================
+   CONFIGURAZIONE DELLE ENTRATE
+   ======================================== */
+
+const categorieEntrate = {
+    stipendio: {
+        nome: "Stipendio",
+        icona: "💼",
+
+        descrizioneObbligatoria: false,
+        descrizionePredefinita: "Stipendio",
+
+        messaggio:
+            "Non hai ancora registrato nessuno stipendio."
+    },
+
+    extra: {
+        nome: "Entrate extra",
+        icona: "🎁",
+
+        descrizioneObbligatoria: true,
+        descrizionePredefinita: "",
+
+        messaggio:
+            "Non hai ancora registrato nessuna entrata extra."
+    }
+};
+
+
+/* ========================================
    ELEMENTI DI INGRESSO
    ======================================== */
 
@@ -82,7 +111,7 @@ const libroInterno =
 
 
 /* ========================================
-   ELEMENTI DEL MOTORE
+   MOTORE DEL LIBRO
    ======================================== */
 
 const pagine =
@@ -91,170 +120,12 @@ const pagine =
 const pulsantiNavigazione =
     document.querySelectorAll("[data-vai]");
 
-
-/* ========================================
-   ELEMENTI DELLA CASA
-   ======================================== */
-
-const pulsantiCategorie =
-    document.querySelectorAll(".sezione-casa");
-
-const iconaCategoria =
-    document.querySelector("#icona-categoria");
-
-const titoloCategoria =
-    document.querySelector("#titolo-categoria");
-
-const iconaStatoVuoto =
-    document.querySelector("#icona-stato-vuoto");
-
-const messaggioVuoto =
-    document.querySelector("#messaggio-vuoto");
-
-const statoVuoto =
-    document.querySelector("#stato-vuoto");
-
-const elencoRegistrazioni =
-    document.querySelector("#elenco-registrazioni");
-
-const righeRegistrazioni =
-    document.querySelector("#righe-registrazioni");
-
-const contenitoreModulo =
-    document.querySelector("#contenitore-modulo");
-
-const moduloRegistrazione =
-    document.querySelector("#modulo-registrazione");
-
-const bottoneAggiungiPrima =
-    document.querySelector("#aggiungi-prima-voce");
-
-const bottoneAggiungiAltra =
-    document.querySelector("#aggiungi-altra-voce");
-
-const bottoneAggiungiAlto =
-    document.querySelector("#apri-modulo-alto");
-
-const bottoneAnnulla =
-    document.querySelector("#annulla-registrazione");
-
-const campoData =
-    document.querySelector("#campo-data");
-
-const campoDescrizione =
-    document.querySelector("#campo-descrizione");
-
-const campoImporto =
-    document.querySelector("#campo-importo");
-
-const campoNota =
-    document.querySelector("#campo-nota");
+let statoIngresso = "scaffale";
+let paginaCorrente = null;
 
 
 /* ========================================
-   STATO DELL’APPLICAZIONE
-   ======================================== */
-
-let statoIngresso =
-    "scaffale";
-
-let paginaCorrente =
-    null;
-
-let categoriaCorrente =
-    null;
-
-
-/* ========================================
-   ARCHIVIO
-   ======================================== */
-
-const chiaveArchivio =
-    "conti-baozzi-casa-v1";
-
-let archivioCasa =
-    caricaArchivio();
-
-
-function creaArchivioVuoto() {
-    const archivio = {};
-
-    Object.keys(categorieCasa)
-        .forEach((categoria) => {
-            archivio[categoria] = [];
-        });
-
-    return archivio;
-}
-
-
-function caricaArchivio() {
-    const archivioVuoto =
-        creaArchivioVuoto();
-
-    try {
-        const contenuto =
-            localStorage.getItem(
-                chiaveArchivio
-            );
-
-        if (!contenuto) {
-            return archivioVuoto;
-        }
-
-        const dati =
-            JSON.parse(contenuto);
-
-        Object.keys(archivioVuoto)
-            .forEach((categoria) => {
-
-                if (
-                    !Array.isArray(
-                        dati[categoria]
-                    )
-                ) {
-                    dati[categoria] = [];
-                }
-            });
-
-        return {
-            ...archivioVuoto,
-            ...dati
-        };
-
-    } catch (errore) {
-        console.error(
-            "Errore durante la lettura dei dati:",
-            errore
-        );
-
-        return archivioVuoto;
-    }
-}
-
-
-function salvaArchivio() {
-    try {
-        localStorage.setItem(
-            chiaveArchivio,
-            JSON.stringify(archivioCasa)
-        );
-
-    } catch (errore) {
-        console.error(
-            "Errore durante il salvataggio:",
-            errore
-        );
-
-        window.alert(
-            "Non è stato possibile salvare i dati."
-        );
-    }
-}
-
-
-/* ========================================
-   FORMATO DEI DATI
+   FUNZIONI GENERALI
    ======================================== */
 
 function formattaEuro(importo) {
@@ -274,9 +145,7 @@ function formattaData(dataISO) {
     }
 
     const data =
-        new Date(
-            `${dataISO}T12:00:00`
-        );
+        new Date(`${dataISO}T12:00:00`);
 
     return new Intl.DateTimeFormat(
         "it-IT"
@@ -284,26 +153,130 @@ function formattaData(dataISO) {
 }
 
 
+function dataOggi() {
+    const oggi =
+        new Date();
+
+    const anno =
+        oggi.getFullYear();
+
+    const mese =
+        String(
+            oggi.getMonth() + 1
+        ).padStart(2, "0");
+
+    const giorno =
+        String(
+            oggi.getDate()
+        ).padStart(2, "0");
+
+    return `${anno}-${mese}-${giorno}`;
+}
+
+
 function creaId() {
     if (
         typeof crypto !== "undefined" &&
-        typeof crypto.randomUUID ===
-            "function"
+        typeof crypto.randomUUID === "function"
     ) {
         return crypto.randomUUID();
     }
 
     return (
         `${Date.now()}-` +
-        `${Math.random()
+        Math.random()
             .toString(16)
-            .slice(2)}`
+            .slice(2)
     );
 }
 
 
+function creaArchivioVuoto(configurazione) {
+    const archivio = {};
+
+    Object.keys(configurazione)
+        .forEach((categoria) => {
+            archivio[categoria] = [];
+        });
+
+    return archivio;
+}
+
+
+function caricaArchivio(
+    chiave,
+    configurazione
+) {
+    const archivioVuoto =
+        creaArchivioVuoto(
+            configurazione
+        );
+
+    try {
+        const contenuto =
+            localStorage.getItem(
+                chiave
+            );
+
+        if (!contenuto) {
+            return archivioVuoto;
+        }
+
+        const dati =
+            JSON.parse(contenuto);
+
+        Object.keys(archivioVuoto)
+            .forEach((categoria) => {
+                if (
+                    !Array.isArray(
+                        dati[categoria]
+                    )
+                ) {
+                    dati[categoria] = [];
+                }
+            });
+
+        return {
+            ...archivioVuoto,
+            ...dati
+        };
+
+    } catch (errore) {
+        console.error(
+            `Errore nella lettura di ${chiave}:`,
+            errore
+        );
+
+        return archivioVuoto;
+    }
+}
+
+
+function salvaArchivio(
+    chiave,
+    archivio
+) {
+    try {
+        localStorage.setItem(
+            chiave,
+            JSON.stringify(archivio)
+        );
+
+    } catch (errore) {
+        console.error(
+            `Errore nel salvataggio di ${chiave}:`,
+            errore
+        );
+
+        window.alert(
+            "Non è stato possibile salvare i dati."
+        );
+    }
+}
+
+
 /* ========================================
-   MOTORE DEL LIBRO
+   NAVIGAZIONE DEL LIBRO
    ======================================== */
 
 function vaiAllaPagina(idPagina) {
@@ -339,6 +312,13 @@ function vaiAllaPagina(idPagina) {
     ) {
         aggiornaRiepilogoCasa();
     }
+
+    if (
+        idPagina ===
+        "riepilogo-entrate"
+    ) {
+        aggiornaRiepilogoEntrate();
+    }
 }
 
 
@@ -349,7 +329,6 @@ function vaiAllaPagina(idPagina) {
 bottonePrendiLibro.addEventListener(
     "click",
     () => {
-
         if (
             statoIngresso !==
             "scaffale"
@@ -357,8 +336,7 @@ bottonePrendiLibro.addEventListener(
             return;
         }
 
-        statoIngresso =
-            "libro";
+        statoIngresso = "libro";
 
         document.body.classList.add(
             "libro-davanti"
@@ -370,7 +348,6 @@ bottonePrendiLibro.addEventListener(
 libro.addEventListener(
     "click",
     () => {
-
         if (
             statoIngresso !==
             "libro"
@@ -378,8 +355,7 @@ libro.addEventListener(
             return;
         }
 
-        statoIngresso =
-            "dedica";
+        statoIngresso = "dedica";
 
         document.body.classList.add(
             "dedica-visibile"
@@ -396,7 +372,6 @@ libro.addEventListener(
 bottoneGiraDedica.addEventListener(
     "click",
     () => {
-
         if (
             statoIngresso !==
             "dedica"
@@ -404,8 +379,7 @@ bottoneGiraDedica.addEventListener(
             return;
         }
 
-        statoIngresso =
-            "giro";
+        statoIngresso = "giro";
 
         document.body.classList.add(
             "dedica-in-giro"
@@ -413,7 +387,6 @@ bottoneGiraDedica.addEventListener(
 
         window.setTimeout(
             () => {
-
                 statoIngresso =
                     "interno";
 
@@ -437,7 +410,6 @@ bottoneGiraDedica.addEventListener(
                 vaiAllaPagina(
                     "indice"
                 );
-
             },
             1050
         );
@@ -446,16 +418,14 @@ bottoneGiraDedica.addEventListener(
 
 
 /* ========================================
-   NAVIGAZIONE GENERALE
+   PULSANTI DI NAVIGAZIONE
    ======================================== */
 
 pulsantiNavigazione.forEach(
     (pulsante) => {
-
         pulsante.addEventListener(
             "click",
             () => {
-
                 const destinazione =
                     pulsante.dataset.vai;
 
@@ -469,22 +439,226 @@ pulsantiNavigazione.forEach(
 
 
 /* ========================================
-   APERTURA DELLE CATEGORIE
+   CREAZIONE DELLE RIGHE
    ======================================== */
 
-pulsantiCategorie.forEach(
-    (pulsante) => {
+function creaRigaTabella(
+    registrazione,
+    funzioneElimina
+) {
+    const riga =
+        document.createElement("tr");
 
+    const cellaData =
+        document.createElement("td");
+
+    const cellaDescrizione =
+        document.createElement("td");
+
+    const cellaImporto =
+        document.createElement("td");
+
+    const cellaAzioni =
+        document.createElement("td");
+
+
+    cellaData.textContent =
+        formattaData(
+            registrazione.data
+        );
+
+
+    const descrizione =
+        document.createElement("span");
+
+    descrizione.textContent =
+        registrazione.descrizione;
+
+    cellaDescrizione.appendChild(
+        descrizione
+    );
+
+
+    if (registrazione.nota) {
+        const nota =
+            document.createElement("small");
+
+        nota.className =
+            "nota-riga";
+
+        nota.textContent =
+            registrazione.nota;
+
+        cellaDescrizione.appendChild(
+            nota
+        );
+    }
+
+
+    cellaImporto.textContent =
+        formattaEuro(
+            registrazione.importo
+        );
+
+
+    const pulsanteElimina =
+        document.createElement("button");
+
+    pulsanteElimina.className =
+        "pulsante-elimina";
+
+    pulsanteElimina.type =
+        "button";
+
+    pulsanteElimina.textContent =
+        "✕";
+
+    pulsanteElimina.setAttribute(
+        "aria-label",
+        "Elimina registrazione"
+    );
+
+    pulsanteElimina.addEventListener(
+        "click",
+        funzioneElimina
+    );
+
+
+    cellaAzioni.appendChild(
+        pulsanteElimina
+    );
+
+    riga.append(
+        cellaData,
+        cellaDescrizione,
+        cellaImporto,
+        cellaAzioni
+    );
+
+    return riga;
+}
+
+
+/* ========================================
+   CAPITOLO I — LA NOSTRA CASA
+   ======================================== */
+
+const chiaveArchivioCasa =
+    "conti-baozzi-casa-v1";
+
+let archivioCasa =
+    caricaArchivio(
+        chiaveArchivioCasa,
+        categorieCasa
+    );
+
+let categoriaCasaCorrente =
+    null;
+
+
+/* Elementi Casa */
+
+const pulsantiCategorieCasa =
+    document.querySelectorAll(
+        "[data-categoria-casa]"
+    );
+
+const casaIconaCategoria =
+    document.querySelector(
+        "#casa-icona-categoria"
+    );
+
+const casaTitoloCategoria =
+    document.querySelector(
+        "#casa-titolo-categoria"
+    );
+
+const casaIconaStatoVuoto =
+    document.querySelector(
+        "#casa-icona-stato-vuoto"
+    );
+
+const casaMessaggioVuoto =
+    document.querySelector(
+        "#casa-messaggio-vuoto"
+    );
+
+const casaStatoVuoto =
+    document.querySelector(
+        "#casa-stato-vuoto"
+    );
+
+const casaElencoRegistrazioni =
+    document.querySelector(
+        "#casa-elenco-registrazioni"
+    );
+
+const casaRigheRegistrazioni =
+    document.querySelector(
+        "#casa-righe-registrazioni"
+    );
+
+const casaContenitoreModulo =
+    document.querySelector(
+        "#casa-contenitore-modulo"
+    );
+
+const casaModuloRegistrazione =
+    document.querySelector(
+        "#casa-modulo-registrazione"
+    );
+
+const casaCampoData =
+    document.querySelector(
+        "#casa-campo-data"
+    );
+
+const casaCampoDescrizione =
+    document.querySelector(
+        "#casa-campo-descrizione"
+    );
+
+const casaCampoImporto =
+    document.querySelector(
+        "#casa-campo-importo"
+    );
+
+const casaCampoNota =
+    document.querySelector(
+        "#casa-campo-nota"
+    );
+
+const casaAggiungiPrimaVoce =
+    document.querySelector(
+        "#casa-aggiungi-prima-voce"
+    );
+
+const casaAggiungiAltraVoce =
+    document.querySelector(
+        "#casa-aggiungi-altra-voce"
+    );
+
+const casaApriModuloAlto =
+    document.querySelector(
+        "#casa-apri-modulo-alto"
+    );
+
+const casaAnnullaRegistrazione =
+    document.querySelector(
+        "#casa-annulla-registrazione"
+    );
+
+
+/* Apertura categorie Casa */
+
+pulsantiCategorieCasa.forEach(
+    (pulsante) => {
         pulsante.addEventListener(
             "click",
             () => {
-
-                const categoria =
+                apriCategoriaCasa(
                     pulsante.dataset
-                        .categoria;
-
-                apriCategoria(
-                    categoria
+                        .categoriaCasa
                 );
             }
         );
@@ -492,7 +666,7 @@ pulsantiCategorie.forEach(
 );
 
 
-function apriCategoria(categoria) {
+function apriCategoriaCasa(categoria) {
     const configurazione =
         categorieCasa[categoria];
 
@@ -500,22 +674,22 @@ function apriCategoria(categoria) {
         return;
     }
 
-    categoriaCorrente =
+    categoriaCasaCorrente =
         categoria;
 
-    iconaCategoria.textContent =
+    casaIconaCategoria.textContent =
         configurazione.icona;
 
-    titoloCategoria.textContent =
+    casaTitoloCategoria.textContent =
         configurazione.nome;
 
-    iconaStatoVuoto.textContent =
+    casaIconaStatoVuoto.textContent =
         configurazione.icona;
 
-    messaggioVuoto.textContent =
+    casaMessaggioVuoto.textContent =
         configurazione.messaggio;
 
-    aggiornaPaginaCategoria();
+    aggiornaPaginaCasa();
 
     vaiAllaPagina(
         "casa-sezione"
@@ -523,33 +697,32 @@ function apriCategoria(categoria) {
 }
 
 
-/* ========================================
-   VISUALIZZAZIONE DELLA CATEGORIA
-   ======================================== */
+/* Visualizzazione Casa */
 
-function aggiornaPaginaCategoria() {
-    if (!categoriaCorrente) {
+function aggiornaPaginaCasa() {
+    if (!categoriaCasaCorrente) {
         return;
     }
 
-    chiudiModulo();
+    chiudiModuloCasa();
 
     const registrazioni =
         archivioCasa[
-            categoriaCorrente
+            categoriaCasaCorrente
         ];
 
-    righeRegistrazioni.innerHTML =
+    casaRigheRegistrazioni.innerHTML =
         "";
 
     if (
         registrazioni.length === 0
     ) {
-        statoVuoto.classList.remove(
-            "nascosto"
-        );
+        casaStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
 
-        elencoRegistrazioni
+        casaElencoRegistrazioni
             .classList.add(
                 "nascosto"
             );
@@ -557,11 +730,12 @@ function aggiornaPaginaCategoria() {
         return;
     }
 
-    statoVuoto.classList.add(
-        "nascosto"
-    );
+    casaStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
 
-    elencoRegistrazioni
+    casaElencoRegistrazioni
         .classList.remove(
             "nascosto"
         );
@@ -577,248 +751,107 @@ function aggiornaPaginaCategoria() {
 
     ordinate.forEach(
         (registrazione) => {
-
             const riga =
-                creaRigaRegistrazione(
-                    registrazione
+                creaRigaTabella(
+                    registrazione,
+                    () => {
+                        eliminaRegistrazioneCasa(
+                            registrazione.id
+                        );
+                    }
                 );
 
-            righeRegistrazioni
+            casaRigheRegistrazioni
                 .appendChild(riga);
         }
     );
 }
 
 
-function creaRigaRegistrazione(
-    registrazione
-) {
-    const riga =
-        document.createElement(
-            "tr"
-        );
+/* Modulo Casa */
 
-    const cellaData =
-        document.createElement(
-            "td"
-        );
-
-    const cellaDescrizione =
-        document.createElement(
-            "td"
-        );
-
-    const cellaImporto =
-        document.createElement(
-            "td"
-        );
-
-    const cellaAzioni =
-        document.createElement(
-            "td"
-        );
-
-    cellaData.textContent =
-        formattaData(
-            registrazione.data
-        );
-
-    const testoDescrizione =
-        document.createElement(
-            "span"
-        );
-
-    testoDescrizione.textContent =
-        registrazione.descrizione;
-
-    cellaDescrizione.appendChild(
-        testoDescrizione
-    );
-
-    if (registrazione.nota) {
-        const nota =
-            document.createElement(
-                "small"
-            );
-
-        nota.className =
-            "nota-riga";
-
-        nota.textContent =
-            registrazione.nota;
-
-        cellaDescrizione.appendChild(
-            nota
-        );
-    }
-
-    cellaImporto.textContent =
-        formattaEuro(
-            registrazione.importo
-        );
-
-    const elimina =
-        document.createElement(
-            "button"
-        );
-
-    elimina.className =
-        "pulsante-elimina";
-
-    elimina.type =
-        "button";
-
-    elimina.textContent =
-        "✕";
-
-    elimina.setAttribute(
-        "aria-label",
-        "Elimina registrazione"
-    );
-
-    elimina.addEventListener(
-        "click",
-        () => {
-
-            eliminaRegistrazione(
-                registrazione.id
-            );
-        }
-    );
-
-    cellaAzioni.appendChild(
-        elimina
-    );
-
-    riga.append(
-        cellaData,
-        cellaDescrizione,
-        cellaImporto,
-        cellaAzioni
-    );
-
-    return riga;
-}
-
-
-/* ========================================
-   MODULO
-   ======================================== */
-
-function apriModulo() {
-    if (!categoriaCorrente) {
+function apriModuloCasa() {
+    if (!categoriaCasaCorrente) {
         return;
     }
 
-    statoVuoto.classList.add(
-        "nascosto"
-    );
-
-    elencoRegistrazioni
+    casaStatoVuoto
         .classList.add(
             "nascosto"
         );
 
-    contenitoreModulo
+    casaElencoRegistrazioni
+        .classList.add(
+            "nascosto"
+        );
+
+    casaContenitoreModulo
         .classList.remove(
             "nascosto"
         );
 
-    moduloRegistrazione.reset();
+    casaModuloRegistrazione.reset();
 
-    campoData.value =
+    casaCampoData.value =
         dataOggi();
 }
 
 
-function chiudiModulo() {
-    contenitoreModulo
+function chiudiModuloCasa() {
+    casaContenitoreModulo
         .classList.add(
             "nascosto"
         );
 }
 
 
-function dataOggi() {
-    const oggi =
-        new Date();
-
-    const anno =
-        oggi.getFullYear();
-
-    const mese =
-        String(
-            oggi.getMonth() + 1
-        ).padStart(2, "0");
-
-    const giorno =
-        String(
-            oggi.getDate()
-        ).padStart(2, "0");
-
-    return (
-        `${anno}-${mese}-${giorno}`
-    );
-}
-
-
-bottoneAggiungiPrima
-    .addEventListener(
-        "click",
-        apriModulo
-    );
-
-bottoneAggiungiAltra
-    .addEventListener(
-        "click",
-        apriModulo
-    );
-
-bottoneAggiungiAlto
-    .addEventListener(
-        "click",
-        apriModulo
-    );
-
-
-bottoneAnnulla.addEventListener(
+casaAggiungiPrimaVoce.addEventListener(
     "click",
-    () => {
+    apriModuloCasa
+);
 
-        aggiornaPaginaCategoria();
-    }
+casaAggiungiAltraVoce.addEventListener(
+    "click",
+    apriModuloCasa
+);
+
+casaApriModuloAlto.addEventListener(
+    "click",
+    apriModuloCasa
+);
+
+casaAnnullaRegistrazione.addEventListener(
+    "click",
+    aggiornaPaginaCasa
 );
 
 
-/* ========================================
-   SALVATAGGIO
-   ======================================== */
+/* Salvataggio Casa */
 
-moduloRegistrazione.addEventListener(
+casaModuloRegistrazione.addEventListener(
     "submit",
     (evento) => {
-
         evento.preventDefault();
 
-        if (!categoriaCorrente) {
+        if (!categoriaCasaCorrente) {
             return;
         }
 
         const data =
-            campoData.value;
+            casaCampoData.value;
 
         const descrizione =
-            campoDescrizione
+            casaCampoDescrizione
                 .value
                 .trim();
 
         const importo =
             Number(
-                campoImporto.value
+                casaCampoImporto.value
             );
 
         const nota =
-            campoNota
+            casaCampoNota
                 .value
                 .trim();
 
@@ -835,35 +868,31 @@ moduloRegistrazione.addEventListener(
             return;
         }
 
-        const nuovaRegistrazione = {
+        archivioCasa[
+            categoriaCasaCorrente
+        ].push({
             id: creaId(),
             data,
             descrizione,
             importo,
             nota
-        };
+        });
 
-        archivioCasa[
-            categoriaCorrente
-        ].push(
-            nuovaRegistrazione
+        salvaArchivio(
+            chiaveArchivioCasa,
+            archivioCasa
         );
 
-        salvaArchivio();
-
-        aggiornaPaginaCategoria();
-
+        aggiornaPaginaCasa();
         aggiornaRiepilogoCasa();
     }
 );
 
 
-/* ========================================
-   ELIMINAZIONE
-   ======================================== */
+/* Eliminazione Casa */
 
-function eliminaRegistrazione(id) {
-    if (!categoriaCorrente) {
+function eliminaRegistrazioneCasa(id) {
+    if (!categoriaCasaCorrente) {
         return;
     }
 
@@ -877,44 +906,43 @@ function eliminaRegistrazione(id) {
     }
 
     archivioCasa[
-        categoriaCorrente
+        categoriaCasaCorrente
     ] =
         archivioCasa[
-            categoriaCorrente
+            categoriaCasaCorrente
         ].filter(
             (registrazione) =>
                 registrazione.id !== id
         );
 
-    salvaArchivio();
+    salvaArchivio(
+        chiaveArchivioCasa,
+        archivioCasa
+    );
 
-    aggiornaPaginaCategoria();
-
+    aggiornaPaginaCasa();
     aggiornaRiepilogoCasa();
 }
 
 
-/* ========================================
-   RIEPILOGO
-   ======================================== */
+/* Riepilogo Casa */
 
-function totaleCategoria(categoria) {
-    return archivioCasa[
-        categoria
-    ].reduce(
-        (totale, registrazione) =>
-            totale +
-            Number(
-                registrazione.importo
-            ),
-        0
-    );
+function totaleCategoriaCasa(categoria) {
+    return archivioCasa[categoria]
+        .reduce(
+            (totale, registrazione) =>
+                totale +
+                Number(
+                    registrazione.importo
+                ),
+            0
+        );
 }
 
 
 function aggiornaRiepilogoCasa() {
-    let sommaRicorrenti = 0;
-    let sommaStraordinarie = 0;
+    let totaleRicorrenti = 0;
+    let totaleStraordinarie = 0;
 
     Object.entries(
         categorieCasa
@@ -923,9 +951,8 @@ function aggiornaRiepilogoCasa() {
             chiave,
             configurazione
         ]) => {
-
             const totale =
-                totaleCategoria(
+                totaleCategoriaCasa(
                     chiave
                 );
 
@@ -945,36 +972,520 @@ function aggiornaRiepilogoCasa() {
                 configurazione.gruppo ===
                 "ricorrente"
             ) {
-                sommaRicorrenti +=
+                totaleRicorrenti +=
                     totale;
 
             } else {
-                sommaStraordinarie +=
+                totaleStraordinarie +=
                     totale;
             }
         }
     );
 
     document.querySelector(
-        "#totale-ricorrenti"
+        "#totale-casa-ricorrenti"
     ).textContent =
         formattaEuro(
-            sommaRicorrenti
+            totaleRicorrenti
         );
 
     document.querySelector(
-        "#totale-straordinarie"
+        "#totale-casa-straordinarie"
     ).textContent =
         formattaEuro(
-            sommaStraordinarie
+            totaleStraordinarie
         );
 
     document.querySelector(
         "#totale-casa"
     ).textContent =
         formattaEuro(
-            sommaRicorrenti +
-            sommaStraordinarie
+            totaleRicorrenti +
+            totaleStraordinarie
+        );
+}
+
+
+/* ========================================
+   CAPITOLO II — ENTRATE
+   ======================================== */
+
+const chiaveArchivioEntrate =
+    "conti-baozzi-entrate-v1";
+
+let archivioEntrate =
+    caricaArchivio(
+        chiaveArchivioEntrate,
+        categorieEntrate
+    );
+
+let categoriaEntrateCorrente =
+    null;
+
+
+/* Elementi Entrate */
+
+const pulsantiCategorieEntrate =
+    document.querySelectorAll(
+        "[data-categoria-entrate]"
+    );
+
+const entrateIconaCategoria =
+    document.querySelector(
+        "#entrate-icona-categoria"
+    );
+
+const entrateTitoloCategoria =
+    document.querySelector(
+        "#entrate-titolo-categoria"
+    );
+
+const entrateIconaStatoVuoto =
+    document.querySelector(
+        "#entrate-icona-stato-vuoto"
+    );
+
+const entrateMessaggioVuoto =
+    document.querySelector(
+        "#entrate-messaggio-vuoto"
+    );
+
+const entrateStatoVuoto =
+    document.querySelector(
+        "#entrate-stato-vuoto"
+    );
+
+const entrateElencoRegistrazioni =
+    document.querySelector(
+        "#entrate-elenco-registrazioni"
+    );
+
+const entrateRigheRegistrazioni =
+    document.querySelector(
+        "#entrate-righe-registrazioni"
+    );
+
+const entrateContenitoreModulo =
+    document.querySelector(
+        "#entrate-contenitore-modulo"
+    );
+
+const entrateModuloRegistrazione =
+    document.querySelector(
+        "#entrate-modulo-registrazione"
+    );
+
+const entrateCampoData =
+    document.querySelector(
+        "#entrate-campo-data"
+    );
+
+const entrateLabelDescrizione =
+    document.querySelector(
+        "#entrate-label-descrizione"
+    );
+
+const entrateCampoDescrizione =
+    document.querySelector(
+        "#entrate-campo-descrizione"
+    );
+
+const entrateCampoImporto =
+    document.querySelector(
+        "#entrate-campo-importo"
+    );
+
+const entrateCampoNota =
+    document.querySelector(
+        "#entrate-campo-nota"
+    );
+
+const entrateAggiungiPrimaVoce =
+    document.querySelector(
+        "#entrate-aggiungi-prima-voce"
+    );
+
+const entrateAggiungiAltraVoce =
+    document.querySelector(
+        "#entrate-aggiungi-altra-voce"
+    );
+
+const entrateApriModuloAlto =
+    document.querySelector(
+        "#entrate-apri-modulo-alto"
+    );
+
+const entrateAnnullaRegistrazione =
+    document.querySelector(
+        "#entrate-annulla-registrazione"
+    );
+
+
+/* Apertura categorie Entrate */
+
+pulsantiCategorieEntrate.forEach(
+    (pulsante) => {
+        pulsante.addEventListener(
+            "click",
+            () => {
+                apriCategoriaEntrate(
+                    pulsante.dataset
+                        .categoriaEntrate
+                );
+            }
+        );
+    }
+);
+
+
+function apriCategoriaEntrate(
+    categoria
+) {
+    const configurazione =
+        categorieEntrate[categoria];
+
+    if (!configurazione) {
+        return;
+    }
+
+    categoriaEntrateCorrente =
+        categoria;
+
+    entrateIconaCategoria.textContent =
+        configurazione.icona;
+
+    entrateTitoloCategoria.textContent =
+        configurazione.nome;
+
+    entrateIconaStatoVuoto.textContent =
+        configurazione.icona;
+
+    entrateMessaggioVuoto.textContent =
+        configurazione.messaggio;
+
+    aggiornaPaginaEntrate();
+
+    vaiAllaPagina(
+        "entrate-sezione"
+    );
+}
+
+
+/* Visualizzazione Entrate */
+
+function aggiornaPaginaEntrate() {
+    if (!categoriaEntrateCorrente) {
+        return;
+    }
+
+    chiudiModuloEntrate();
+
+    const registrazioni =
+        archivioEntrate[
+            categoriaEntrateCorrente
+        ];
+
+    entrateRigheRegistrazioni.innerHTML =
+        "";
+
+    if (
+        registrazioni.length === 0
+    ) {
+        entrateStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
+
+        entrateElencoRegistrazioni
+            .classList.add(
+                "nascosto"
+            );
+
+        return;
+    }
+
+    entrateStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    entrateElencoRegistrazioni
+        .classList.remove(
+            "nascosto"
+        );
+
+    const ordinate =
+        [...registrazioni]
+            .sort(
+                (prima, seconda) =>
+                    seconda.data.localeCompare(
+                        prima.data
+                    )
+            );
+
+    ordinate.forEach(
+        (registrazione) => {
+            const riga =
+                creaRigaTabella(
+                    registrazione,
+                    () => {
+                        eliminaRegistrazioneEntrate(
+                            registrazione.id
+                        );
+                    }
+                );
+
+            entrateRigheRegistrazioni
+                .appendChild(riga);
+        }
+    );
+}
+
+
+/* Modulo Entrate */
+
+function apriModuloEntrate() {
+    if (!categoriaEntrateCorrente) {
+        return;
+    }
+
+    const configurazione =
+        categorieEntrate[
+            categoriaEntrateCorrente
+        ];
+
+    entrateStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    entrateElencoRegistrazioni
+        .classList.add(
+            "nascosto"
+        );
+
+    entrateContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+    entrateModuloRegistrazione.reset();
+
+    entrateCampoData.value =
+        dataOggi();
+
+    entrateCampoDescrizione.required =
+        configurazione
+            .descrizioneObbligatoria;
+
+    entrateLabelDescrizione
+        .classList.toggle(
+            "nascosto",
+            !configurazione
+                .descrizioneObbligatoria
+        );
+}
+
+
+function chiudiModuloEntrate() {
+    entrateContenitoreModulo
+        .classList.add(
+            "nascosto"
+        );
+}
+
+
+entrateAggiungiPrimaVoce
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+entrateAggiungiAltraVoce
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+entrateApriModuloAlto
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+entrateAnnullaRegistrazione
+    .addEventListener(
+        "click",
+        aggiornaPaginaEntrate
+    );
+
+
+/* Salvataggio Entrate */
+
+entrateModuloRegistrazione
+    .addEventListener(
+        "submit",
+        (evento) => {
+            evento.preventDefault();
+
+            if (
+                !categoriaEntrateCorrente
+            ) {
+                return;
+            }
+
+            const configurazione =
+                categorieEntrate[
+                    categoriaEntrateCorrente
+                ];
+
+            const data =
+                entrateCampoData.value;
+
+            const descrizioneScritta =
+                entrateCampoDescrizione
+                    .value
+                    .trim();
+
+            const descrizione =
+                configurazione
+                    .descrizioneObbligatoria
+                    ? descrizioneScritta
+                    : configurazione
+                        .descrizionePredefinita;
+
+            const importo =
+                Number(
+                    entrateCampoImporto
+                        .value
+                );
+
+            const nota =
+                entrateCampoNota
+                    .value
+                    .trim();
+
+            if (
+                !data ||
+                !descrizione ||
+                !Number.isFinite(importo) ||
+                importo <= 0
+            ) {
+                window.alert(
+                    "Inserisci i dati richiesti e l’importo."
+                );
+
+                return;
+            }
+
+            archivioEntrate[
+                categoriaEntrateCorrente
+            ].push({
+                id: creaId(),
+                data,
+                descrizione,
+                importo,
+                nota
+            });
+
+            salvaArchivio(
+                chiaveArchivioEntrate,
+                archivioEntrate
+            );
+
+            aggiornaPaginaEntrate();
+            aggiornaRiepilogoEntrate();
+        }
+    );
+
+
+/* Eliminazione Entrate */
+
+function eliminaRegistrazioneEntrate(
+    id
+) {
+    if (
+        !categoriaEntrateCorrente
+    ) {
+        return;
+    }
+
+    const conferma =
+        window.confirm(
+            "Eliminare questa registrazione?"
+        );
+
+    if (!conferma) {
+        return;
+    }
+
+    archivioEntrate[
+        categoriaEntrateCorrente
+    ] =
+        archivioEntrate[
+            categoriaEntrateCorrente
+        ].filter(
+            (registrazione) =>
+                registrazione.id !== id
+        );
+
+    salvaArchivio(
+        chiaveArchivioEntrate,
+        archivioEntrate
+    );
+
+    aggiornaPaginaEntrate();
+    aggiornaRiepilogoEntrate();
+}
+
+
+/* Riepilogo Entrate */
+
+function totaleCategoriaEntrate(
+    categoria
+) {
+    return archivioEntrate[categoria]
+        .reduce(
+            (totale, registrazione) =>
+                totale +
+                Number(
+                    registrazione.importo
+                ),
+            0
+        );
+}
+
+
+function aggiornaRiepilogoEntrate() {
+    const stipendio =
+        totaleCategoriaEntrate(
+            "stipendio"
+        );
+
+    const extra =
+        totaleCategoriaEntrate(
+            "extra"
+        );
+
+    document.querySelector(
+        "#totale-stipendio"
+    ).textContent =
+        formattaEuro(
+            stipendio
+        );
+
+    document.querySelector(
+        "#totale-extra"
+    ).textContent =
+        formattaEuro(
+            extra
+        );
+
+    document.querySelector(
+        "#totale-entrate"
+    ).textContent =
+        formattaEuro(
+            stipendio + extra
         );
 }
 
@@ -984,3 +1495,4 @@ function aggiornaRiepilogoCasa() {
    ======================================== */
 
 aggiornaRiepilogoCasa();
+aggiornaRiepilogoEntrate();
