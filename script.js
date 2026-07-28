@@ -1,13 +1,31 @@
-const libro = document.querySelector("#libro-baozzi");
+const zonaLibro = document.querySelector("#libro-baozzi");
+const libroAnimato = document.querySelector("#libro-animato");
 
-let aperto = false;
+let statoLibro = "scaffale";
 
-libro.addEventListener("click", () => {
+zonaLibro.addEventListener("click", () => {
+    if (statoLibro !== "scaffale") {
+        return;
+    }
 
-    if (aperto) return;
-
-    aperto = true;
-
+    statoLibro = "davanti";
     document.body.classList.add("apertura");
 
+    /*
+     * L'animazione CSS dura 900 millisecondi.
+     * Quando il libro arriva al centro,
+     * diventa lui stesso cliccabile.
+     */
+    window.setTimeout(() => {
+        libroAnimato.classList.add("cliccabile");
+    }, 900);
+});
+
+libroAnimato.addEventListener("click", () => {
+    if (statoLibro !== "davanti") {
+        return;
+    }
+
+    statoLibro = "aperto";
+    document.body.classList.add("libro-aperto");
 });
