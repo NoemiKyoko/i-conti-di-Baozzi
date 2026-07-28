@@ -1,31 +1,62 @@
-const zonaLibro = document.querySelector("#libro-baozzi");
-const libroAnimato = document.querySelector("#libro-animato");
+/* =========================
+   ELEMENTI
+   ========================= */
 
-let statoLibro = "scaffale";
+const bottone = document.querySelector("#apri-libro");
 
-zonaLibro.addEventListener("click", () => {
-    if (statoLibro !== "scaffale") {
-        return;
-    }
+const libro = document.querySelector("#libro");
 
-    statoLibro = "davanti";
-    document.body.classList.add("apertura");
+const dedica = document.querySelector("#dedica");
 
-    /*
-     * L'animazione CSS dura 900 millisecondi.
-     * Quando il libro arriva al centro,
-     * diventa lui stesso cliccabile.
-     */
-    window.setTimeout(() => {
-        libroAnimato.classList.add("cliccabile");
-    }, 900);
+
+/* =========================
+   STATI
+   ========================= */
+
+let stato = "scaffale";
+
+
+/* =========================
+   PRIMO TOCCO
+   ========================= */
+
+bottone.addEventListener("click", () => {
+
+    if (stato !== "scaffale") return;
+
+    stato = "libro";
+
+    document.body.classList.add("libro-aperto");
+
 });
 
-libroAnimato.addEventListener("click", () => {
-    if (statoLibro !== "davanti") {
-        return;
-    }
 
-    statoLibro = "aperto";
-    document.body.classList.add("libro-aperto");
+/* =========================
+   SECONDO TOCCO
+   ========================= */
+
+libro.addEventListener("click", () => {
+
+    if (stato !== "libro") return;
+
+    stato = "dedica";
+
+    document.body.classList.add("dedica-aperta");
+
+});
+
+
+/* =========================
+   TERZO TOCCO
+   (preparazione indice)
+   ========================= */
+
+dedica.addEventListener("click", () => {
+
+    if (stato !== "dedica") return;
+
+    stato = "indice";
+
+    console.log("Prossima pagina: indice.");
+
 });
