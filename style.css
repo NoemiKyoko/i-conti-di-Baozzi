@@ -130,8 +130,9 @@ body.apertura #libro-animato {
 
     left: 50%;
     top: 50%;
-    width: 120%;
-
+    width: auto;
+height: 78vh;
+max-width: 90vw;
     transform:
         translate(-50%, -50%);
 
