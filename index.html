@@ -2,7 +2,6 @@
 <html lang="it">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -14,7 +13,6 @@
     <link
         rel="stylesheet"
         href="style.css">
-
 </head>
 
 <body>
@@ -22,35 +20,128 @@
     <main id="scena">
 
         <!-- Libreria -->
-
         <img
             src="libreria.png.PNG"
             alt="Libreria Baozzi"
             id="libreria">
 
-
-        <!-- Libro che esce -->
-
+        <!-- Libro che esce dallo scaffale -->
         <img
             src="libro-baozzi.png"
-            alt="Libro Baozzi"
+            alt="I Conti di Baozzi"
             id="libro">
 
+        <!-- Dedica illustrata -->
+        <section
+            id="pagina-dedica"
+            class="pagina"
+            aria-hidden="true">
 
-        <!-- Prima pagina del libro -->
+            <img
+                src="dedica.png"
+                alt="Dedica alla nostra squadra"
+                id="dedica">
 
-        <img
-            src="dedica.png"
-            alt="Dedica"
-            id="dedica">
+            <button
+                class="angolo-pagina"
+                id="vai-indice"
+                type="button"
+                aria-label="Vai all’indice">
+            </button>
 
+        </section>
 
-        <!-- Zona cliccabile del libro -->
+        <!-- Indice -->
+        <section
+            id="pagina-indice"
+            class="pagina"
+            aria-hidden="true">
 
+            <div class="pagina-carta">
+
+                <header class="intestazione-indice">
+                    <p class="ornamento">❦</p>
+                    <h1>Indice</h1>
+                    <p class="ornamento">❦</p>
+                </header>
+
+                <nav aria-label="Capitoli del libro">
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="casa">
+                        <span>I.</span>
+                        <strong>La nostra casa</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="entrate">
+                        <span>II.</span>
+                        <strong>Entrate</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="quotidiane">
+                        <span>III.</span>
+                        <strong>Spese quotidiane</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="coccole">
+                        <span>IV.</span>
+                        <strong>Desideri e coccole</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="risparmi">
+                        <span>V.</span>
+                        <strong>Risparmi e obiettivi</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="protezione">
+                        <span>VI.</span>
+                        <strong>Protezione e serenità</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="abbonamenti">
+                        <span>VII.</span>
+                        <strong>Abbonamenti</strong>
+                    </button>
+
+                    <button
+                        class="voce-indice"
+                        type="button"
+                        data-capitolo="note">
+                        <span>VIII.</span>
+                        <strong>Note e idee</strong>
+                    </button>
+
+                </nav>
+
+            </div>
+
+        </section>
+
+        <!-- Zona invisibile sul libro nello scaffale -->
         <button
             id="apri-libro"
             type="button"
-            aria-label="Apri I Conti di Baozzi">
+            aria-label="Prendi I Conti di Baozzi">
         </button>
 
     </main>
