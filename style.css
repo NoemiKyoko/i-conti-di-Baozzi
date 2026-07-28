@@ -1,6 +1,6 @@
-/* =========================
+/* ========================================
    RESET
-   ========================= */
+   ======================================== */
 
 * {
     margin: 0;
@@ -15,17 +15,32 @@ body {
     overflow: hidden;
 
     background: #f8f3e9;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 }
 
-button {
+button,
+input,
+textarea {
     font: inherit;
 }
 
+button {
+    color: inherit;
+}
 
-/* =========================
+input,
+textarea {
+    outline: none;
+}
+
+
+/* ========================================
    SCENA
-   ========================= */
+   ======================================== */
 
 #scena {
     position: relative;
@@ -37,9 +52,9 @@ button {
 }
 
 
-/* =========================
+/* ========================================
    LIBRERIA
-   ========================= */
+   ======================================== */
 
 #libreria {
     position: absolute;
@@ -60,9 +75,9 @@ button {
 }
 
 
-/* =========================
+/* ========================================
    LIBRO
-   ========================= */
+   ======================================== */
 
 #libro {
     position: absolute;
@@ -91,11 +106,11 @@ button {
 }
 
 
-/* =========================
-   ZONA CLICCABILE INIZIALE
-   ========================= */
+/* ========================================
+   ZONA CLICCABILE DEL LIBRO
+   ======================================== */
 
-#apri-libro {
+#prendi-libro {
     position: absolute;
 
     left: 34.5%;
@@ -114,42 +129,36 @@ button {
 }
 
 
-/* =========================
-   PAGINE
-   ========================= */
+/* ========================================
+   DEDICA
+   ======================================== */
 
-.pagina {
+#schermata-dedica {
     position: absolute;
 
     left: 50%;
     top: 50%;
 
-    width: min(70vw, 50vh);
+    width:
+        min(70vw, 50vh);
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    z-index: 7;
+    z-index: 9;
 
     transform:
         translate(-50%, -50%)
         scale(.96);
 
+    transform-origin:
+        left center;
+
     transition:
-        opacity 650ms ease,
-        transform 800ms cubic-bezier(.22, .8, .25, 1),
-        visibility 0s linear 800ms;
-}
-
-
-/* =========================
-   DEDICA
-   ========================= */
-
-#pagina-dedica {
-    perspective: 1400px;
-    transform-style: preserve-3d;
+        opacity 700ms ease,
+        transform 950ms cubic-bezier(.22, .8, .25, 1),
+        visibility 0s linear 950ms;
 }
 
 #dedica {
@@ -158,15 +167,18 @@ button {
     width: 100%;
     height: auto;
 
-    filter:
-        drop-shadow(0 24px 30px rgba(0, 0, 0, .28));
-
     user-select: none;
     -webkit-user-drag: none;
+
+    filter:
+        drop-shadow(
+            0 24px 30px
+            rgba(0, 0, 0, .28)
+        );
 }
 
 
-/* Angolo della pagina */
+/* Angolo sollevato */
 
 .angolo-pagina {
     position: absolute;
@@ -189,133 +201,710 @@ button {
         );
 
     clip-path:
-        polygon(100% 0, 100% 100%, 0 100%);
+        polygon(
+            100% 0,
+            100% 100%,
+            0 100%
+        );
 
     filter:
-        drop-shadow(-4px -4px 5px rgba(50, 30, 10, .18));
+        drop-shadow(
+            -4px -4px 5px
+            rgba(50, 30, 10, .18)
+        );
 
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+/* ========================================
+   LIBRO INTERNO
+   ======================================== */
+
+#libro-interno {
+    position: absolute;
+    inset: 0;
+
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+
+/* ========================================
+   PAGINE
+   ======================================== */
+
+.pagina {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width:
+        min(88vw, 62vh);
+
+    max-height: 94vh;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform:
+        translate(-50%, -48%)
+        scale(.97);
 
     transition:
-        transform 220ms ease,
-        filter 220ms ease;
+        opacity 420ms ease,
+        transform 520ms cubic-bezier(.22, .8, .25, 1),
+        visibility 0s linear 520ms;
 }
 
-.angolo-pagina:active {
+.pagina.attiva {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
     transform:
-        translate(-4px, -4px)
-        rotate(-2deg);
+        translate(-50%, -50%)
+        scale(1);
 
-    filter:
-        drop-shadow(-7px -7px 7px rgba(50, 30, 10, .25));
+    transition-delay:
+        0s, 0s, 0s;
 }
 
 
-/* =========================
-   INDICE
-   ========================= */
+/* ========================================
+   CARTA
+   ======================================== */
 
 .pagina-carta {
     width: 100%;
-    aspect-ratio: 2 / 3;
+    min-height:
+        min(88vh, 780px);
+
+    max-height: 94vh;
 
     padding:
-        clamp(42px, 7vh, 86px)
-        clamp(28px, 5vw, 68px);
+        clamp(34px, 5.5vh, 70px)
+        clamp(24px, 4.5vw, 58px);
 
-    background-image: url("pagina.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
+    overflow-y: auto;
+
+    background-image:
+        url("pagina.png");
+
+    background-size:
+        100% 100%;
+
+    background-repeat:
+        no-repeat;
+
+    background-position:
+        center;
 
     color: #4b321f;
 
     filter:
-        drop-shadow(0 24px 30px rgba(0, 0, 0, .28));
+        drop-shadow(
+            0 24px 30px
+            rgba(0, 0, 0, .28)
+        );
+
+    scrollbar-width: none;
 }
 
-.intestazione-indice {
+.pagina-carta::-webkit-scrollbar {
+    display: none;
+}
+
+.pagina-operativa {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ========================================
+   TITOLI
+   ======================================== */
+
+.titolo-pagina {
     margin-bottom:
-        clamp(20px, 3vh, 36px);
+        clamp(18px, 3vh, 34px);
 
     text-align: center;
 }
 
-.intestazione-indice h1 {
-    margin: 4px 0;
+.titolo-pagina h1 {
+    margin: 5px 0;
 
     font-size:
-        clamp(28px, 4.5vh, 52px);
+        clamp(24px, 3.8vh, 44px);
 
     font-weight: normal;
-    letter-spacing: .08em;
+
+    letter-spacing: .04em;
 }
 
 .ornamento {
-    font-size:
-        clamp(18px, 2.5vh, 28px);
+    display: block;
 
-    opacity: .72;
+    font-size:
+        clamp(16px, 2.3vh, 25px);
+
+    opacity: .7;
 }
 
 
-/* Voci dell’indice */
+/* ========================================
+   INDICE
+   ======================================== */
+
+.indice-capitoli {
+    display: flex;
+    flex-direction: column;
+}
 
 .voce-indice {
     display: grid;
-    grid-template-columns: 2.8em 1fr;
+
+    grid-template-columns:
+        2.7em 1fr;
+
     align-items: center;
 
     width: 100%;
 
     padding:
-        clamp(7px, 1.15vh, 13px)
-        clamp(7px, 1vw, 12px);
+        clamp(8px, 1.3vh, 14px)
+        clamp(6px, 1vw, 12px);
 
     border: 0;
+
     border-bottom:
-        1px solid rgba(79, 50, 27, .18);
+        1px solid
+        rgba(79, 50, 27, .18);
 
     background: transparent;
-    color: #4b321f;
 
     text-align: left;
+
     cursor: pointer;
 
-    -webkit-tap-highlight-color: transparent;
-
-    transition:
-        transform 180ms ease,
-        color 180ms ease,
-        background 180ms ease;
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
 .voce-indice span {
-    opacity: .72;
+    opacity: .68;
 }
 
 .voce-indice strong {
     font-size:
-        clamp(15px, 2.05vh, 23px);
+        clamp(14px, 1.9vh, 21px);
 
     font-weight: normal;
 }
 
-.voce-indice:active {
-    color: #7b4c28;
+
+/* ========================================
+   SEZIONI DELLA CASA
+   ======================================== */
+
+.elenco-sezioni {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        clamp(9px, 1.5vh, 16px);
+}
+
+.sezione-casa {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 56px;
+
+    padding:
+        11px 14px;
+
+    border:
+        1px solid
+        rgba(91, 58, 31, .24);
+
+    border-radius: 8px;
 
     background:
-        rgba(133, 91, 48, .08);
+        rgba(255, 248, 226, .22);
 
-    transform:
-        translateX(5px);
+    color: #4b321f;
+
+    cursor: pointer;
+    text-align: left;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.sezione-casa span {
+    font-size: 22px;
+}
+
+.sezione-casa strong {
+    font-weight: normal;
 }
 
 
-/* =========================
-   STATO 1:
-   LIBRO DAVANTI
-   ========================= */
+/* ========================================
+   PULSANTI
+   ======================================== */
+
+.azioni-pagina,
+.azioni-modulo {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top:
+        clamp(24px, 4vh, 42px);
+}
+
+.pulsante-libro,
+.pulsante-secondario,
+.pulsante-testo {
+    cursor: pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.pulsante-libro,
+.pulsante-secondario {
+    min-height: 44px;
+
+    padding:
+        10px 18px;
+
+    border-radius: 6px;
+}
+
+.pulsante-libro {
+    border:
+        1px solid
+        rgba(91, 58, 31, .52);
+
+    background:
+        rgba(111, 70, 36, .12);
+
+    color: #4b321f;
+}
+
+.pulsante-secondario {
+    border: 0;
+
+    border-bottom:
+        1px solid
+        rgba(91, 58, 31, .32);
+
+    background: transparent;
+
+    color: #684729;
+}
+
+.pulsante-testo {
+    border: 0;
+    padding: 6px 2px;
+
+    background: transparent;
+
+    color: #684729;
+
+    font-size:
+        clamp(12px, 1.6vh, 17px);
+}
+
+
+/* ========================================
+   BARRA INTERNA
+   ======================================== */
+
+.barra-interna {
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding-bottom: 13px;
+
+    border-bottom:
+        1px solid
+        rgba(78, 48, 25, .24);
+}
+
+.barra-interna > button:last-child {
+    justify-self: end;
+}
+
+.titolo-categoria {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    text-align: center;
+}
+
+.titolo-categoria span {
+    font-size:
+        clamp(21px, 3.1vh, 34px);
+}
+
+.titolo-categoria h1 {
+    font-size:
+        clamp(19px, 2.8vh, 32px);
+
+    font-weight: normal;
+}
+
+
+/* ========================================
+   STATO VUOTO
+   ======================================== */
+
+#stato-vuoto {
+    display: flex;
+
+    flex: 1;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 55vh;
+
+    padding: 28px 12px;
+
+    text-align: center;
+}
+
+.icona-vuota {
+    margin-bottom: 18px;
+
+    font-size:
+        clamp(42px, 7vh, 72px);
+}
+
+#messaggio-vuoto {
+    max-width: 31ch;
+
+    margin-bottom: 24px;
+
+    font-size:
+        clamp(15px, 1.9vh, 20px);
+
+    line-height: 1.55;
+}
+
+
+/* ========================================
+   TABELLA
+   ======================================== */
+
+#elenco-registrazioni {
+    padding-top:
+        clamp(18px, 2.8vh, 30px);
+}
+
+.tabella-scroll {
+    max-height:
+        min(57vh, 460px);
+
+    overflow: auto;
+
+    border:
+        1px solid
+        rgba(79, 49, 24, .22);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 245, 218, .30);
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size:
+        clamp(12px, 1.6vh, 17px);
+}
+
+th,
+td {
+    padding: 10px 9px;
+
+    border-bottom:
+        1px solid
+        rgba(79, 49, 24, .14);
+
+    text-align: left;
+}
+
+th {
+    position: sticky;
+    top: 0;
+
+    background:
+        rgba(229, 199, 143, .96);
+
+    font-weight: normal;
+
+    z-index: 1;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    text-align: right;
+    white-space: nowrap;
+}
+
+th:last-child,
+td:last-child {
+    width: 38px;
+    text-align: center;
+}
+
+.nota-riga {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: .88em;
+
+    opacity: .67;
+}
+
+.pulsante-elimina {
+    border: 0;
+
+    padding: 5px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    opacity: .62;
+}
+
+#aggiungi-altra-voce {
+    display: block;
+
+    margin:
+        24px auto 0;
+}
+
+
+/* ========================================
+   MODULO
+   ======================================== */
+
+#contenitore-modulo {
+    padding-top:
+        clamp(18px, 2.8vh, 30px);
+}
+
+#modulo-registrazione {
+    display: grid;
+
+    gap:
+        clamp(13px, 2vh, 21px);
+
+    max-width: 430px;
+
+    margin: 0 auto;
+}
+
+#modulo-registrazione label {
+    display: grid;
+
+    gap: 7px;
+
+    font-size:
+        clamp(13px, 1.7vh, 17px);
+}
+
+input,
+textarea {
+    width: 100%;
+
+    border:
+        1px solid
+        rgba(78, 49, 25, .32);
+
+    border-radius: 7px;
+
+    padding: 11px 12px;
+
+    background:
+        rgba(255, 248, 226, .66);
+
+    color: #3f2b1c;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.campo-importo {
+    display: flex;
+    align-items: center;
+
+    border:
+        1px solid
+        rgba(78, 49, 25, .32);
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 248, 226, .66);
+}
+
+.campo-importo span {
+    padding-left: 12px;
+}
+
+.campo-importo input {
+    border: 0;
+    background: transparent;
+}
+
+
+/* ========================================
+   RIEPILOGO
+   ======================================== */
+
+.gruppo-riepilogo {
+    margin-bottom:
+        clamp(19px, 3vh, 32px);
+}
+
+.gruppo-riepilogo h2 {
+    margin-bottom: 10px;
+
+    font-size:
+        clamp(16px, 2.2vh, 23px);
+
+    font-weight: normal;
+}
+
+.riga-riepilogo,
+.totale-parziale {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 8px 3px;
+
+    border-bottom:
+        1px dotted
+        rgba(78, 48, 25, .27);
+
+    font-size:
+        clamp(13px, 1.75vh, 18px);
+}
+
+.riga-riepilogo strong,
+.totale-parziale strong {
+    white-space: nowrap;
+}
+
+.totale-parziale {
+    margin-top: 5px;
+
+    border-bottom: 0;
+
+    font-weight: bold;
+}
+
+.totale-capitolo {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 12px;
+
+    padding: 16px 13px;
+
+    border-top:
+        2px solid
+        rgba(78, 48, 25, .52);
+
+    border-bottom:
+        2px solid
+        rgba(78, 48, 25, .52);
+
+    font-size:
+        clamp(18px, 2.7vh, 29px);
+}
+
+
+/* ========================================
+   CAPITOLI IN DECANTAZIONE
+   ======================================== */
+
+.pagina-decantazione {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.pagina-decantazione p {
+    max-width: 28ch;
+
+    margin-bottom: 34px;
+
+    font-size:
+        clamp(16px, 2.1vh, 22px);
+
+    line-height: 1.55;
+}
+
+
+/* ========================================
+   CLASSI DI SERVIZIO
+   ======================================== */
+
+.nascosto {
+    display: none !important;
+}
+
+
+/* ========================================
+   STATI DI INGRESSO
+   ======================================== */
 
 body.libro-davanti #libreria {
     filter:
@@ -348,28 +937,25 @@ body.libro-davanti #libro {
     cursor: pointer;
 }
 
-body.libro-davanti #apri-libro {
+body.libro-davanti #prendi-libro {
     pointer-events: none;
 }
 
 
-/* =========================
-   STATO 2:
-   DEDICA
-   ========================= */
+/* Dedica visibile */
 
 body.dedica-visibile #libro {
     opacity: 0;
 
     transform:
         translate(-70%, -50%)
-        rotateY(-45deg)
+        rotateY(-42deg)
         scale(.94);
 
     pointer-events: none;
 }
 
-body.dedica-visibile #pagina-dedica {
+body.dedica-visibile #schermata-dedica {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -379,61 +965,95 @@ body.dedica-visibile #pagina-dedica {
         scale(1);
 
     transition-delay:
-        180ms, 180ms, 0s;
+        170ms, 170ms, 0s;
 }
 
 
-/* =========================
-   GIRO DELLA DEDICA
-   ========================= */
+/* Giro della pagina */
 
-body.pagina-in-giro #pagina-dedica {
+body.dedica-in-giro #schermata-dedica {
+    opacity: .05;
+
     transform:
         translate(-50%, -50%)
-        perspective(1400px)
-        rotateY(-88deg);
+        perspective(1300px)
+        rotateY(-96deg);
 
-    transform-origin: left center;
-
-    opacity: .15;
-}
-
-
-/* =========================
-   STATO 3:
-   INDICE
-   ========================= */
-
-body.indice-visibile #pagina-dedica {
-    opacity: 0;
-    visibility: hidden;
     pointer-events: none;
+
+    transition:
+        opacity 1000ms ease,
+        transform 1200ms
+        cubic-bezier(.55, .05, .25, 1);
 }
 
-body.indice-visibile #pagina-indice {
-    opacity: 1;
+
+/* Libro interno visibile */
+
+body.libro-interno-visibile
+#schermata-dedica {
+    visibility: hidden;
+}
+
+body.libro-interno-visibile
+#libro-interno {
     visibility: visible;
     pointer-events: auto;
-
-    transform:
-        translate(-50%, -50%)
-        scale(1);
-
-    transition-delay:
-        100ms, 100ms, 0s;
 }
 
 
-/* =========================
-   ACCESSIBILITÀ
-   ========================= */
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (orientation: landscape) {
+
+    .pagina {
+        width:
+            min(72vw, 72vh);
+    }
+
+    .pagina-carta {
+        min-height: 88vh;
+    }
+
+    .elenco-sezioni {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .pagina {
+        width:
+            min(94vw, 66vh);
+    }
+
+    .pagina-carta {
+        padding:
+            34px 22px;
+    }
+
+    .elenco-sezioni {
+        grid-template-columns:
+            1fr;
+    }
+
+    .barra-interna {
+        grid-template-columns:
+            auto 1fr auto;
+    }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
 
     #libreria,
     #libro,
-    .pagina,
-    .angolo-pagina {
+    #schermata-dedica,
+    .pagina {
         transition-duration: 1ms;
     }
 }
