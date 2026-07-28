@@ -72,9 +72,6 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-
-/* Piccolo segnale al tocco */
-
 #libro-baozzi:active {
     background: rgba(255, 224, 155, 0.18);
 }
@@ -106,6 +103,7 @@ body {
     transition:
         left 900ms cubic-bezier(.22, .8, .25, 1),
         top 900ms cubic-bezier(.22, .8, .25, 1),
+        width 900ms cubic-bezier(.22, .8, .25, 1),
         transform 900ms cubic-bezier(.22, .8, .25, 1),
         filter 900ms ease,
         opacity 120ms ease;
@@ -118,8 +116,6 @@ body {
 /* =========================
    STATO DI APERTURA
    ========================= */
-
-/* La libreria arretra e si sfoca */
 
 body.apertura #libreria {
     filter: brightness(.48) blur(4px);
@@ -134,10 +130,10 @@ body.apertura #libro-animato {
 
     left: 50%;
     top: 50%;
+    width: 46%;
 
     transform:
-        translate(-50%, -50%)
-        scale(2.6);
+        translate(-50%, -50%);
 
     filter:
         drop-shadow(0 28px 30px rgba(0, 0, 0, .35));
