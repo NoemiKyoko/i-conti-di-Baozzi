@@ -60,6 +60,7 @@ body {
 #libro-baozzi:active {
     background: rgba(255, 224, 155, 0.18);
 }
+
 /* Libreria che va sullo sfondo */
 
 body.apertura #libreria{
