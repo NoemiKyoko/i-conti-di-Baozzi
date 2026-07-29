@@ -52,7 +52,7 @@ const categorieCasa = {
     },
 
     altro: {
-        nome: "Altro",
+        nome: "Acquisti per la casa",
         icona: "🪴",
         gruppo: "straordinaria",
         messaggio:
