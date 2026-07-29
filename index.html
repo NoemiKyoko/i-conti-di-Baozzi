@@ -258,6 +258,16 @@
                         <button
                             class="sezione-casa"
                             type="button"
+                            data-categoria-casa="tasse">
+
+                            <span>🧾</span>
+                            <strong>Tasse</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-casa"
+                            type="button"
                             data-categoria-casa="manutenzione">
 
                             <span>🛠️</span>
@@ -377,7 +387,7 @@
                     </div>
 
 
-                    <!-- Elenco -->
+                    <!-- Elenco registrazioni -->
 
                     <div
                         id="casa-elenco-registrazioni"
@@ -444,7 +454,7 @@
                                     id="casa-campo-descrizione"
                                     type="text"
                                     maxlength="70"
-                                    placeholder="Per esempio:intervento, bolletta o altra spesa"
+                                    placeholder="Descrivi questa spesa"
                                     required>
 
                             </label>
@@ -532,72 +542,85 @@
 
                     </header>
 
-                    <section class="gruppo-riepilogo">
+                    <div class="riga-riepilogo">
 
-                        <h2>Spese ricorrenti</h2>
+                        <span>💡 Luce</span>
 
-                        <div class="riga-riepilogo">
-                            <span>💡 Luce</span>
-                            <strong id="totale-luce">€ 0,00</strong>
-                        </div>
+                        <strong id="totale-luce">
+                            € 0,00
+                        </strong>
 
-                        <div class="riga-riepilogo">
-                            <span>💧 Acqua</span>
-                            <strong id="totale-acqua">€ 0,00</strong>
-                        </div>
+                    </div>
 
-                        <div class="riga-riepilogo">
-                            <span>🔥 Gas</span>
-                            <strong id="totale-gas">€ 0,00</strong>
-                        </div>
+                    <div class="riga-riepilogo">
 
-                        <div class="riga-riepilogo">
-                            <span>📶 Internet</span>
-                            <strong id="totale-internet">€ 0,00</strong>
-                        </div>
+                        <span>💧 Acqua</span>
 
-                        <div class="riga-riepilogo">
-                            <span>🏢 Condominio</span>
-                            <strong id="totale-condominio">€ 0,00</strong>
-                        </div>
+                        <strong id="totale-acqua">
+                            € 0,00
+                        </strong>
 
-                        <div class="totale-parziale">
+                    </div>
 
-                            <span>Totale ricorrenti</span>
+                    <div class="riga-riepilogo">
 
-                            <strong id="totale-casa-ricorrenti">
-                                € 0,00
-                            </strong>
+                        <span>🔥 Gas</span>
 
-                        </div>
+                        <strong id="totale-gas">
+                            € 0,00
+                        </strong>
 
-                    </section>
+                    </div>
 
-                    <section class="gruppo-riepilogo">
+                    <div class="riga-riepilogo">
 
-                        <h2>Spese straordinarie</h2>
+                        <span>📶 Internet</span>
 
-                        <div class="riga-riepilogo">
-                            <span>🛠️ Manutenzione</span>
-                            <strong id="totale-manutenzione">€ 0,00</strong>
-                        </div>
+                        <strong id="totale-internet">
+                            € 0,00
+                        </strong>
 
-                        <div class="riga-riepilogo">
-                            <span>🪴 Altro</span>
-                            <strong id="totale-altro">€ 0,00</strong>
-                        </div>
+                    </div>
 
-                        <div class="totale-parziale">
+                    <div class="riga-riepilogo">
 
-                            <span>Totale straordinarie</span>
+                        <span>🏢 Condominio</span>
 
-                            <strong id="totale-casa-straordinarie">
-                                € 0,00
-                            </strong>
+                        <strong id="totale-condominio">
+                            € 0,00
+                        </strong>
 
-                        </div>
+                    </div>
 
-                    </section>
+                    <div class="riga-riepilogo">
+
+                        <span>🧾 Tasse</span>
+
+                        <strong id="totale-tasse">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🛠️ Manutenzione</span>
+
+                        <strong id="totale-manutenzione">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🪴 Acquisti per la casa</span>
+
+                        <strong id="totale-altro">
+                            € 0,00
+                        </strong>
+
+                    </div>
 
                     <div class="totale-capitolo">
 
@@ -780,7 +803,7 @@
                     </div>
 
 
-                    <!-- Elenco -->
+                    <!-- Elenco registrazioni -->
 
                     <div
                         id="entrate-elenco-registrazioni"
@@ -848,7 +871,7 @@
                                     id="entrate-campo-descrizione"
                                     type="text"
                                     maxlength="70"
-                                    placeholder="Per esempio: rimborso scuola">
+                                    placeholder="Descrivi questa entrata">
 
                             </label>
 
@@ -993,38 +1016,437 @@
 
 
             <!-- ====================================
-                 CAPITOLI IN DECANTAZIONE
+                 CAPITOLO III — SPESE QUOTIDIANE
                  ==================================== -->
 
             <section
                 id="spese-quotidiane"
                 class="pagina">
 
-                <div class="pagina-carta pagina-decantazione">
+                <div class="pagina-carta">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Spese quotidiane</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
-                    <p>
-                        Questo capitolo è pronto a crescere.
-                    </p>
+                    <div class="elenco-sezioni elenco-sezioni-spese">
 
-                    <button
-                        class="pulsante-secondario"
-                        type="button"
-                        data-vai="indice">
+                        <button
+                            class="sezione-spese"
+                            type="button"
+                            data-categoria-spese="alimentari">
 
-                        Torna all’indice
+                            <span>🛒</span>
+                            <strong>Spesa alimentare</strong>
 
-                    </button>
+                        </button>
+
+                        <button
+                            class="sezione-spese"
+                            type="button"
+                            data-categoria-spese="trasporti">
+
+                            <span>🚗</span>
+                            <strong>Auto e trasporti</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-spese"
+                            type="button"
+                            data-categoria-spese="salute">
+
+                            <span>💊</span>
+                            <strong>Salute</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-spese"
+                            type="button"
+                            data-categoria-spese="greta">
+
+                            <span>👶</span>
+                            <strong>Greta</strong>
+
+                        </button>
+
+                        <button
+                            class="sezione-spese"
+                            type="button"
+                            data-categoria-spese="regali">
+
+                            <span>🎁</span>
+                            <strong>Regali</strong>
+
+                        </button>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-libro"
+                            type="button"
+                            data-vai="riepilogo-spese">
+
+                            Riepilogo del capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
 
                 </div>
 
             </section>
 
+
+            <!-- ====================================
+                 SEZIONE RIUTILIZZABILE
+                 DELLE SPESE QUOTIDIANE
+                 ==================================== -->
+
+            <section
+                id="spese-sezione"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="barra-interna">
+
+                        <button
+                            class="pulsante-testo"
+                            type="button"
+                            data-vai="spese-quotidiane">
+
+                            ← Sezioni
+
+                        </button>
+
+                        <div class="titolo-categoria">
+
+                            <span id="spese-icona-categoria">
+                                🛒
+                            </span>
+
+                            <h1 id="spese-titolo-categoria">
+                                Spesa alimentare
+                            </h1>
+
+                        </div>
+
+                        <button
+                            id="spese-apri-modulo-alto"
+                            class="pulsante-testo"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </header>
+
+
+                    <!-- Frase speciale per Greta -->
+
+                    <p
+                        id="frase-greta"
+                        class="frase-speciale nascosto">
+
+                        Ogni piccola spesa per te racconta
+                        un pezzetto della tua crescita.
+
+                    </p>
+
+
+                    <!-- Stato vuoto -->
+
+                    <div id="spese-stato-vuoto">
+
+                        <div
+                            id="spese-icona-stato-vuoto"
+                            class="icona-vuota">
+
+                            🛒
+
+                        </div>
+
+                        <p id="spese-messaggio-vuoto">
+                            Non hai ancora registrato nessuna spesa.
+                        </p>
+
+                        <button
+                            id="spese-aggiungi-prima-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            Aggiungi la prima
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Elenco registrazioni -->
+
+                    <div
+                        id="spese-elenco-registrazioni"
+                        class="nascosto">
+
+                        <div class="tabella-scroll">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Descrizione</th>
+                                        <th>Importo</th>
+                                        <th></th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="spese-righe-registrazioni">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <button
+                            id="spese-aggiungi-altra-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Modulo -->
+
+                    <div
+                        id="spese-contenitore-modulo"
+                        class="nascosto">
+
+                        <form id="spese-modulo-registrazione">
+
+                            <label>
+
+                                Data
+
+                                <input
+                                    id="spese-campo-data"
+                                    type="date"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Descrizione
+
+                                <input
+                                    id="spese-campo-descrizione"
+                                    type="text"
+                                    maxlength="70"
+                                    placeholder="Descrivi questa spesa"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Importo
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="spese-campo-importo"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <label>
+
+                                Nota facoltativa
+
+                                <textarea
+                                    id="spese-campo-nota"
+                                    rows="3"
+                                    maxlength="180"
+                                    placeholder="Un dettaglio utile da ricordare"></textarea>
+
+                            </label>
+
+                            <div class="azioni-modulo">
+
+                                <button
+                                    class="pulsante-libro"
+                                    type="submit">
+
+                                    Salva
+
+                                </button>
+
+                                <button
+                                    id="spese-annulla-registrazione"
+                                    class="pulsante-secondario"
+                                    type="button">
+
+                                    Annulla
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 RIEPILOGO DELLE SPESE QUOTIDIANE
+                 ==================================== -->
+
+            <section
+                id="riepilogo-spese"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>Riepilogo delle spese</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🛒 Spesa alimentare</span>
+
+                        <strong id="totale-alimentari">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🚗 Auto e trasporti</span>
+
+                        <strong id="totale-trasporti">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>💊 Salute</span>
+
+                        <strong id="totale-salute">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>👶 Greta</span>
+
+                        <strong id="totale-greta">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="riga-riepilogo">
+
+                        <span>🎁 Regali</span>
+
+                        <strong id="totale-regali">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="totale-capitolo">
+
+                        <span>Totale spese quotidiane</span>
+
+                        <strong id="totale-spese">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="spese-quotidiane">
+
+                            Torna al capitolo
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 CAPITOLI IN DECANTAZIONE
+                 ==================================== -->
 
             <section
                 id="desideri"
@@ -1033,9 +1455,13 @@
                 <div class="pagina-carta pagina-decantazione">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Desideri e coccole</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
                     <p>
@@ -1063,9 +1489,13 @@
                 <div class="pagina-carta pagina-decantazione">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Risparmi e obiettivi</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
                     <p>
@@ -1093,9 +1523,13 @@
                 <div class="pagina-carta pagina-decantazione">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Protezione e serenità</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
                     <p>
@@ -1123,9 +1557,13 @@
                 <div class="pagina-carta pagina-decantazione">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Abbonamenti</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
                     <p>
@@ -1153,9 +1591,13 @@
                 <div class="pagina-carta pagina-decantazione">
 
                     <header class="titolo-pagina">
+
                         <span class="ornamento">❦</span>
+
                         <h1>Note e idee</h1>
+
                         <span class="ornamento">❦</span>
+
                     </header>
 
                     <p>
