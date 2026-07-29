@@ -1447,165 +1447,430 @@
      CAPITOLO IV — DESIDERI E COCCOLE
      ==================================== -->
 
-<section
-    id="desideri"
-    class="pagina">
+            <section
+                id="desideri"
+                class="pagina">
 
-    <div class="pagina-carta pagina-desideri">
+                <div class="pagina-carta pagina-desideri">
 
-        <header class="titolo-pagina">
+                    <header class="titolo-pagina">
 
-            <span class="ornamento">❦</span>
+                        <span class="ornamento">❦</span>
 
-            <h1>Desideri e coccole</h1>
+                        <h1>Desideri e coccole</h1>
 
-            <span class="ornamento">❦</span>
+                        <span class="ornamento">❦</span>
 
-        </header>
+                    </header>
+
+                    <div class="scelte-desideri">
+
+                        <button
+                            id="apri-dialogo-baozzi"
+                            class="scelta-desideri"
+                            type="button">
+
+                            <strong>Mi fermo un attimo</strong>
+
+                            <span>
+                                Prima di decidere,
+                                posso sedermi con Baozzi.
+                            </span>
+
+                        </button>
+
+                        <button
+                            class="scelta-desideri"
+                            type="button"
+                            data-vai="acquisti-desideri">
+
+                            <strong>I miei acquisti</strong>
+
+                            <span>
+                                Annota ciò che hai scelto
+                                di regalarti.
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-libro"
+                            type="button"
+                            data-vai="riepilogo-desideri">
+
+                            Riepilogo del capitolo
+
+                        </button>
+
+                    </div>
+
+                    <div class="navigazione-capitolo">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="spese-quotidiane">
+
+                            ◁ Capitolo precedente
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="risparmi">
+
+                            Capitolo successivo ▷
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
 
-        <div class="scelte-desideri">
-
-            <button
-                id="apri-dialogo-baozzi"
-                class="scelta-desideri"
-                type="button">
-
-                <strong>Mi fermo un attimo</strong>
-
-                <span>
-                    Baozzi è qui per ragionarci insieme.
-                </span>
-
-            </button>
-
-
-            <button
-                class="scelta-desideri"
-                type="button"
-                data-vai="acquisti-desideri">
-
-                <strong>I miei acquisti</strong>
-
-                <span>
-                    Annota ciò che hai scelto di regalarti.
-                </span>
-
-            </button>
-
-        </div>
-
-
-        <div class="navigazione-capitolo">
-
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="spese-quotidiane">
-
-                ◁ Capitolo precedente
-
-            </button>
-
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="indice">
-
-                Torna all’indice
-
-            </button>
-
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="risparmi">
-
-                Capitolo successivo ▷
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
             <!-- ====================================
-     DIALOGO DI BAOZZI
-     ==================================== -->
+                 DIALOGO DI BAOZZI
+                 ==================================== -->
 
-<section
-    id="dialogo-baozzi"
-    class="pagina">
+            <section
+                id="dialogo-baozzi"
+                class="pagina">
 
-    <div class="pagina-carta pagina-dialogo">
+                <div class="pagina-carta pagina-dialogo">
 
-        <div class="baozzi-scena">
+                    <div class="baozzi-scena">
 
-            <img
-                src="img/baozzi-panchina.png"
-                alt="Baozzi seduto sulla panchina"
-                class="baozzi-immagine">
+                        <img
+                            id="immagine-baozzi"
+                            class="baozzi-immagine"
+                            src="assets/baozzi-panchina.png"
+                            alt="Baozzi seduto sulla panchina accanto a un cuscino rosa">
 
-        </div>
+                    </div>
 
-        <div
-            id="fumetto-baozzi"
-            class="fumetto-baozzi nascosto">
+                    <div
+                        id="fumetto-baozzi"
+                        class="fumetto-baozzi nascosto"
+                        aria-live="polite">
 
-            <p id="testo-baozzi">
-                Perché non ti siedi un attimo?
-            </p>
+                        <p id="testo-baozzi">
+                            Perché non ti siedi un attimo?
+                        </p>
 
-        </div>
+                    </div>
 
-        <div class="azioni-baozzi">
+                    <div
+                        id="azioni-baozzi"
+                        class="azioni-baozzi">
+                    </div>
 
-            <button
-                id="pulsante-baozzi"
-                class="pulsante-libro"
-                type="button">
+                    <div class="navigazione-capitolo navigazione-dialogo">
 
-                Mi siedo.
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="spese-quotidiane">
 
-            </button>
+                            ◁ Capitolo precedente
 
-        </div>
+                        </button>
 
-        <div class="navigazione-capitolo navigazione-dialogo">
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
 
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="spese-quotidiane">
+                            Torna all’indice
 
-                ◁ Capitolo precedente
+                        </button>
 
-            </button>
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="risparmi">
 
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="indice">
+                            Capitolo successivo ▷
 
-                Torna all’indice
+                        </button>
 
-            </button>
+                    </div>
 
-            <button
-                class="pulsante-secondario"
-                type="button"
-                data-vai="risparmi">
+                </div>
 
-                Capitolo successivo ▷
+            </section>
 
-            </button>
 
-        </div>
+            <!-- ====================================
+                 ACQUISTI — DESIDERI E COCCOLE
+                 ==================================== -->
 
-    </div>
+            <section
+                id="acquisti-desideri"
+                class="pagina">
 
-</section>
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="barra-interna">
+
+                        <button
+                            class="pulsante-testo"
+                            type="button"
+                            data-vai="desideri">
+
+                            ← Capitolo
+
+                        </button>
+
+                        <div class="titolo-categoria">
+
+                            <span>❦</span>
+
+                            <h1>I miei acquisti</h1>
+
+                        </div>
+
+                        <button
+                            id="desideri-apri-modulo-alto"
+                            class="pulsante-testo"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </header>
+
+                    <div id="desideri-stato-vuoto">
+
+                        <div class="icona-vuota">❦</div>
+
+                        <p id="desideri-messaggio-vuoto">
+                            Non hai ancora annotato nessun acquisto.
+                        </p>
+
+                        <button
+                            id="desideri-aggiungi-prima-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            Aggiungi il primo
+
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="desideri-elenco-registrazioni"
+                        class="nascosto">
+
+                        <div class="tabella-scroll">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Descrizione</th>
+                                        <th>Importo</th>
+                                        <th></th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="desideri-righe-registrazioni">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <button
+                            id="desideri-aggiungi-altra-voce"
+                            class="pulsante-libro"
+                            type="button">
+
+                            + Aggiungi
+
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="desideri-contenitore-modulo"
+                        class="nascosto">
+
+                        <form id="desideri-modulo-registrazione">
+
+                            <label>
+
+                                Data
+
+                                <input
+                                    id="desideri-campo-data"
+                                    type="date"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Descrizione
+
+                                <input
+                                    id="desideri-campo-descrizione"
+                                    type="text"
+                                    maxlength="100"
+                                    placeholder="Descrivi questo acquisto"
+                                    autocomplete="off"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Importo
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="desideri-campo-importo"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <label>
+
+                                Nota facoltativa
+
+                                <textarea
+                                    id="desideri-campo-nota"
+                                    rows="3"
+                                    maxlength="250"
+                                    placeholder="Aggiungi un dettaglio, se vuoi"></textarea>
+
+                            </label>
+
+                            <div class="azioni-modulo">
+
+                                <button
+                                    class="pulsante-libro"
+                                    type="submit">
+
+                                    Salva
+
+                                </button>
+
+                                <button
+                                    id="desideri-annulla-registrazione"
+                                    class="pulsante-secondario"
+                                    type="button">
+
+                                    Annulla
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================
+                 RIEPILOGO — DESIDERI E COCCOLE
+                 ==================================== -->
+
+            <section
+                id="riepilogo-desideri"
+                class="pagina">
+
+                <div class="pagina-carta pagina-operativa">
+
+                    <header class="titolo-pagina">
+
+                        <span class="ornamento">❦</span>
+
+                        <h1>Riepilogo desideri e coccole</h1>
+
+                        <span class="ornamento">❦</span>
+
+                    </header>
+
+                    <div class="riga-riepilogo">
+
+                        <span>Acquisti annotati</span>
+
+                        <strong id="numero-acquisti-desideri">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <div class="totale-capitolo">
+
+                        <span>Totale desideri e coccole</span>
+
+                        <strong id="totale-desideri">
+                            € 0,00
+                        </strong>
+
+                    </div>
+
+                    <div class="azioni-pagina">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="acquisti-desideri">
+
+                            Torna agli acquisti
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
 
             <section
                 id="risparmi"
@@ -1748,6 +2013,7 @@
     </main>
 
     <script src="script.js"></script>
+    <script src="dialogo.js"></script>
 
 </body>
 

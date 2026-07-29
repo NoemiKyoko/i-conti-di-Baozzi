@@ -1312,3 +1312,230 @@ body.libro-interno-visibile
         transition-duration: 1ms;
     }
 }
+
+
+/* ========================================
+   CAPITOLO IV — DESIDERI E COCCOLE
+   ======================================== */
+
+.pagina-desideri {
+    display: flex;
+    flex-direction: column;
+}
+
+.scelte-desideri {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(12px, 2vh, 20px);
+}
+
+.scelta-desideri {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: 120px;
+    padding: 18px;
+    border: 1px solid rgba(91, 58, 31, .28);
+    border-radius: 9px;
+    background: rgba(255, 248, 226, .28);
+    color: #4b321f;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 170ms ease, background 170ms ease;
+}
+
+.scelta-desideri:active {
+    transform: scale(.98);
+    background: rgba(232, 205, 154, .3);
+}
+
+.scelta-desideri strong {
+    font-size: clamp(17px, 2.2vh, 23px);
+    font-weight: normal;
+}
+
+.scelta-desideri span {
+    font-size: clamp(13px, 1.7vh, 17px);
+    line-height: 1.5;
+    opacity: .76;
+}
+
+.navigazione-capitolo {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: clamp(24px, 4vh, 42px);
+}
+
+.navigazione-capitolo button:first-child {
+    justify-self: start;
+}
+
+.navigazione-capitolo button:nth-child(2) {
+    justify-self: center;
+}
+
+.navigazione-capitolo button:last-child {
+    justify-self: end;
+}
+
+.pagina-dialogo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: min(88vh, 780px);
+    text-align: center;
+}
+
+.baozzi-scena {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.baozzi-immagine {
+    display: block;
+    width: min(100%, 520px);
+    max-height: 40vh;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    filter: drop-shadow(0 14px 18px rgba(67, 41, 21, .15));
+}
+
+.fumetto-baozzi {
+    max-width: 34ch;
+    margin-top: clamp(12px, 2vh, 22px);
+    padding: 14px 19px;
+    border: 1px solid rgba(91, 58, 31, .3);
+    border-radius: 18px;
+    background: rgba(255, 252, 240, .86);
+    color: #4b321f;
+    font-size: clamp(15px, 1.9vh, 20px);
+    line-height: 1.55;
+    white-space: pre-line;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.fumetto-baozzi.visibile {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.azioni-baozzi {
+    width: min(100%, 470px);
+    margin-top: clamp(14px, 2.2vh, 24px);
+}
+
+.campo-desiderio-baozzi,
+.risposte-baozzi {
+    display: grid;
+    gap: 10px;
+}
+
+.pulsante-risposta-baozzi {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid rgba(91, 58, 31, .38);
+    border-radius: 7px;
+    background: rgba(255, 248, 226, .48);
+    color: #4b321f;
+    cursor: pointer;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pulsante-risposta-baozzi:active {
+    transform: scale(.98);
+}
+
+.navigazione-dialogo {
+    opacity: .38;
+    transition: opacity 500ms ease;
+}
+
+.navigazione-dialogo:focus-within {
+    opacity: .78;
+}
+
+#desideri-stato-vuoto {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 55vh;
+    padding: 28px 12px;
+    text-align: center;
+}
+
+#desideri-messaggio-vuoto {
+    max-width: 31ch;
+    margin-bottom: 24px;
+    font-size: clamp(15px, 1.9vh, 20px);
+    line-height: 1.55;
+}
+
+#desideri-elenco-registrazioni,
+#desideri-contenitore-modulo {
+    padding-top: clamp(18px, 2.8vh, 30px);
+}
+
+#desideri-modulo-registrazione {
+    display: grid;
+    gap: clamp(13px, 2vh, 21px);
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+#desideri-modulo-registrazione label {
+    display: grid;
+    gap: 7px;
+    font-size: clamp(13px, 1.7vh, 17px);
+}
+
+#desideri-aggiungi-altra-voce {
+    display: block;
+    margin: 24px auto 0;
+}
+
+@media (max-width: 560px) {
+    .scelte-desideri {
+        grid-template-columns: 1fr;
+    }
+
+    .scelta-desideri {
+        min-height: 98px;
+    }
+
+    .navigazione-capitolo {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .navigazione-capitolo button:nth-child(2) {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .baozzi-immagine {
+        max-height: 34vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scelta-desideri,
+    .fumetto-baozzi,
+    .navigazione-dialogo {
+        transition-duration: 1ms;
+    }
+}

@@ -114,6 +114,15 @@ function vaiAllaPagina(idPagina) {
 
         aggiornaRiepilogoSpese();
     }
+
+
+    if (
+        idPagina ===
+        "riepilogo-desideri"
+    ) {
+
+        aggiornaRiepilogoDesideri();
+    }
 }
 
 
@@ -2169,6 +2178,426 @@ function aggiornaRiepilogoSpese() {
     }
 }
 /* ========================================
+   PARTE 5 — DESIDERI E COCCOLE
+   ======================================== */
+
+const chiaveArchivioDesideri =
+    "conti-baozzi-desideri-v1";
+
+let archivioDesideri =
+    caricaElenco(
+        chiaveArchivioDesideri
+    );
+
+const desideriStatoVuoto =
+    document.querySelector(
+        "#desideri-stato-vuoto"
+    );
+
+const desideriElencoRegistrazioni =
+    document.querySelector(
+        "#desideri-elenco-registrazioni"
+    );
+
+const desideriRigheRegistrazioni =
+    document.querySelector(
+        "#desideri-righe-registrazioni"
+    );
+
+const desideriContenitoreModulo =
+    document.querySelector(
+        "#desideri-contenitore-modulo"
+    );
+
+const desideriModuloRegistrazione =
+    document.querySelector(
+        "#desideri-modulo-registrazione"
+    );
+
+const desideriCampoData =
+    document.querySelector(
+        "#desideri-campo-data"
+    );
+
+const desideriCampoDescrizione =
+    document.querySelector(
+        "#desideri-campo-descrizione"
+    );
+
+const desideriCampoImporto =
+    document.querySelector(
+        "#desideri-campo-importo"
+    );
+
+const desideriCampoNota =
+    document.querySelector(
+        "#desideri-campo-nota"
+    );
+
+const desideriAggiungiPrimaVoce =
+    document.querySelector(
+        "#desideri-aggiungi-prima-voce"
+    );
+
+const desideriAggiungiAltraVoce =
+    document.querySelector(
+        "#desideri-aggiungi-altra-voce"
+    );
+
+const desideriApriModuloAlto =
+    document.querySelector(
+        "#desideri-apri-modulo-alto"
+    );
+
+const desideriAnnullaRegistrazione =
+    document.querySelector(
+        "#desideri-annulla-registrazione"
+    );
+
+
+function aggiornaPaginaDesideri() {
+
+    if (
+        !desideriStatoVuoto ||
+        !desideriElencoRegistrazioni ||
+        !desideriRigheRegistrazioni
+    ) {
+
+        return;
+    }
+
+
+    chiudiModuloDesideri();
+
+    desideriRigheRegistrazioni.innerHTML =
+        "";
+
+
+    if (
+        archivioDesideri.length === 0
+    ) {
+
+        desideriStatoVuoto.classList.remove(
+            "nascosto"
+        );
+
+        desideriElencoRegistrazioni
+            .classList.add(
+                "nascosto"
+            );
+
+        return;
+    }
+
+
+    desideriStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+    desideriElencoRegistrazioni
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    const registrazioniOrdinate =
+        [...archivioDesideri].sort(
+            (prima, seconda) =>
+
+                seconda.data.localeCompare(
+                    prima.data
+                )
+        );
+
+
+    registrazioniOrdinate.forEach(
+        (registrazione) => {
+
+            const riga =
+                creaRigaTabella(
+                    registrazione,
+                    () => {
+
+                        eliminaRegistrazioneDesideri(
+                            registrazione.id
+                        );
+                    }
+                );
+
+            desideriRigheRegistrazioni
+                .appendChild(
+                    riga
+                );
+        }
+    );
+}
+
+
+function apriModuloDesideri(
+    descrizionePrecompilata = ""
+) {
+
+    if (
+        !desideriModuloRegistrazione ||
+        !desideriContenitoreModulo
+    ) {
+
+        return;
+    }
+
+
+    vaiAllaPagina(
+        "acquisti-desideri"
+    );
+
+
+    desideriStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+    desideriElencoRegistrazioni
+        .classList.add(
+            "nascosto"
+        );
+
+    desideriContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    desideriModuloRegistrazione.reset();
+
+    desideriCampoData.value =
+        dataOggi();
+
+    desideriCampoDescrizione.value =
+        descrizionePrecompilata;
+
+
+    window.setTimeout(
+        () => {
+
+            if (descrizionePrecompilata) {
+
+                desideriCampoImporto.focus();
+
+                return;
+            }
+
+            desideriCampoDescrizione.focus();
+        },
+        120
+    );
+}
+
+
+function chiudiModuloDesideri() {
+
+    if (desideriContenitoreModulo) {
+
+        desideriContenitoreModulo
+            .classList.add(
+                "nascosto"
+            );
+    }
+}
+
+
+[
+    desideriAggiungiPrimaVoce,
+    desideriAggiungiAltraVoce,
+    desideriApriModuloAlto
+].forEach(
+    (pulsante) => {
+
+        if (pulsante) {
+
+            pulsante.addEventListener(
+                "click",
+                () => {
+
+                    apriModuloDesideri();
+                }
+            );
+        }
+    }
+);
+
+
+if (desideriAnnullaRegistrazione) {
+
+    desideriAnnullaRegistrazione
+        .addEventListener(
+            "click",
+            aggiornaPaginaDesideri
+        );
+}
+
+
+if (desideriModuloRegistrazione) {
+
+    desideriModuloRegistrazione
+        .addEventListener(
+            "submit",
+            (evento) => {
+
+                evento.preventDefault();
+
+
+                const data =
+                    desideriCampoData.value;
+
+                const descrizione =
+                    desideriCampoDescrizione
+                        .value
+                        .trim();
+
+                const importo =
+                    Number(
+                        desideriCampoImporto.value
+                    );
+
+                const nota =
+                    desideriCampoNota
+                        .value
+                        .trim();
+
+
+                if (
+                    !data ||
+                    !descrizione ||
+                    !Number.isFinite(importo) ||
+                    importo <= 0
+                ) {
+
+                    window.alert(
+                        "Inserisci data, descrizione e importo."
+                    );
+
+                    return;
+                }
+
+
+                archivioDesideri.push({
+
+                    id:
+                        creaId(),
+
+                    data:
+                        data,
+
+                    descrizione:
+                        descrizione,
+
+                    importo:
+                        importo,
+
+                    nota:
+                        nota
+                });
+
+
+                salvaArchivio(
+                    chiaveArchivioDesideri,
+                    archivioDesideri
+                );
+
+
+                aggiornaPaginaDesideri();
+
+                aggiornaRiepilogoDesideri();
+            }
+        );
+}
+
+
+function eliminaRegistrazioneDesideri(
+    id
+) {
+
+    const conferma =
+        window.confirm(
+            "Eliminare questo acquisto?"
+        );
+
+
+    if (!conferma) {
+
+        return;
+    }
+
+
+    archivioDesideri =
+        archivioDesideri.filter(
+            (registrazione) =>
+
+                registrazione.id !== id
+        );
+
+
+    salvaArchivio(
+        chiaveArchivioDesideri,
+        archivioDesideri
+    );
+
+
+    aggiornaPaginaDesideri();
+
+    aggiornaRiepilogoDesideri();
+}
+
+
+function aggiornaRiepilogoDesideri() {
+
+    const numeroAcquisti =
+        archivioDesideri.length;
+
+    const totale =
+        archivioDesideri.reduce(
+            (somma, registrazione) =>
+
+                somma +
+                Number(
+                    registrazione.importo
+                ),
+            0
+        );
+
+
+    const elementoNumero =
+        document.querySelector(
+            "#numero-acquisti-desideri"
+        );
+
+    const elementoTotale =
+        document.querySelector(
+            "#totale-desideri"
+        );
+
+
+    if (elementoNumero) {
+
+        elementoNumero.textContent =
+            String(numeroAcquisti);
+    }
+
+
+    if (elementoTotale) {
+
+        elementoTotale.textContent =
+            formattaEuro(
+                totale
+            );
+    }
+}
+
+
+window.apriModuloDesideri =
+    apriModuloDesideri;
+
+
+/* ========================================
    PARTE 5 — SERVIZI CONDIVISI
    Formattazione, archivi, tabelle e avvio
    ======================================== */
@@ -2393,6 +2822,50 @@ function caricaArchivio(
 
 
         return archivioVuoto;
+    }
+}
+
+
+/* ========================================
+   CARICAMENTO DI UN ELENCO
+   ======================================== */
+
+function caricaElenco(
+    chiave
+) {
+
+    try {
+
+        const datiSalvati =
+            localStorage.getItem(
+                chiave
+            );
+
+
+        if (!datiSalvati) {
+
+            return [];
+        }
+
+
+        const dati =
+            JSON.parse(
+                datiSalvati
+            );
+
+
+        return Array.isArray(dati)
+            ? dati
+            : [];
+
+    } catch (errore) {
+
+        console.warn(
+            `Impossibile caricare l’elenco "${chiave}".`,
+            errore
+        );
+
+        return [];
     }
 }
 
@@ -2629,6 +3102,10 @@ aggiornaRiepilogoCasa();
 aggiornaRiepilogoEntrate();
 
 aggiornaRiepilogoSpese();
+
+aggiornaPaginaDesideri();
+
+aggiornaRiepilogoDesideri();
 
 
 /* ========================================
