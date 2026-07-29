@@ -1538,3 +1538,633 @@ function aggiornaRiepilogoEntrate() {
             );
     }
 }
+/* ========================================
+   PARTE 4 — CAPITOLO SPESE QUOTIDIANE
+   ======================================== */
+
+
+/* ========================================
+   CONFIGURAZIONE DELLE CATEGORIE
+   ======================================== */
+
+const categorieSpese = {
+
+    alimentari: {
+        nome: "Spesa alimentare",
+        icona: "🛒",
+
+        messaggio:
+            "Non hai ancora registrato nessuna spesa alimentare."
+    },
+
+    trasporti: {
+        nome: "Auto e trasporti",
+        icona: "🚗",
+
+        messaggio:
+            "Non hai ancora registrato nessuna spesa per auto o trasporti."
+    },
+
+    salute: {
+        nome: "Salute",
+        icona: "💊",
+
+        messaggio:
+            "Non hai ancora registrato nessuna spesa per la salute."
+    },
+
+    greta: {
+        nome: "Greta",
+        icona: "👶",
+
+        messaggio:
+            "Non hai ancora registrato nessuna spesa per Greta."
+    },
+
+    regali: {
+        nome: "Regali",
+        icona: "🎁",
+
+        messaggio:
+            "Non hai ancora registrato nessuna spesa per i regali."
+    }
+};
+
+
+/* ========================================
+   ARCHIVIO DELLE SPESE
+   ======================================== */
+
+const chiaveArchivioSpese =
+    "conti-baozzi-spese-v1";
+
+let archivioSpese =
+    caricaArchivio(
+        chiaveArchivioSpese,
+        categorieSpese
+    );
+
+let categoriaSpeseCorrente =
+    null;
+
+
+/* ========================================
+   ELEMENTI DEL CAPITOLO
+   ======================================== */
+
+const pulsantiCategorieSpese =
+    document.querySelectorAll(
+        "[data-categoria-spese]"
+    );
+
+
+const speseIconaCategoria =
+    document.querySelector(
+        "#spese-icona-categoria"
+    );
+
+const speseTitoloCategoria =
+    document.querySelector(
+        "#spese-titolo-categoria"
+    );
+
+
+const speseIconaStatoVuoto =
+    document.querySelector(
+        "#spese-icona-stato-vuoto"
+    );
+
+const speseMessaggioVuoto =
+    document.querySelector(
+        "#spese-messaggio-vuoto"
+    );
+
+const speseStatoVuoto =
+    document.querySelector(
+        "#spese-stato-vuoto"
+    );
+
+
+const fraseGreta =
+    document.querySelector(
+        "#frase-greta"
+    );
+
+
+const speseElencoRegistrazioni =
+    document.querySelector(
+        "#spese-elenco-registrazioni"
+    );
+
+const speseRigheRegistrazioni =
+    document.querySelector(
+        "#spese-righe-registrazioni"
+    );
+
+
+const speseContenitoreModulo =
+    document.querySelector(
+        "#spese-contenitore-modulo"
+    );
+
+const speseModuloRegistrazione =
+    document.querySelector(
+        "#spese-modulo-registrazione"
+    );
+
+
+const speseCampoData =
+    document.querySelector(
+        "#spese-campo-data"
+    );
+
+const speseCampoDescrizione =
+    document.querySelector(
+        "#spese-campo-descrizione"
+    );
+
+const speseCampoImporto =
+    document.querySelector(
+        "#spese-campo-importo"
+    );
+
+const speseCampoNota =
+    document.querySelector(
+        "#spese-campo-nota"
+    );
+
+
+const speseAggiungiPrimaVoce =
+    document.querySelector(
+        "#spese-aggiungi-prima-voce"
+    );
+
+const speseAggiungiAltraVoce =
+    document.querySelector(
+        "#spese-aggiungi-altra-voce"
+    );
+
+const speseApriModuloAlto =
+    document.querySelector(
+        "#spese-apri-modulo-alto"
+    );
+
+const speseAnnullaRegistrazione =
+    document.querySelector(
+        "#spese-annulla-registrazione"
+    );
+
+
+/* ========================================
+   APERTURA DELLE CATEGORIE
+   ======================================== */
+
+pulsantiCategorieSpese.forEach(
+    (pulsante) => {
+
+        pulsante.addEventListener(
+            "click",
+            () => {
+
+                const categoria =
+                    pulsante.dataset
+                        .categoriaSpese;
+
+
+                apriCategoriaSpese(
+                    categoria
+                );
+            }
+        );
+    }
+);
+
+
+function apriCategoriaSpese(
+    categoria
+) {
+
+    const configurazione =
+        categorieSpese[categoria];
+
+
+    if (!configurazione) {
+
+        console.warn(
+            `La categoria Spese "${categoria}" non esiste.`
+        );
+
+        return;
+    }
+
+
+    categoriaSpeseCorrente =
+        categoria;
+
+
+    speseIconaCategoria.textContent =
+        configurazione.icona;
+
+    speseTitoloCategoria.textContent =
+        configurazione.nome;
+
+
+    speseIconaStatoVuoto.textContent =
+        configurazione.icona;
+
+    speseMessaggioVuoto.textContent =
+        configurazione.messaggio;
+
+
+    fraseGreta.classList.toggle(
+        "nascosto",
+        categoria !== "greta"
+    );
+
+
+    aggiornaPaginaSpese();
+
+
+    vaiAllaPagina(
+        "spese-sezione"
+    );
+}
+
+
+/* ========================================
+   VISUALIZZAZIONE DELLA CATEGORIA
+   ======================================== */
+
+function aggiornaPaginaSpese() {
+
+    if (!categoriaSpeseCorrente) {
+
+        return;
+    }
+
+
+    chiudiModuloSpese();
+
+
+    const registrazioni =
+        archivioSpese[
+            categoriaSpeseCorrente
+        ];
+
+
+    speseRigheRegistrazioni.innerHTML =
+        "";
+
+
+    if (
+        registrazioni.length === 0
+    ) {
+
+        speseStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
+
+
+        speseElencoRegistrazioni
+            .classList.add(
+                "nascosto"
+            );
+
+
+        return;
+    }
+
+
+    speseStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+
+    speseElencoRegistrazioni
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    const registrazioniOrdinate =
+        [...registrazioni].sort(
+            (prima, seconda) =>
+
+                seconda.data.localeCompare(
+                    prima.data
+                )
+        );
+
+
+    registrazioniOrdinate.forEach(
+        (registrazione) => {
+
+            const riga =
+                creaRigaTabella(
+
+                    registrazione,
+
+                    () => {
+
+                        eliminaRegistrazioneSpese(
+                            registrazione.id
+                        );
+                    }
+                );
+
+
+            speseRigheRegistrazioni
+                .appendChild(
+                    riga
+                );
+        }
+    );
+}
+
+
+/* ========================================
+   APERTURA E CHIUSURA DEL MODULO
+   ======================================== */
+
+function apriModuloSpese() {
+
+    if (!categoriaSpeseCorrente) {
+
+        return;
+    }
+
+
+    speseStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+
+    speseElencoRegistrazioni
+        .classList.add(
+            "nascosto"
+        );
+
+
+    speseContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    speseModuloRegistrazione.reset();
+
+
+    speseCampoData.value =
+        dataOggi();
+}
+
+
+function chiudiModuloSpese() {
+
+    speseContenitoreModulo
+        .classList.add(
+            "nascosto"
+        );
+}
+
+
+/* ========================================
+   PULSANTI DEL MODULO
+   ======================================== */
+
+speseAggiungiPrimaVoce
+    .addEventListener(
+        "click",
+        apriModuloSpese
+    );
+
+
+speseAggiungiAltraVoce
+    .addEventListener(
+        "click",
+        apriModuloSpese
+    );
+
+
+speseApriModuloAlto
+    .addEventListener(
+        "click",
+        apriModuloSpese
+    );
+
+
+speseAnnullaRegistrazione
+    .addEventListener(
+        "click",
+        () => {
+
+            aggiornaPaginaSpese();
+        }
+    );
+
+
+/* ========================================
+   SALVATAGGIO DI UNA SPESA
+   ======================================== */
+
+speseModuloRegistrazione
+    .addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+
+            if (!categoriaSpeseCorrente) {
+
+                return;
+            }
+
+
+            const data =
+                speseCampoData.value;
+
+
+            const descrizione =
+                speseCampoDescrizione
+                    .value
+                    .trim();
+
+
+            const importo =
+                Number(
+                    speseCampoImporto.value
+                );
+
+
+            const nota =
+                speseCampoNota
+                    .value
+                    .trim();
+
+
+            if (
+                !data ||
+                !descrizione ||
+                !Number.isFinite(importo) ||
+                importo <= 0
+            ) {
+
+                window.alert(
+                    "Inserisci data, descrizione e importo."
+                );
+
+                return;
+            }
+
+
+            const nuovaRegistrazione = {
+
+                id:
+                    creaId(),
+
+                data:
+                    data,
+
+                descrizione:
+                    descrizione,
+
+                importo:
+                    importo,
+
+                nota:
+                    nota
+            };
+
+
+            archivioSpese[
+                categoriaSpeseCorrente
+            ].push(
+                nuovaRegistrazione
+            );
+
+
+            salvaArchivio(
+                chiaveArchivioSpese,
+                archivioSpese
+            );
+
+
+            aggiornaPaginaSpese();
+
+            aggiornaRiepilogoSpese();
+        }
+    );
+
+
+/* ========================================
+   ELIMINAZIONE DI UNA SPESA
+   ======================================== */
+
+function eliminaRegistrazioneSpese(
+    id
+) {
+
+    if (!categoriaSpeseCorrente) {
+
+        return;
+    }
+
+
+    const conferma =
+        window.confirm(
+            "Eliminare questa registrazione?"
+        );
+
+
+    if (!conferma) {
+
+        return;
+    }
+
+
+    archivioSpese[
+        categoriaSpeseCorrente
+    ] =
+        archivioSpese[
+            categoriaSpeseCorrente
+        ].filter(
+
+            (registrazione) =>
+
+                registrazione.id !== id
+        );
+
+
+    salvaArchivio(
+        chiaveArchivioSpese,
+        archivioSpese
+    );
+
+
+    aggiornaPaginaSpese();
+
+    aggiornaRiepilogoSpese();
+}
+
+
+/* ========================================
+   RIEPILOGO DELLE SPESE
+   ======================================== */
+
+function aggiornaRiepilogoSpese() {
+
+    let totaleSpese =
+        0;
+
+
+    Object.keys(
+        categorieSpese
+    ).forEach(
+        (categoria) => {
+
+            const totale =
+                totaleCategoria(
+
+                    archivioSpese,
+
+                    categoria
+                );
+
+
+            totaleSpese +=
+                totale;
+
+
+            const elementoTotale =
+                document.querySelector(
+                    `#totale-${categoria}`
+                );
+
+
+            if (elementoTotale) {
+
+                elementoTotale.textContent =
+                    formattaEuro(
+                        totale
+                    );
+            }
+        }
+    );
+
+
+    const elementoTotaleSpese =
+        document.querySelector(
+            "#totale-spese"
+        );
+
+
+    if (elementoTotaleSpese) {
+
+        elementoTotaleSpese.textContent =
+            formattaEuro(
+                totaleSpese
+            );
+    }
+}
