@@ -2168,3 +2168,469 @@ function aggiornaRiepilogoSpese() {
             );
     }
 }
+/* ========================================
+   PARTE 5 — SERVIZI CONDIVISI
+   Formattazione, archivi, tabelle e avvio
+   ======================================== */
+
+
+/* ========================================
+   FORMATTAZIONE DEGLI IMPORTI
+   ======================================== */
+
+function formattaEuro(
+    importo
+) {
+
+    return new Intl.NumberFormat(
+        "it-IT",
+        {
+            style:
+                "currency",
+
+            currency:
+                "EUR"
+        }
+    ).format(
+        Number(importo) || 0
+    );
+}
+
+
+/* ========================================
+   FORMATTAZIONE DELLE DATE
+   ======================================== */
+
+function formattaData(
+    dataISO
+) {
+
+    if (!dataISO) {
+
+        return "";
+    }
+
+
+    const data =
+        new Date(
+            `${dataISO}T12:00:00`
+        );
+
+
+    return new Intl.DateTimeFormat(
+        "it-IT"
+    ).format(
+        data
+    );
+}
+
+
+/* ========================================
+   DATA DI OGGI
+   ======================================== */
+
+function dataOggi() {
+
+    const oggi =
+        new Date();
+
+
+    const anno =
+        oggi.getFullYear();
+
+
+    const mese =
+        String(
+            oggi.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const giorno =
+        String(
+            oggi.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        `${anno}-${mese}-${giorno}`
+    );
+}
+
+
+/* ========================================
+   CREAZIONE DI UN IDENTIFICATIVO
+   ======================================== */
+
+function creaId() {
+
+    if (
+        typeof crypto !== "undefined" &&
+        typeof crypto.randomUUID ===
+            "function"
+    ) {
+
+        return crypto.randomUUID();
+    }
+
+
+    return (
+        `${Date.now()}-` +
+        Math.random()
+            .toString(16)
+            .slice(2)
+    );
+}
+
+
+/* ========================================
+   CREAZIONE DI UN ARCHIVIO VUOTO
+   ======================================== */
+
+function creaArchivioVuoto(
+    configurazione
+) {
+
+    const archivio =
+        {};
+
+
+    Object.keys(
+        configurazione
+    ).forEach(
+        (categoria) => {
+
+            archivio[categoria] =
+                [];
+        }
+    );
+
+
+    return archivio;
+}
+
+
+/* ========================================
+   LETTURA DAL LOCALSTORAGE
+   ======================================== */
+
+function caricaArchivio(
+    chiave,
+    configurazione
+) {
+
+    const archivioVuoto =
+        creaArchivioVuoto(
+            configurazione
+        );
+
+
+    try {
+
+        const contenuto =
+            localStorage.getItem(
+                chiave
+            );
+
+
+        if (!contenuto) {
+
+            return archivioVuoto;
+        }
+
+
+        const dati =
+            JSON.parse(
+                contenuto
+            );
+
+
+        if (
+            !dati ||
+            typeof dati !== "object"
+        ) {
+
+            return archivioVuoto;
+        }
+
+
+        Object.keys(
+            archivioVuoto
+        ).forEach(
+            (categoria) => {
+
+                if (
+                    !Array.isArray(
+                        dati[categoria]
+                    )
+                ) {
+
+                    dati[categoria] =
+                        [];
+                }
+            }
+        );
+
+
+        return {
+
+            ...archivioVuoto,
+
+            ...dati
+        };
+
+    } catch (errore) {
+
+        console.error(
+            `Errore nella lettura di ${chiave}:`,
+            errore
+        );
+
+
+        return archivioVuoto;
+    }
+}
+
+
+/* ========================================
+   SALVATAGGIO NEL LOCALSTORAGE
+   ======================================== */
+
+function salvaArchivio(
+    chiave,
+    archivio
+) {
+
+    try {
+
+        localStorage.setItem(
+            chiave,
+            JSON.stringify(
+                archivio
+            )
+        );
+
+    } catch (errore) {
+
+        console.error(
+            `Errore nel salvataggio di ${chiave}:`,
+            errore
+        );
+
+
+        window.alert(
+            "Non è stato possibile salvare i dati."
+        );
+    }
+}
+
+
+/* ========================================
+   TOTALE DI UNA CATEGORIA
+   ======================================== */
+
+function totaleCategoria(
+    archivio,
+    categoria
+) {
+
+    const registrazioni =
+        archivio[categoria];
+
+
+    if (
+        !Array.isArray(
+            registrazioni
+        )
+    ) {
+
+        return 0;
+    }
+
+
+    return registrazioni.reduce(
+        (
+            totale,
+            registrazione
+        ) => {
+
+            const importo =
+                Number(
+                    registrazione.importo
+                );
+
+
+            if (
+                !Number.isFinite(
+                    importo
+                )
+            ) {
+
+                return totale;
+            }
+
+
+            return totale +
+                importo;
+        },
+        0
+    );
+}
+
+
+/* ========================================
+   CREAZIONE DI UNA RIGA DELLA TABELLA
+   ======================================== */
+
+function creaRigaTabella(
+    registrazione,
+    funzioneElimina
+) {
+
+    const riga =
+        document.createElement(
+            "tr"
+        );
+
+
+    const cellaData =
+        document.createElement(
+            "td"
+        );
+
+
+    const cellaDescrizione =
+        document.createElement(
+            "td"
+        );
+
+
+    const cellaImporto =
+        document.createElement(
+            "td"
+        );
+
+
+    const cellaAzioni =
+        document.createElement(
+            "td"
+        );
+
+
+    cellaData.textContent =
+        formattaData(
+            registrazione.data
+        );
+
+
+    const descrizione =
+        document.createElement(
+            "span"
+        );
+
+
+    descrizione.textContent =
+        registrazione.descrizione;
+
+
+    cellaDescrizione.appendChild(
+        descrizione
+    );
+
+
+    if (
+        registrazione.nota
+    ) {
+
+        const nota =
+            document.createElement(
+                "small"
+            );
+
+
+        nota.className =
+            "nota-riga";
+
+
+        nota.textContent =
+            registrazione.nota;
+
+
+        cellaDescrizione.appendChild(
+            nota
+        );
+    }
+
+
+    cellaImporto.textContent =
+        formattaEuro(
+            registrazione.importo
+        );
+
+
+    const pulsanteElimina =
+        document.createElement(
+            "button"
+        );
+
+
+    pulsanteElimina.className =
+        "pulsante-elimina";
+
+
+    pulsanteElimina.type =
+        "button";
+
+
+    pulsanteElimina.textContent =
+        "✕";
+
+
+    pulsanteElimina.setAttribute(
+        "aria-label",
+        "Elimina registrazione"
+    );
+
+
+    pulsanteElimina.addEventListener(
+        "click",
+        funzioneElimina
+    );
+
+
+    cellaAzioni.appendChild(
+        pulsanteElimina
+    );
+
+
+    riga.append(
+        cellaData,
+        cellaDescrizione,
+        cellaImporto,
+        cellaAzioni
+    );
+
+
+    return riga;
+}
+
+
+/* ========================================
+   AVVIO DELL’APPLICAZIONE
+   ======================================== */
+
+aggiornaRiepilogoCasa();
+
+aggiornaRiepilogoEntrate();
+
+aggiornaRiepilogoSpese();
+
+
+/* ========================================
+   FINE DEL FILE
+   ======================================== */
