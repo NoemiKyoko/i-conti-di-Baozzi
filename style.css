@@ -1413,18 +1413,38 @@ body.libro-interno-visibile
 
 .fumetto-baozzi {
     max-width: 34ch;
-    margin-top: clamp(12px, 2vh, 22px);
-    padding: 14px 19px;
-    border: 1px solid rgba(91, 58, 31, .3);
-    border-radius: 18px;
-    background: rgba(255, 252, 240, .86);
+
+    margin-top:
+        clamp(12px, 2vh, 22px);
+
+    padding:
+        8px 12px;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+
     color: #4b321f;
-    font-size: clamp(15px, 1.9vh, 20px);
-    line-height: 1.55;
+
+    font-size:
+        clamp(15px, 1.9vh, 20px);
+
+    line-height: 1.65;
+
+    text-align: center;
+
     white-space: pre-line;
+
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 500ms ease, transform 500ms ease;
+
+    transform:
+        translateY(8px);
+
+    transition:
+        opacity 500ms ease,
+        transform 500ms ease;
+
 }
 
 .fumetto-baozzi.visibile {
