@@ -61,10 +61,10 @@ const COPIONE = {
     panchina: {
 
         testo:
-            "Ti va di sederti qui un attimo?",
+            "Perché non ti siedi un attimo",
 
         pulsante:
-            "Mi siedo"
+            "Mi siedo."
     },
 
 
