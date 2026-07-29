@@ -890,3 +890,651 @@ function aggiornaRiepilogoCasa() {
             );
     }
 }
+/* ========================================
+   PARTE 3 — CAPITOLO ENTRATE
+   ======================================== */
+
+
+/* ========================================
+   CONFIGURAZIONE DELLE CATEGORIE
+   ======================================== */
+
+const categorieEntrate = {
+
+    stipendio: {
+        nome: "Stipendio",
+        icona: "💼",
+
+        descrizioneObbligatoria: false,
+        descrizionePredefinita:
+            "Stipendio",
+
+        messaggio:
+            "Non hai ancora registrato nessuno stipendio."
+    },
+
+    extra: {
+        nome: "Entrate extra",
+        icona: "🎁",
+
+        descrizioneObbligatoria: true,
+        descrizionePredefinita:
+            "",
+
+        messaggio:
+            "Non hai ancora registrato nessuna entrata extra."
+    }
+};
+
+
+/* ========================================
+   ARCHIVIO DELLE ENTRATE
+   ======================================== */
+
+const chiaveArchivioEntrate =
+    "conti-baozzi-entrate-v1";
+
+let archivioEntrate =
+    caricaArchivio(
+        chiaveArchivioEntrate,
+        categorieEntrate
+    );
+
+let categoriaEntrateCorrente =
+    null;
+
+
+/* ========================================
+   ELEMENTI DEL CAPITOLO ENTRATE
+   ======================================== */
+
+const pulsantiCategorieEntrate =
+    document.querySelectorAll(
+        "[data-categoria-entrate]"
+    );
+
+
+const entrateIconaCategoria =
+    document.querySelector(
+        "#entrate-icona-categoria"
+    );
+
+const entrateTitoloCategoria =
+    document.querySelector(
+        "#entrate-titolo-categoria"
+    );
+
+
+const entrateIconaStatoVuoto =
+    document.querySelector(
+        "#entrate-icona-stato-vuoto"
+    );
+
+const entrateMessaggioVuoto =
+    document.querySelector(
+        "#entrate-messaggio-vuoto"
+    );
+
+const entrateStatoVuoto =
+    document.querySelector(
+        "#entrate-stato-vuoto"
+    );
+
+
+const entrateElencoRegistrazioni =
+    document.querySelector(
+        "#entrate-elenco-registrazioni"
+    );
+
+const entrateRigheRegistrazioni =
+    document.querySelector(
+        "#entrate-righe-registrazioni"
+    );
+
+
+const entrateContenitoreModulo =
+    document.querySelector(
+        "#entrate-contenitore-modulo"
+    );
+
+const entrateModuloRegistrazione =
+    document.querySelector(
+        "#entrate-modulo-registrazione"
+    );
+
+
+const entrateCampoData =
+    document.querySelector(
+        "#entrate-campo-data"
+    );
+
+const entrateLabelDescrizione =
+    document.querySelector(
+        "#entrate-label-descrizione"
+    );
+
+const entrateCampoDescrizione =
+    document.querySelector(
+        "#entrate-campo-descrizione"
+    );
+
+const entrateCampoImporto =
+    document.querySelector(
+        "#entrate-campo-importo"
+    );
+
+const entrateCampoNota =
+    document.querySelector(
+        "#entrate-campo-nota"
+    );
+
+
+const entrateAggiungiPrimaVoce =
+    document.querySelector(
+        "#entrate-aggiungi-prima-voce"
+    );
+
+const entrateAggiungiAltraVoce =
+    document.querySelector(
+        "#entrate-aggiungi-altra-voce"
+    );
+
+const entrateApriModuloAlto =
+    document.querySelector(
+        "#entrate-apri-modulo-alto"
+    );
+
+const entrateAnnullaRegistrazione =
+    document.querySelector(
+        "#entrate-annulla-registrazione"
+    );
+
+
+/* ========================================
+   APERTURA DELLE CATEGORIE
+   ======================================== */
+
+pulsantiCategorieEntrate.forEach(
+    (pulsante) => {
+
+        pulsante.addEventListener(
+            "click",
+            () => {
+
+                const categoria =
+                    pulsante.dataset
+                        .categoriaEntrate;
+
+
+                apriCategoriaEntrate(
+                    categoria
+                );
+            }
+        );
+    }
+);
+
+
+function apriCategoriaEntrate(
+    categoria
+) {
+
+    const configurazione =
+        categorieEntrate[categoria];
+
+
+    if (!configurazione) {
+
+        console.warn(
+            `La categoria Entrate "${categoria}" non esiste.`
+        );
+
+        return;
+    }
+
+
+    categoriaEntrateCorrente =
+        categoria;
+
+
+    entrateIconaCategoria.textContent =
+        configurazione.icona;
+
+    entrateTitoloCategoria.textContent =
+        configurazione.nome;
+
+
+    entrateIconaStatoVuoto.textContent =
+        configurazione.icona;
+
+    entrateMessaggioVuoto.textContent =
+        configurazione.messaggio;
+
+
+    aggiornaPaginaEntrate();
+
+
+    vaiAllaPagina(
+        "entrate-sezione"
+    );
+}
+
+
+/* ========================================
+   VISUALIZZAZIONE DELLA CATEGORIA
+   ======================================== */
+
+function aggiornaPaginaEntrate() {
+
+    if (!categoriaEntrateCorrente) {
+
+        return;
+    }
+
+
+    chiudiModuloEntrate();
+
+
+    const registrazioni =
+        archivioEntrate[
+            categoriaEntrateCorrente
+        ];
+
+
+    entrateRigheRegistrazioni.innerHTML =
+        "";
+
+
+    if (
+        registrazioni.length === 0
+    ) {
+
+        entrateStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
+
+
+        entrateElencoRegistrazioni
+            .classList.add(
+                "nascosto"
+            );
+
+
+        return;
+    }
+
+
+    entrateStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+
+    entrateElencoRegistrazioni
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    const registrazioniOrdinate =
+        [...registrazioni].sort(
+            (prima, seconda) =>
+
+                seconda.data.localeCompare(
+                    prima.data
+                )
+        );
+
+
+    registrazioniOrdinate.forEach(
+        (registrazione) => {
+
+            const riga =
+                creaRigaTabella(
+
+                    registrazione,
+
+                    () => {
+
+                        eliminaRegistrazioneEntrate(
+                            registrazione.id
+                        );
+                    }
+                );
+
+
+            entrateRigheRegistrazioni
+                .appendChild(
+                    riga
+                );
+        }
+    );
+}
+
+
+/* ========================================
+   APERTURA E CHIUSURA DEL MODULO
+   ======================================== */
+
+function apriModuloEntrate() {
+
+    if (!categoriaEntrateCorrente) {
+
+        return;
+    }
+
+
+    const configurazione =
+        categorieEntrate[
+            categoriaEntrateCorrente
+        ];
+
+
+    entrateStatoVuoto.classList.add(
+        "nascosto"
+    );
+
+
+    entrateElencoRegistrazioni
+        .classList.add(
+            "nascosto"
+        );
+
+
+    entrateContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    entrateModuloRegistrazione.reset();
+
+
+    entrateCampoData.value =
+        dataOggi();
+
+
+    entrateCampoDescrizione.required =
+        configurazione
+            .descrizioneObbligatoria;
+
+
+    entrateLabelDescrizione
+        .classList.toggle(
+            "nascosto",
+            !configurazione
+                .descrizioneObbligatoria
+        );
+}
+
+
+function chiudiModuloEntrate() {
+
+    entrateContenitoreModulo
+        .classList.add(
+            "nascosto"
+        );
+}
+
+
+/* ========================================
+   PULSANTI DEL MODULO
+   ======================================== */
+
+entrateAggiungiPrimaVoce
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+
+entrateAggiungiAltraVoce
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+
+entrateApriModuloAlto
+    .addEventListener(
+        "click",
+        apriModuloEntrate
+    );
+
+
+entrateAnnullaRegistrazione
+    .addEventListener(
+        "click",
+        () => {
+
+            aggiornaPaginaEntrate();
+        }
+    );
+
+
+/* ========================================
+   SALVATAGGIO DI UN’ENTRATA
+   ======================================== */
+
+entrateModuloRegistrazione
+    .addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+
+            if (
+                !categoriaEntrateCorrente
+            ) {
+
+                return;
+            }
+
+
+            const configurazione =
+                categorieEntrate[
+                    categoriaEntrateCorrente
+                ];
+
+
+            const data =
+                entrateCampoData.value;
+
+
+            const descrizioneScritta =
+                entrateCampoDescrizione
+                    .value
+                    .trim();
+
+
+            const descrizione =
+                configurazione
+                    .descrizioneObbligatoria
+                    ? descrizioneScritta
+                    : configurazione
+                        .descrizionePredefinita;
+
+
+            const importo =
+                Number(
+                    entrateCampoImporto.value
+                );
+
+
+            const nota =
+                entrateCampoNota
+                    .value
+                    .trim();
+
+
+            if (
+                !data ||
+                !descrizione ||
+                !Number.isFinite(importo) ||
+                importo <= 0
+            ) {
+
+                window.alert(
+                    "Inserisci i dati richiesti e l’importo."
+                );
+
+                return;
+            }
+
+
+            const nuovaRegistrazione = {
+
+                id:
+                    creaId(),
+
+                data:
+                    data,
+
+                descrizione:
+                    descrizione,
+
+                importo:
+                    importo,
+
+                nota:
+                    nota
+            };
+
+
+            archivioEntrate[
+                categoriaEntrateCorrente
+            ].push(
+                nuovaRegistrazione
+            );
+
+
+            salvaArchivio(
+                chiaveArchivioEntrate,
+                archivioEntrate
+            );
+
+
+            aggiornaPaginaEntrate();
+
+            aggiornaRiepilogoEntrate();
+        }
+    );
+
+
+/* ========================================
+   ELIMINAZIONE DI UN’ENTRATA
+   ======================================== */
+
+function eliminaRegistrazioneEntrate(
+    id
+) {
+
+    if (!categoriaEntrateCorrente) {
+
+        return;
+    }
+
+
+    const conferma =
+        window.confirm(
+            "Eliminare questa registrazione?"
+        );
+
+
+    if (!conferma) {
+
+        return;
+    }
+
+
+    archivioEntrate[
+        categoriaEntrateCorrente
+    ] =
+        archivioEntrate[
+            categoriaEntrateCorrente
+        ].filter(
+
+            (registrazione) =>
+
+                registrazione.id !== id
+        );
+
+
+    salvaArchivio(
+        chiaveArchivioEntrate,
+        archivioEntrate
+    );
+
+
+    aggiornaPaginaEntrate();
+
+    aggiornaRiepilogoEntrate();
+}
+
+
+/* ========================================
+   RIEPILOGO DELLE ENTRATE
+   ======================================== */
+
+function aggiornaRiepilogoEntrate() {
+
+    const totaleStipendio =
+        totaleCategoria(
+            archivioEntrate,
+            "stipendio"
+        );
+
+
+    const totaleExtra =
+        totaleCategoria(
+            archivioEntrate,
+            "extra"
+        );
+
+
+    const elementoStipendio =
+        document.querySelector(
+            "#totale-stipendio"
+        );
+
+
+    const elementoExtra =
+        document.querySelector(
+            "#totale-extra"
+        );
+
+
+    const elementoTotaleEntrate =
+        document.querySelector(
+            "#totale-entrate"
+        );
+
+
+    if (elementoStipendio) {
+
+        elementoStipendio.textContent =
+            formattaEuro(
+                totaleStipendio
+            );
+    }
+
+
+    if (elementoExtra) {
+
+        elementoExtra.textContent =
+            formattaEuro(
+                totaleExtra
+            );
+    }
+
+
+    if (elementoTotaleEntrate) {
+
+        elementoTotaleEntrate.textContent =
+            formattaEuro(
+                totaleStipendio +
+                totaleExtra
+            );
+    }
+}
