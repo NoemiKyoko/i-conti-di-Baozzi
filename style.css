@@ -213,8 +213,7 @@ textarea {
             rgba(50, 30, 10, .18)
         );
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -281,9 +280,7 @@ textarea {
 .pagina-carta {
     width: 100%;
 
-    min-height:
-        min(88vh, 780px);
-
+    min-height: min(88vh, 780px);
     max-height: 94vh;
 
     padding:
@@ -295,14 +292,9 @@ textarea {
     background-image:
         url("pagina.png");
 
-    background-size:
-        100% 100%;
-
-    background-repeat:
-        no-repeat;
-
-    background-position:
-        center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 
     color: #4b321f;
 
@@ -343,7 +335,6 @@ textarea {
         clamp(24px, 3.8vh, 44px);
 
     font-weight: normal;
-
     letter-spacing: .04em;
 }
 
@@ -389,11 +380,9 @@ textarea {
     background: transparent;
 
     text-align: left;
-
     cursor: pointer;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .voce-indice span {
@@ -423,7 +412,8 @@ textarea {
 }
 
 .sezione-casa,
-.sezione-entrate {
+.sezione-entrate,
+.sezione-spese {
     display: flex;
     align-items: center;
 
@@ -448,26 +438,60 @@ textarea {
     cursor: pointer;
     text-align: left;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 170ms ease,
+        background 170ms ease;
+}
+
+.sezione-casa:active,
+.sezione-entrate:active,
+.sezione-spese:active {
+    transform: scale(.98);
+
+    background:
+        rgba(232, 205, 154, .28);
 }
 
 .sezione-casa span,
-.sezione-entrate span {
+.sezione-entrate span,
+.sezione-spese span {
+    flex: 0 0 auto;
+
     font-size: 22px;
 }
 
 .sezione-casa strong,
-.sezione-entrate strong {
+.sezione-entrate strong,
+.sezione-spese strong {
     font-weight: normal;
 }
+
+
+/* Entrate */
 
 .elenco-sezioni-entrate {
     max-width: 430px;
     margin: 0 auto;
 
-    grid-template-columns:
-        1fr;
+    grid-template-columns: 1fr;
+}
+
+.sezione-entrate {
+    min-height:
+        clamp(68px, 9vh, 90px);
+}
+
+
+/* Spese quotidiane */
+
+.elenco-sezioni-spese {
+    grid-template-columns: 1fr 1fr;
+}
+
+.sezione-spese:last-child {
+    grid-column: 1 / -1;
 }
 
 
@@ -493,8 +517,7 @@ textarea {
 .pulsante-testo {
     cursor: pointer;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .pulsante-libro,
@@ -516,6 +539,17 @@ textarea {
         rgba(111, 70, 36, .12);
 
     color: #4b321f;
+
+    transition:
+        transform 170ms ease,
+        background 170ms ease;
+}
+
+.pulsante-libro:active {
+    transform: scale(.97);
+
+    background:
+        rgba(111, 70, 36, .2);
 }
 
 .pulsante-secondario {
@@ -571,31 +605,75 @@ textarea {
 .titolo-categoria {
     display: flex;
     align-items: center;
+    justify-content: center;
 
     gap: 7px;
+
+    min-width: 0;
 
     text-align: center;
 }
 
 .titolo-categoria span {
+    flex: 0 0 auto;
+
     font-size:
         clamp(21px, 3.1vh, 34px);
 }
 
 .titolo-categoria h1 {
+    min-width: 0;
+
     font-size:
-        clamp(19px, 2.8vh, 32px);
+        clamp(17px, 2.6vh, 30px);
 
     font-weight: normal;
+
+    line-height: 1.12;
 }
 
 
 /* ========================================
-   STATO VUOTO
+   FRASE SPECIALE DI GRETA
+   ======================================== */
+
+.frase-speciale {
+    max-width: 34ch;
+
+    margin:
+        clamp(18px, 2.8vh, 30px)
+        auto 0;
+
+    padding:
+        12px 16px;
+
+    border-top:
+        1px solid
+        rgba(95, 61, 32, .2);
+
+    border-bottom:
+        1px solid
+        rgba(95, 61, 32, .2);
+
+    text-align: center;
+
+    font-size:
+        clamp(14px, 1.8vh, 19px);
+
+    font-style: italic;
+    line-height: 1.55;
+
+    color: #664326;
+}
+
+
+/* ========================================
+   STATI VUOTI
    ======================================== */
 
 #casa-stato-vuoto,
-#entrate-stato-vuoto {
+#entrate-stato-vuoto,
+#spese-stato-vuoto {
     display: flex;
 
     flex: 1;
@@ -620,7 +698,8 @@ textarea {
 }
 
 #casa-messaggio-vuoto,
-#entrate-messaggio-vuoto {
+#entrate-messaggio-vuoto,
+#spese-messaggio-vuoto {
     max-width: 31ch;
 
     margin-bottom: 24px;
@@ -632,12 +711,23 @@ textarea {
 }
 
 
+/* Se compare la frase di Greta,
+   riduciamo leggermente lo spazio vuoto */
+
+#frase-greta:not(.nascosto)
++
+#spese-stato-vuoto {
+    min-height: 42vh;
+}
+
+
 /* ========================================
-   TABELLE
+   ELENCHI E TABELLE
    ======================================== */
 
 #casa-elenco-registrazioni,
-#entrate-elenco-registrazioni {
+#entrate-elenco-registrazioni,
+#spese-elenco-registrazioni {
     padding-top:
         clamp(18px, 2.8vh, 30px);
 }
@@ -676,6 +766,7 @@ td {
         rgba(79, 49, 24, .14);
 
     text-align: left;
+    vertical-align: top;
 }
 
 th {
@@ -722,10 +813,13 @@ td:last-child {
     cursor: pointer;
 
     opacity: .62;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 #casa-aggiungi-altra-voce,
-#entrate-aggiungi-altra-voce {
+#entrate-aggiungi-altra-voce,
+#spese-aggiungi-altra-voce {
     display: block;
 
     margin:
@@ -738,13 +832,15 @@ td:last-child {
    ======================================== */
 
 #casa-contenitore-modulo,
-#entrate-contenitore-modulo {
+#entrate-contenitore-modulo,
+#spese-contenitore-modulo {
     padding-top:
         clamp(18px, 2.8vh, 30px);
 }
 
 #casa-modulo-registrazione,
-#entrate-modulo-registrazione {
+#entrate-modulo-registrazione,
+#spese-modulo-registrazione {
     display: grid;
 
     gap:
@@ -756,7 +852,8 @@ td:last-child {
 }
 
 #casa-modulo-registrazione label,
-#entrate-modulo-registrazione label {
+#entrate-modulo-registrazione label,
+#spese-modulo-registrazione label {
     display: grid;
 
     gap: 7px;
@@ -783,6 +880,15 @@ textarea {
     color: #3f2b1c;
 }
 
+input:focus,
+textarea:focus {
+    border-color:
+        rgba(91, 58, 31, .62);
+
+    background:
+        rgba(255, 250, 234, .82);
+}
+
 textarea {
     resize: vertical;
 }
@@ -799,6 +905,14 @@ textarea {
 
     background:
         rgba(255, 248, 226, .66);
+}
+
+.campo-importo:focus-within {
+    border-color:
+        rgba(91, 58, 31, .62);
+
+    background:
+        rgba(255, 250, 234, .82);
 }
 
 .campo-importo span {
@@ -834,10 +948,13 @@ textarea {
     display: flex;
 
     justify-content: space-between;
+    align-items: baseline;
 
     gap: 15px;
 
-    padding: 8px 3px;
+    padding:
+        clamp(8px, 1.2vh, 12px)
+        3px;
 
     border-bottom:
         1px dotted
@@ -847,8 +964,15 @@ textarea {
         clamp(13px, 1.75vh, 18px);
 }
 
+.riga-riepilogo span,
+.totale-parziale span {
+    min-width: 0;
+}
+
 .riga-riepilogo strong,
 .totale-parziale strong {
+    flex: 0 0 auto;
+
     white-space: nowrap;
 }
 
@@ -866,6 +990,8 @@ textarea {
     justify-content: space-between;
     align-items: center;
 
+    gap: 16px;
+
     margin-top: 24px;
 
     padding: 16px 13px;
@@ -879,7 +1005,13 @@ textarea {
         rgba(78, 48, 25, .52);
 
     font-size:
-        clamp(18px, 2.7vh, 29px);
+        clamp(17px, 2.5vh, 28px);
+}
+
+.totale-capitolo strong {
+    flex: 0 0 auto;
+
+    white-space: nowrap;
 }
 
 
@@ -986,7 +1118,7 @@ body.dedica-visibile #schermata-dedica {
 }
 
 
-/* Giro pagina */
+/* Giro della dedica */
 
 body.dedica-in-giro #schermata-dedica {
     opacity: .05;
@@ -1005,7 +1137,7 @@ body.dedica-in-giro #schermata-dedica {
 }
 
 
-/* Libro interno */
+/* Libro interno visibile */
 
 body.libro-interno-visibile
 #schermata-dedica {
@@ -1020,7 +1152,7 @@ body.libro-interno-visibile
 
 
 /* ========================================
-   RESPONSIVE
+   ORIENTAMENTO ORIZZONTALE
    ======================================== */
 
 @media (orientation: landscape) {
@@ -1032,6 +1164,10 @@ body.libro-interno-visibile
 
     .pagina-carta {
         min-height: 88vh;
+
+        padding:
+            clamp(26px, 4vh, 48px)
+            clamp(24px, 4vw, 50px);
     }
 
     .elenco-sezioni {
@@ -1043,8 +1179,33 @@ body.libro-interno-visibile
         grid-template-columns:
             repeat(2, 1fr);
     }
+
+    .elenco-sezioni-spese {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .sezione-spese:last-child {
+        grid-column: auto;
+    }
+
+    #casa-stato-vuoto,
+    #entrate-stato-vuoto,
+    #spese-stato-vuoto {
+        min-height: 48vh;
+    }
+
+    #frase-greta:not(.nascosto)
+    +
+    #spese-stato-vuoto {
+        min-height: 34vh;
+    }
 }
 
+
+/* ========================================
+   SCHERMI STRETTI
+   ======================================== */
 
 @media (max-width: 560px) {
 
@@ -1059,24 +1220,95 @@ body.libro-interno-visibile
     }
 
     .elenco-sezioni,
-    .elenco-sezioni-entrate {
-        grid-template-columns:
-            1fr;
+    .elenco-sezioni-entrate,
+    .elenco-sezioni-spese {
+        grid-template-columns: 1fr;
+    }
+
+    .sezione-spese:last-child {
+        grid-column: auto;
     }
 
     .barra-interna {
         grid-template-columns:
             auto 1fr auto;
+
+        gap: 7px;
+    }
+
+    .pulsante-testo {
+        font-size: 12px;
+    }
+
+    .titolo-categoria h1 {
+        font-size:
+            clamp(16px, 4.5vw, 23px);
+    }
+
+    th,
+    td {
+        padding:
+            9px 6px;
+    }
+
+    .totale-capitolo {
+        align-items: baseline;
+
+        font-size:
+            clamp(16px, 4.6vw, 22px);
     }
 }
 
+
+/* ========================================
+   SCHERMI MOLTO BASSI
+   ======================================== */
+
+@media (max-height: 620px) {
+
+    .pagina-carta {
+        min-height: 92vh;
+
+        padding:
+            24px 24px;
+    }
+
+    .titolo-pagina {
+        margin-bottom: 15px;
+    }
+
+    .titolo-pagina h1 {
+        font-size: 25px;
+    }
+
+    #casa-stato-vuoto,
+    #entrate-stato-vuoto,
+    #spese-stato-vuoto {
+        min-height: 42vh;
+    }
+
+    .icona-vuota {
+        margin-bottom: 10px;
+
+        font-size: 40px;
+    }
+}
+
+
+/* ========================================
+   MOVIMENTO RIDOTTO
+   ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
 
     #libreria,
     #libro,
     #schermata-dedica,
-    .pagina {
+    .pagina,
+    .sezione-casa,
+    .sezione-entrate,
+    .sezione-spese,
+    .pulsante-libro {
         transition-duration: 1ms;
     }
 }
