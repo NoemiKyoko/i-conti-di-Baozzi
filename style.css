@@ -369,7 +369,7 @@ textarea {
 
     padding:
         clamp(8px, 1.3vh, 14px)
-        clamp(6px, 1vw, 12px);
+        clamp(28px, 4vw, 42px);
 
     border: 0;
 
