@@ -132,7 +132,7 @@ if (
 
     aggiornaRiepilogoAnnuale();
 }
-
+}
 /* ========================================
    IL LIBRO ESCE DALLO SCAFFALE
    ======================================== */
