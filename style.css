@@ -2628,3 +2628,272 @@ body.libro-interno-visibile
             9px 10px;
     }
 }
+/* ========================================
+   CAPITOLO VIII — RIEPILOGO ANNUALE
+   ======================================== */
+
+
+/* ========================================
+   STRUTTURA DELLA PAGINA
+   ======================================== */
+
+.pagina-riepilogo-annuale {
+    position: relative;
+}
+
+
+/* ========================================
+   ANNO
+   ======================================== */
+
+.scheda-riepilogo-annuale > h2 {
+    margin:
+        0 0
+        clamp(22px, 3.5vh, 34px);
+
+    color: #4b321f;
+
+    text-align: center;
+
+    font-size:
+        clamp(30px, 4.8vh, 48px);
+
+    font-weight: normal;
+
+    line-height: 1;
+}
+
+
+/* ========================================
+   RIGHE DEL RIEPILOGO
+   ======================================== */
+
+.riepilogo-righe {
+    display: grid;
+
+    gap:
+        clamp(12px, 2vh, 19px);
+}
+
+.riga-riepilogo {
+    display: flex;
+
+    align-items: baseline;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom:
+        clamp(7px, 1.2vh, 11px);
+
+    border-bottom:
+        1px dotted
+        rgba(78, 48, 25, .22);
+
+    color: #4b321f;
+
+    font-size:
+        clamp(14px, 1.9vh, 19px);
+
+    line-height: 1.45;
+}
+
+.riga-riepilogo strong {
+    flex: 0 0 auto;
+
+    white-space: nowrap;
+
+    font-size:
+        clamp(15px, 2vh, 21px);
+
+    font-weight: normal;
+}
+
+
+/* ========================================
+   SEPARATORE
+   ======================================== */
+
+.separatore-riepilogo {
+    width:
+        min(78%, 360px);
+
+    height: 1px;
+
+    margin:
+        clamp(28px, 4.5vh, 46px)
+        auto;
+
+    border: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(78, 48, 25, .42),
+            transparent
+        );
+}
+
+
+/* ========================================
+   NOTA SULL’ANNO
+   ======================================== */
+
+.nota-annuale {
+    display: grid;
+
+    gap:
+        clamp(11px, 1.8vh, 17px);
+
+    color: #4b321f;
+
+    font-size:
+        clamp(15px, 2vh, 20px);
+
+    line-height: 1.4;
+}
+
+.nota-annuale > span {
+    text-align: center;
+}
+
+
+/* ========================================
+   TEXTAREA QUASI INVISIBILE
+   ======================================== */
+
+#riepilogo-nota {
+    width: 100%;
+
+    min-height:
+        clamp(150px, 24vh, 235px);
+
+    box-sizing: border-box;
+
+    border: 0;
+
+    border-radius: 0;
+
+    padding:
+        4px 3px 7px;
+
+    background-color: transparent;
+
+    background-image:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(78, 48, 25, .18) 31px,
+            rgba(78, 48, 25, .18) 32px
+        );
+
+    background-attachment: local;
+
+    color:
+        rgba(63, 43, 28, .88);
+
+    font: inherit;
+
+    font-size:
+        clamp(14px, 1.9vh, 19px);
+
+    line-height: 32px;
+
+    resize: vertical;
+
+    overflow-wrap: anywhere;
+}
+
+#riepilogo-nota::placeholder {
+    color:
+        rgba(63, 43, 28, .35);
+}
+
+#riepilogo-nota:focus {
+    outline: none;
+
+    background-color:
+        rgba(255, 250, 234, .16);
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(78, 48, 25, .08);
+}
+
+
+/* ========================================
+   PULSANTE SALVA
+   ======================================== */
+
+.scheda-riepilogo-annuale .azioni-modulo {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top:
+        clamp(18px, 3vh, 30px);
+}
+
+
+/* ========================================
+   SCHERMI STRETTI
+   ======================================== */
+
+@media (max-width: 560px) {
+
+    .riga-riepilogo {
+        gap: 12px;
+
+        font-size:
+            clamp(13px, 4vw, 17px);
+    }
+
+    .riga-riepilogo strong {
+        font-size:
+            clamp(14px, 4.1vw, 18px);
+    }
+
+    #riepilogo-nota {
+        min-height: 175px;
+    }
+}
+
+
+/* ========================================
+   SCHERMI MOLTO BASSI
+   ======================================== */
+
+@media (max-height: 620px) {
+
+    .scheda-riepilogo-annuale > h2 {
+        margin-bottom: 18px;
+
+        font-size: 31px;
+    }
+
+    .riepilogo-righe {
+        gap: 9px;
+    }
+
+    .separatore-riepilogo {
+        margin:
+            22px auto;
+    }
+
+    #riepilogo-nota {
+        min-height: 128px;
+
+        line-height: 29px;
+
+        background-image:
+            repeating-linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 28px,
+                rgba(78, 48, 25, .18) 28px,
+                rgba(78, 48, 25, .18) 29px
+            );
+    }
+}
