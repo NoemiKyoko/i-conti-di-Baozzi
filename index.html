@@ -14,7 +14,15 @@
         rel="stylesheet"
         href="style.css">
 </head>
-
+<script>
+window.onerror = function (messaggio, sorgente, riga, colonna) {
+    alert(
+        messaggio +
+        "\nRiga: " + riga +
+        "\nColonna: " + colonna
+    );
+};
+</script>
 <body>
 
     <main id="scena">
