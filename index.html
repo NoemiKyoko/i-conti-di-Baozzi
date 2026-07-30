@@ -2319,41 +2319,359 @@
 
 </section>
             
+<!-- ====================================
+     CAPITOLO VII — ABBONAMENTI
+     ==================================== -->
+
+<section
+    id="abbonamenti"
+    class="pagina">
+
+    <div class="pagina-carta pagina-abbonamenti">
+
+        <header class="titolo-pagina">
+
+            <span class="ornamento">❦</span>
+
+            <h1>Abbonamenti</h1>
+
+            <span class="ornamento">❦</span>
+
+        </header>
 
 
-            <section
-                id="abbonamenti"
-                class="pagina">
+        <!-- STATO VUOTO -->
 
-                <div class="pagina-carta pagina-decantazione">
+        <div
+            id="abbonamenti-stato-vuoto"
+            class="abbonamenti-stato-vuoto">
 
-                    <header class="titolo-pagina">
+            <button
+                id="abbonamenti-aggiungi-primo"
+                class="pulsante-secondario"
+                type="button">
 
-                        <span class="ornamento">❦</span>
+                + Aggiungi un abbonamento
 
-                        <h1>Abbonamenti</h1>
+            </button>
 
-                        <span class="ornamento">❦</span>
+        </div>
 
-                    </header>
 
-                    <p>
-                        Questo capitolo è pronto a crescere.
-                    </p>
+        <!-- ELENCO DEGLI ABBONAMENTI -->
+
+        <div
+            id="abbonamenti-elenco"
+            class="abbonamenti-elenco nascosto">
+
+            <div
+                id="abbonamenti-schede"
+                class="abbonamenti-schede"
+                aria-live="polite">
+            </div>
+
+
+            <!-- RIEPILOGO -->
+
+            <div class="riepilogo-abbonamenti">
+
+                <div class="riga-riepilogo-abbonamenti">
+
+                    <span>
+                        Totale mensile
+                    </span>
+
+                    <strong id="abbonamenti-totale-mensile">
+                        € 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="riga-riepilogo-abbonamenti">
+
+                    <span>
+                        Totale annuale
+                    </span>
+
+                    <strong id="abbonamenti-totale-annuale">
+                        € 0,00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="abbonamenti-aggiungi-altro"
+                class="pulsante-secondario abbonamenti-aggiungi-altro"
+                type="button">
+
+                + Aggiungi un abbonamento
+
+            </button>
+
+        </div>
+
+
+        <!-- MODULO -->
+
+        <div
+            id="abbonamenti-contenitore-modulo"
+            class="abbonamenti-contenitore-modulo nascosto">
+
+            <form id="abbonamenti-modulo">
+
+                <h2 id="abbonamenti-titolo-modulo">
+                    Nuovo abbonamento
+                </h2>
+
+
+                <label>
+
+                    <span>
+                        Nome
+                    </span>
+
+                    <input
+                        id="abbonamenti-campo-nome"
+                        name="nome"
+                        type="text"
+                        maxlength="80"
+                        placeholder="Es. Prime Video"
+                        autocomplete="off"
+                        required>
+
+                </label>
+
+
+                <label>
+
+                    <span>
+                        Costo
+                    </span>
+
+                    <div class="campo-importo">
+
+                        <span>
+                            €
+                        </span>
+
+                        <input
+                            id="abbonamenti-campo-costo"
+                            name="costo"
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            inputmode="decimal"
+                            placeholder="0,00"
+                            required>
+
+                    </div>
+
+                </label>
+
+
+                <!-- FREQUENZA -->
+
+                <fieldset class="frequenza-abbonamento">
+
+                    <legend>
+                        Rinnovo
+                    </legend>
+
+
+                    <label class="scelta-frequenza">
+
+                        <input
+                            id="abbonamenti-frequenza-mensile"
+                            name="frequenza"
+                            type="radio"
+                            value="mensile"
+                            checked>
+
+                        <span>
+                            Mensile
+                        </span>
+
+                    </label>
+
+
+                    <label class="scelta-frequenza">
+
+                        <input
+                            id="abbonamenti-frequenza-annuale"
+                            name="frequenza"
+                            type="radio"
+                            value="annuale">
+
+                        <span>
+                            Annuale
+                        </span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- GIORNO DEL RINNOVO -->
+
+                <label>
+
+                    <span>
+                        Giorno del rinnovo
+                    </span>
+
+                    <input
+                        id="abbonamenti-campo-giorno"
+                        name="giorno"
+                        type="number"
+                        min="1"
+                        max="31"
+                        step="1"
+                        inputmode="numeric"
+                        placeholder="Es. 18"
+                        required>
+
+                </label>
+
+
+                <!-- MESE, VISIBILE SOLO PER GLI ANNUALI -->
+
+                <label
+                    id="abbonamenti-label-mese"
+                    class="nascosto">
+
+                    <span>
+                        Mese del rinnovo
+                    </span>
+
+                    <select
+                        id="abbonamenti-campo-mese"
+                        name="mese">
+
+                        <option value="">
+                            Scegli il mese
+                        </option>
+
+                        <option value="1">
+                            Gennaio
+                        </option>
+
+                        <option value="2">
+                            Febbraio
+                        </option>
+
+                        <option value="3">
+                            Marzo
+                        </option>
+
+                        <option value="4">
+                            Aprile
+                        </option>
+
+                        <option value="5">
+                            Maggio
+                        </option>
+
+                        <option value="6">
+                            Giugno
+                        </option>
+
+                        <option value="7">
+                            Luglio
+                        </option>
+
+                        <option value="8">
+                            Agosto
+                        </option>
+
+                        <option value="9">
+                            Settembre
+                        </option>
+
+                        <option value="10">
+                            Ottobre
+                        </option>
+
+                        <option value="11">
+                            Novembre
+                        </option>
+
+                        <option value="12">
+                            Dicembre
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <div class="azioni-modulo">
 
                     <button
-                        class="pulsante-secondario"
-                        type="button"
-                        data-vai="indice">
+                        class="pulsante-libro"
+                        type="submit">
 
-                        Torna all’indice
+                        Salva
+
+                    </button>
+
+                    <button
+                        id="abbonamenti-annulla"
+                        class="pulsante-secondario"
+                        type="button">
+
+                        Annulla
 
                     </button>
 
                 </div>
 
-            </section>
+            </form>
 
+        </div>
+
+
+        <!-- NAVIGAZIONE -->
+
+        <div class="navigazione-capitolo">
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="documenti">
+
+                ◁ Capitolo precedente
+
+            </button>
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="indice">
+
+                Torna all’indice
+
+            </button>
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="note">
+
+                Capitolo successivo ▷
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+            
 
             <section
                 id="note"
