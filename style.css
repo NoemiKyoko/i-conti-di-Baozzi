@@ -1733,3 +1733,435 @@ body.libro-interno-visibile
         animation-duration: 1ms;
     }
 }
+/* ========================================
+   CAPITOLO VI — DOCUMENTI
+   Blocco aggiungibile in fondo al CSS
+   ======================================== */
+
+
+/* ========================================
+   STRUTTURA DELLA PAGINA
+   ======================================== */
+
+.pagina-documenti {
+    position: relative;
+}
+
+
+/* ========================================
+   STATO VUOTO
+   ======================================== */
+
+.documenti-stato-vuoto {
+    min-height:
+        clamp(210px, 38vh, 390px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+        clamp(18px, 3vh, 30px);
+
+    text-align: center;
+}
+
+.documenti-stato-vuoto p {
+    max-width: 34ch;
+
+    margin: 0;
+
+    font-size:
+        clamp(15px, 2vh, 20px);
+
+    line-height: 1.65;
+}
+
+
+/* ========================================
+   ELENCO DEI DOCUMENTI
+   ======================================== */
+
+.documenti-elenco {
+    display: grid;
+
+    gap:
+        clamp(20px, 3vh, 30px);
+}
+
+.documenti-schede {
+    display: grid;
+
+    gap:
+        clamp(14px, 2.4vh, 24px);
+}
+
+
+/* ========================================
+   SCHEDA DI UN DOCUMENTO
+   Le schede verranno create dal JavaScript
+   ======================================== */
+
+.scheda-documento {
+    padding:
+        clamp(15px, 2.3vh, 23px)
+        clamp(4px, 1vw, 10px);
+
+    border-bottom:
+        1px dotted
+        rgba(78, 48, 25, .34);
+}
+
+.testata-documento {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+.intestazione-documento {
+    min-width: 0;
+}
+
+.titolo-documento {
+    margin: 0;
+
+    color: #4b321f;
+
+    font-size:
+        clamp(18px, 2.5vh, 27px);
+
+    font-weight: normal;
+
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+}
+
+.categoria-documento {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size:
+        clamp(12px, 1.55vh, 15px);
+
+    line-height: 1.4;
+
+    opacity: .72;
+}
+
+
+/* ========================================
+   DATE, SCADENZA E NOTE
+   ======================================== */
+
+.dettagli-documento {
+    display: grid;
+
+    gap: 5px;
+
+    margin-top:
+        clamp(10px, 1.7vh, 16px);
+
+    color: #4b321f;
+
+    font-size:
+        clamp(13px, 1.7vh, 17px);
+
+    line-height: 1.55;
+}
+
+.data-documento,
+.scadenza-documento {
+    display: block;
+}
+
+.note-documento {
+    display: block;
+
+    margin-top: 3px;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+
+    opacity: .88;
+}
+
+
+/* ========================================
+   PULSANTI DELLA SCHEDA
+   ======================================== */
+
+.azioni-documento {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap:
+        7px 13px;
+
+    margin-top:
+        clamp(13px, 2vh, 20px);
+}
+
+.pulsante-documento {
+    padding:
+        6px 4px;
+
+    border: 0;
+
+    border-bottom:
+        1px solid
+        rgba(78, 48, 25, .34);
+
+    border-radius: 0;
+
+    background: transparent;
+
+    color: #4b321f;
+
+    font: inherit;
+
+    font-size:
+        clamp(12px, 1.55vh, 15px);
+
+    line-height: 1.35;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.pulsante-documento:hover,
+.pulsante-documento:focus-visible {
+    border-bottom-color:
+        rgba(78, 48, 25, .72);
+}
+
+
+/* ========================================
+   PULSANTE AGGIUNGI
+   ======================================== */
+
+#documenti-aggiungi-primo,
+#documenti-aggiungi-altro {
+    margin-inline: auto;
+}
+
+#documenti-aggiungi-altro {
+    justify-self: center;
+}
+
+
+/* ========================================
+   CONTENITORE DEL MODULO
+   ======================================== */
+
+.documenti-contenitore-modulo {
+    margin-top:
+        clamp(18px, 3vh, 30px);
+
+    padding-top:
+        clamp(18px, 3vh, 28px);
+
+    border-top:
+        1px dotted
+        rgba(78, 48, 25, .34);
+}
+
+#documenti-modulo {
+    display: grid;
+
+    gap:
+        clamp(13px, 2vh, 21px);
+
+    width: 100%;
+
+    max-width: 470px;
+
+    margin: 0 auto;
+}
+
+#documenti-modulo h2 {
+    margin:
+        0 0
+        clamp(3px, 1vh, 8px);
+
+    color: #4b321f;
+
+    text-align: center;
+
+    font-size:
+        clamp(20px, 2.8vh, 29px);
+
+    font-weight: normal;
+}
+
+
+/* ========================================
+   ETICHETTE E CAMPI
+   ======================================== */
+
+#documenti-modulo label {
+    display: grid;
+
+    gap: 7px;
+
+    color: #4b321f;
+
+    font-size:
+        clamp(13px, 1.7vh, 17px);
+
+    line-height: 1.4;
+}
+
+#documenti-modulo input,
+#documenti-modulo select,
+#documenti-modulo textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(78, 49, 25, .35);
+
+    border-radius: 7px;
+
+    padding:
+        11px 12px;
+
+    background:
+        rgba(255, 248, 226, .7);
+
+    color: #3f2b1c;
+
+    font: inherit;
+
+    line-height: 1.35;
+}
+
+#documenti-modulo textarea {
+    min-height: 92px;
+
+    resize: vertical;
+}
+
+#documenti-modulo input::placeholder,
+#documenti-modulo textarea::placeholder {
+    color:
+        rgba(63, 43, 28, .48);
+}
+
+#documenti-modulo input:focus,
+#documenti-modulo select:focus,
+#documenti-modulo textarea:focus {
+    outline: none;
+
+    border-color:
+        rgba(91, 58, 31, .65);
+
+    background:
+        rgba(255, 250, 234, .86);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(91, 58, 31, .08);
+}
+
+
+/* ========================================
+   DATA E SCADENZA AFFIANCATE
+   ======================================== */
+
+.documenti-campi-date {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        clamp(12px, 2vw, 20px);
+}
+
+
+/* ========================================
+   AZIONI DEL MODULO
+   ======================================== */
+
+.documenti-azioni-modulo {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap:
+        12px 20px;
+
+    margin-top:
+        clamp(5px, 1vh, 10px);
+}
+
+
+/* ========================================
+   SCHERMI STRETTI
+   ======================================== */
+
+@media (max-width: 560px) {
+
+    .documenti-stato-vuoto {
+        min-height:
+            clamp(190px, 34vh, 330px);
+    }
+
+    .documenti-campi-date {
+        grid-template-columns: 1fr;
+    }
+
+    .testata-documento {
+        display: block;
+    }
+
+    .azioni-documento {
+        gap:
+            5px 11px;
+    }
+
+    #documenti-modulo {
+        max-width: 100%;
+    }
+}
+
+
+/* ========================================
+   SCHERMI MOLTO BASSI
+   ======================================== */
+
+@media (max-height: 620px) {
+
+    .documenti-stato-vuoto {
+        min-height: 38vh;
+    }
+
+    #documenti-modulo {
+        gap: 12px;
+    }
+
+    #documenti-modulo input,
+    #documenti-modulo select,
+    #documenti-modulo textarea {
+        padding:
+            9px 10px;
+    }
+}
