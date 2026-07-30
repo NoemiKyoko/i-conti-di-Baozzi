@@ -5573,6 +5573,559 @@ function eliminaAbbonamento(
     aggiornaPaginaAbbonamenti();
 }
 /* ========================================
+   PARTE 9 — RIEPILOGO ANNUALE
+   ======================================== */
+
+const chiaveNoteAnnuali =
+    "conti-baozzi-note-annuali-v1";
+
+let noteAnnuali =
+    caricaNoteAnnuali();
+
+
+/* ========================================
+   ELEMENTI DEL CAPITOLO
+   ======================================== */
+
+const riepilogoAnno =
+    document.querySelector(
+        "#riepilogo-anno"
+    );
+
+const riepilogoEntrate =
+    document.querySelector(
+        "#riepilogo-entrate"
+    );
+
+const riepilogoSpese =
+    document.querySelector(
+        "#riepilogo-spese"
+    );
+
+const riepilogoRisparmio =
+    document.querySelector(
+        "#riepilogo-risparmio"
+    );
+
+const riepilogoObiettivi =
+    document.querySelector(
+        "#riepilogo-obiettivi"
+    );
+
+const riepilogoAbbonamenti =
+    document.querySelector(
+        "#riepilogo-abbonamenti"
+    );
+
+const riepilogoDocumenti =
+    document.querySelector(
+        "#riepilogo-documenti"
+    );
+
+const riepilogoNota =
+    document.querySelector(
+        "#riepilogo-nota"
+    );
+
+const salvaRiepilogoAnnuale =
+    document.querySelector(
+        "#salva-riepilogo-annuale"
+    );
+
+
+/* ========================================
+   ANNO VISUALIZZATO
+   ======================================== */
+
+function annoRiepilogoCorrente() {
+
+    return new Date()
+        .getFullYear();
+}
+
+
+/* ========================================
+   CARICAMENTO DELLE NOTE ANNUALI
+   ======================================== */
+
+function caricaNoteAnnuali() {
+
+    try {
+
+        const contenuto =
+            localStorage.getItem(
+                chiaveNoteAnnuali
+            );
+
+
+        if (!contenuto) {
+
+            return {};
+        }
+
+
+        const dati =
+            JSON.parse(
+                contenuto
+            );
+
+
+        if (
+            !dati ||
+            typeof dati !== "object" ||
+            Array.isArray(dati)
+        ) {
+
+            return {};
+        }
+
+
+        return dati;
+
+    } catch (errore) {
+
+        console.warn(
+            "Impossibile caricare le note annuali.",
+            errore
+        );
+
+
+        return {};
+    }
+}
+
+
+/* ========================================
+   SALVATAGGIO DELLE NOTE ANNUALI
+   ======================================== */
+
+function salvaNoteAnnuali() {
+
+    try {
+
+        localStorage.setItem(
+            chiaveNoteAnnuali,
+            JSON.stringify(
+                noteAnnuali
+            )
+        );
+
+    } catch (errore) {
+
+        console.error(
+            "Impossibile salvare la nota annuale.",
+            errore
+        );
+
+
+        window.alert(
+            "Non è stato possibile salvare la nota."
+        );
+    }
+}
+
+
+/* ========================================
+   CONTROLLO DELL’ANNO DI UNA REGISTRAZIONE
+   ======================================== */
+
+function appartieneAllAnno(
+    registrazione,
+    anno
+) {
+
+    if (
+        !registrazione ||
+        !registrazione.data
+    ) {
+
+        return false;
+    }
+
+
+    return String(
+        registrazione.data
+    ).startsWith(
+        `${anno}-`
+    );
+}
+
+
+/* ========================================
+   TOTALE ANNUALE DI UN ARCHIVIO
+   CON CATEGORIE
+   ======================================== */
+
+function totaleAnnualeArchivio(
+    archivio,
+    anno
+) {
+
+    if (
+        !archivio ||
+        typeof archivio !== "object"
+    ) {
+
+        return 0;
+    }
+
+
+    return Object.values(
+        archivio
+    ).reduce(
+        (
+            totaleArchivio,
+            registrazioni
+        ) => {
+
+            if (
+                !Array.isArray(
+                    registrazioni
+                )
+            ) {
+
+                return totaleArchivio;
+            }
+
+
+            const totaleCategoria =
+                registrazioni.reduce(
+                    (
+                        totale,
+                        registrazione
+                    ) => {
+
+                        if (
+                            !appartieneAllAnno(
+                                registrazione,
+                                anno
+                            )
+                        ) {
+
+                            return totale;
+                        }
+
+
+                        const importo =
+                            Number(
+                                registrazione.importo
+                            );
+
+
+                        return Number.isFinite(
+                            importo
+                        )
+                            ? totale + importo
+                            : totale;
+                    },
+                    0
+                );
+
+
+            return (
+                totaleArchivio +
+                totaleCategoria
+            );
+        },
+        0
+    );
+}
+
+
+/* ========================================
+   TOTALE ANNUALE DI UN ELENCO
+   ======================================== */
+
+function totaleAnnualeElenco(
+    elenco,
+    anno
+) {
+
+    if (!Array.isArray(elenco)) {
+
+        return 0;
+    }
+
+
+    return elenco.reduce(
+        (
+            totale,
+            registrazione
+        ) => {
+
+            if (
+                !appartieneAllAnno(
+                    registrazione,
+                    anno
+                )
+            ) {
+
+                return totale;
+            }
+
+
+            const importo =
+                Number(
+                    registrazione.importo
+                );
+
+
+            return Number.isFinite(
+                importo
+            )
+                ? totale + importo
+                : totale;
+        },
+        0
+    );
+}
+
+
+/* ========================================
+   CONTEGGIO DEGLI OBIETTIVI RAGGIUNTI
+   ======================================== */
+
+function contaObiettiviRaggiunti() {
+
+    if (
+        typeof obiettivi === "undefined" ||
+        !Array.isArray(obiettivi)
+    ) {
+
+        return 0;
+    }
+
+
+    return obiettivi.filter(
+        (obiettivo) => {
+
+            const raggiunto =
+                Number(
+                    obiettivo.raggiunto
+                );
+
+            const traguardo =
+                Number(
+                    obiettivo.traguardo
+                );
+
+
+            return (
+                Number.isFinite(raggiunto) &&
+                Number.isFinite(traguardo) &&
+                traguardo > 0 &&
+                raggiunto >= traguardo
+            );
+        }
+    ).length;
+}
+
+
+/* ========================================
+   AGGIORNAMENTO DEL RIEPILOGO
+   ======================================== */
+
+function aggiornaRiepilogoAnnuale() {
+
+    if (!riepilogoAnno) {
+
+        return;
+    }
+
+
+    const anno =
+        annoRiepilogoCorrente();
+
+
+    /*
+       Entrate dell’anno.
+    */
+
+    const totaleEntrate =
+        typeof archivioEntrate !==
+            "undefined"
+            ? totaleAnnualeArchivio(
+                archivioEntrate,
+                anno
+            )
+            : 0;
+
+
+    /*
+       Le spese comprendono:
+
+       - La nostra casa
+       - Spese quotidiane
+       - Desideri e coccole
+
+       Gli abbonamenti non vengono sommati qui,
+       perché non possiedono una data di pagamento
+       effettivamente registrata.
+    */
+
+    const speseCasa =
+        typeof archivioCasa !==
+            "undefined"
+            ? totaleAnnualeArchivio(
+                archivioCasa,
+                anno
+            )
+            : 0;
+
+
+    const speseQuotidiane =
+        typeof archivioSpese !==
+            "undefined"
+            ? totaleAnnualeArchivio(
+                archivioSpese,
+                anno
+            )
+            : 0;
+
+
+    const speseDesideri =
+        typeof archivioDesideri !==
+            "undefined"
+            ? totaleAnnualeElenco(
+                archivioDesideri,
+                anno
+            )
+            : 0;
+
+
+    const totaleSpese =
+        speseCasa +
+        speseQuotidiane +
+        speseDesideri;
+
+
+    const risparmio =
+        totaleEntrate -
+        totaleSpese;
+
+
+    const numeroObiettivi =
+        contaObiettiviRaggiunti();
+
+
+    const numeroAbbonamenti =
+        typeof archivioAbbonamenti !==
+            "undefined" &&
+        Array.isArray(
+            archivioAbbonamenti
+        )
+            ? archivioAbbonamenti.length
+            : 0;
+
+
+    const numeroDocumenti =
+        typeof archivioDocumenti !==
+            "undefined" &&
+        Array.isArray(
+            archivioDocumenti
+        )
+            ? archivioDocumenti.length
+            : 0;
+
+
+    riepilogoAnno.textContent =
+        String(anno);
+
+
+    riepilogoEntrate.textContent =
+        formattaEuro(
+            totaleEntrate
+        );
+
+
+    riepilogoSpese.textContent =
+        formattaEuro(
+            totaleSpese
+        );
+
+
+    riepilogoRisparmio.textContent =
+        formattaEuro(
+            risparmio
+        );
+
+
+    riepilogoObiettivi.textContent =
+        String(
+            numeroObiettivi
+        );
+
+
+    riepilogoAbbonamenti.textContent =
+        String(
+            numeroAbbonamenti
+        );
+
+
+    riepilogoDocumenti.textContent =
+        String(
+            numeroDocumenti
+        );
+
+
+    if (riepilogoNota) {
+
+        riepilogoNota.value =
+            noteAnnuali[anno] || "";
+    }
+}
+
+
+/* ========================================
+   SALVATAGGIO DELLA NOTA
+   ======================================== */
+
+if (
+    salvaRiepilogoAnnuale &&
+    riepilogoNota
+) {
+
+    salvaRiepilogoAnnuale
+        .addEventListener(
+            "click",
+            () => {
+
+                const anno =
+                    annoRiepilogoCorrente();
+
+
+                noteAnnuali[anno] =
+                    riepilogoNota
+                        .value
+                        .trim();
+
+
+                salvaNoteAnnuali();
+
+
+                const testoOriginale =
+                    salvaRiepilogoAnnuale
+                        .textContent;
+
+
+                salvaRiepilogoAnnuale
+                    .textContent =
+                    "Salvato";
+
+
+                window.setTimeout(
+                    () => {
+
+                        salvaRiepilogoAnnuale
+                            .textContent =
+                            testoOriginale;
+                    },
+                    1200
+                );
+            }
+        );
+}
+/* ========================================
    AVVIO DELL’APPLICAZIONE
    ======================================== */
 
