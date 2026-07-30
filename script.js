@@ -293,56 +293,56 @@ const categorieCasa = {
 
     luce: {
         nome: "Luce",
-        icona: "💡",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna bolletta della luce."
     },
 
     acqua: {
         nome: "Acqua",
-        icona: "💧",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna bolletta dell’acqua."
     },
 
     gas: {
         nome: "Gas",
-        icona: "🔥",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna bolletta del gas."
     },
 
     internet: {
         nome: "Internet",
-        icona: "📶",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna spesa per Internet."
     },
 
     condominio: {
         nome: "Condominio",
-        icona: "🏢",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna spesa condominiale."
     },
 
     tasse: {
         nome: "Tasse",
-        icona: "🧾",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessuna tassa legata alla casa."
     },
 
     manutenzione: {
         nome: "Manutenzione",
-        icona: "🛠️",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessun intervento di manutenzione."
     },
 
     altro: {
         nome: "Acquisti per la casa",
-        icona: "🪴",
+        icona: "",
         messaggio:
             "Non hai ancora registrato nessun acquisto per la casa."
     }
@@ -921,7 +921,7 @@ const categorieEntrate = {
 
     stipendio: {
         nome: "Stipendio",
-        icona: "💼",
+        icona: "",
 
         descrizioneObbligatoria: false,
         descrizionePredefinita:
@@ -933,7 +933,7 @@ const categorieEntrate = {
 
     extra: {
         nome: "Entrate extra",
-        icona: "🎁",
+        icona: "",
 
         descrizioneObbligatoria: true,
         descrizionePredefinita:
@@ -1569,7 +1569,7 @@ const categorieSpese = {
 
     alimentari: {
         nome: "Spesa alimentare",
-        icona: "🛒",
+        icona: "",
 
         messaggio:
             "Non hai ancora registrato nessuna spesa alimentare."
@@ -1577,7 +1577,7 @@ const categorieSpese = {
 
     trasporti: {
         nome: "Auto e trasporti",
-        icona: "🚗",
+        icona: "",
 
         messaggio:
             "Non hai ancora registrato nessuna spesa per auto o trasporti."
@@ -1585,7 +1585,7 @@ const categorieSpese = {
 
     salute: {
         nome: "Salute",
-        icona: "💊",
+        icona: "",
 
         messaggio:
             "Non hai ancora registrato nessuna spesa per la salute."
@@ -1593,7 +1593,7 @@ const categorieSpese = {
 
     greta: {
         nome: "Greta",
-        icona: "👶",
+        icona: "",
 
         messaggio:
             "Non hai ancora registrato nessuna spesa per Greta."
@@ -1601,7 +1601,7 @@ const categorieSpese = {
 
     regali: {
         nome: "Regali",
-        icona: "🎁",
+        icona: "",
 
         messaggio:
             "Non hai ancora registrato nessuna spesa per i regali."
@@ -3347,7 +3347,7 @@ function aggiornaPaginaObiettivi() {
                 "nome-obiettivo";
 
             nome.textContent =
-                `${obiettivo.id === "casa" ? "🏠 " : ""}${obiettivo.nome}`;
+                obiettivo.nome;
 
             const azioni =
                 document.createElement(
@@ -3470,7 +3470,7 @@ function aggiornaPaginaObiettivi() {
                 "bandierina-obiettivo";
 
             bandierina.textContent =
-                "🏁";
+                "";
 
             percorso.append(
                 pista,
@@ -3672,7 +3672,7 @@ function festeggiaObiettivo() {
         "";
 
     const simboli =
-        ["🪙", "🪙", "🪙", "💶"];
+        ["€", "€", "€", "€€"];
 
     const quantita =
         30;
@@ -6040,19 +6040,19 @@ function aggiornaRiepilogoAnnuale() {
 
 
     riepilogoEntrate.textContent =
-        formattaEuro(
+        formattaEuroConSimboloPrima(
             totaleEntrate
         );
 
 
     riepilogoSpese.textContent =
-        formattaEuro(
+        formattaEuroConSimboloPrima(
             totaleSpese
         );
 
 
     riepilogoRisparmio.textContent =
-        formattaEuro(
+        formattaEuroConSimboloPrima(
             risparmio
         );
 
@@ -6132,6 +6132,125 @@ if (
             }
         );
 }
+
+/* ========================================
+   RIFINITURE GENERALI — VERSIONE LIBRO
+   ======================================== */
+
+function formattaEuroConSimboloPrima(importo) {
+
+    const valore =
+        new Intl.NumberFormat(
+            "it-IT",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ).format(
+            Number(importo) || 0
+        );
+
+    return `€ ${valore}`;
+}
+
+
+function rimuoviEmojiDaiCapitoli() {
+
+    const libroInternoElemento =
+        document.querySelector(
+            "#libro-interno"
+        );
+
+    if (!libroInternoElemento) {
+
+        return;
+    }
+
+    const espressioneEmoji =
+        /\p{Extended_Pictographic}|\uFE0F|\u20E3/gu;
+
+    const iteratore =
+        document.createTreeWalker(
+            libroInternoElemento,
+            NodeFilter.SHOW_TEXT
+        );
+
+    const nodi = [];
+
+    while (iteratore.nextNode()) {
+
+        nodi.push(
+            iteratore.currentNode
+        );
+    }
+
+    nodi.forEach(
+        (nodo) => {
+
+            nodo.nodeValue =
+                nodo.nodeValue
+                    .replace(
+                        espressioneEmoji,
+                        ""
+                    )
+                    .replace(
+                        / {2,}/g,
+                        " "
+                    );
+        }
+    );
+}
+
+
+function correggiNavigazioneCapitoliFinali() {
+
+    const paginaDocumenti =
+        document.querySelector(
+            "#documenti"
+        );
+
+    const paginaAbbonamenti =
+        document.querySelector(
+            "#abbonamenti"
+        );
+
+    const correggiUltimoPulsante =
+        (pagina, destinazione) => {
+
+            if (!pagina) {
+
+                return;
+            }
+
+            const pulsanti =
+                pagina.querySelectorAll(
+                    ".navigazione-capitolo [data-vai]"
+                );
+
+            const ultimo =
+                pulsanti[
+                    pulsanti.length - 1
+                ];
+
+            if (ultimo) {
+
+                ultimo.dataset.vai =
+                    destinazione;
+            }
+        };
+
+    correggiUltimoPulsante(
+        paginaDocumenti,
+        "abbonamenti"
+    );
+
+    correggiUltimoPulsante(
+        paginaAbbonamenti,
+        "riepilogo-annuale"
+    );
+}
+
+
 /* ========================================
    AVVIO DELL’APPLICAZIONE
    ======================================== */
@@ -6151,6 +6270,10 @@ aggiornaPaginaDocumenti();
 aggiornaPaginaAbbonamenti();
 
 aggiornaRiepilogoAnnuale();
+
+correggiNavigazioneCapitoliFinali();
+
+rimuoviEmojiDaiCapitoli();
 
 
 aggiornaRiepilogoDesideri();

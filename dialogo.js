@@ -146,48 +146,102 @@ let timerDialogo =
     null;
 
 
-const pulsanteApriDialogo =
-    document.querySelector(
-        "#apri-dialogo-baozzi"
+
+let pulsanteApriDialogo = null;
+let immagineBaozzi = null;
+let fumettoBaozzi = null;
+let testoBaozzi = null;
+let azioniBaozzi = null;
+
+
+function inizializzaDialogoBaozzi() {
+
+    pulsanteApriDialogo =
+        document.querySelector(
+            "#apri-dialogo-baozzi"
+        );
+
+    immagineBaozzi =
+        document.querySelector(
+            "#immagine-baozzi"
+        );
+
+    fumettoBaozzi =
+        document.querySelector(
+            "#fumetto-baozzi"
+        );
+
+    testoBaozzi =
+        document.querySelector(
+            "#testo-baozzi"
+        );
+
+    azioniBaozzi =
+        document.querySelector(
+            "#azioni-baozzi"
+        );
+
+    if (
+        !pulsanteApriDialogo ||
+        !immagineBaozzi ||
+        !fumettoBaozzi ||
+        !testoBaozzi ||
+        !azioniBaozzi
+    ) {
+
+        console.warn(
+            "Il dialogo di Baozzi non è stato inizializzato: manca un elemento HTML."
+        );
+
+        return;
+    }
+
+    pulsanteApriDialogo
+        .removeEventListener(
+            "click",
+            apriDialogoBaozzi
+        );
+
+    pulsanteApriDialogo
+        .addEventListener(
+            "click",
+            apriDialogoBaozzi
+        );
+}
+
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        inizializzaDialogoBaozzi,
+        { once: true }
     );
 
-const immagineBaozzi =
-    document.querySelector(
-        "#immagine-baozzi"
-    );
+} else {
 
-const fumettoBaozzi =
-    document.querySelector(
-        "#fumetto-baozzi"
-    );
-
-const testoBaozzi =
-    document.querySelector(
-        "#testo-baozzi"
-    );
-
-const azioniBaozzi =
-    document.querySelector(
-        "#azioni-baozzi"
-    );
-
-
-if (
-    pulsanteApriDialogo &&
-    immagineBaozzi &&
-    fumettoBaozzi &&
-    testoBaozzi &&
-    azioniBaozzi
-) {
-
-    pulsanteApriDialogo.addEventListener(
-        "click",
-        apriDialogoBaozzi
-    );
+    inizializzaDialogoBaozzi();
 }
 
 
 function apriDialogoBaozzi() {
+
+    if (
+        !immagineBaozzi ||
+        !fumettoBaozzi ||
+        !testoBaozzi ||
+        !azioniBaozzi ||
+        typeof vaiAllaPagina !== "function"
+    ) {
+
+        inizializzaDialogoBaozzi();
+
+        if (typeof vaiAllaPagina !== "function") {
+
+            console.error("La navigazione del libro non è disponibile.");
+            return;
+        }
+    }
 
     azzeraDialogo();
 
@@ -615,3 +669,6 @@ function registraRisposta(
         850
     );
 }
+
+
+window.apriDialogoBaozzi = apriDialogoBaozzi;

@@ -2929,3 +2929,95 @@ body.libro-interno-visibile
     width: min(82%, 720px);
     margin-inline: auto;
 }
+
+/* ========================================
+   RIFINITURA GENERALE — STILE LIBRO
+   ======================================== */
+
+/* Categorie senza riquadri e senza sfondo */
+.sezione-casa,
+.sezione-entrate,
+.sezione-spese,
+.scelta-desideri {
+    border: 0;
+    border-bottom: 1px solid rgba(91, 58, 31, .24);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.sezione-casa:active,
+.sezione-entrate:active,
+.sezione-spese:active,
+.scelta-desideri:active {
+    background: transparent;
+}
+
+/* Gli spazi prima occupati dalle icone non restano vuoti */
+.sezione-casa,
+.sezione-entrate,
+.sezione-spese {
+    gap: 0;
+}
+
+.sezione-casa > span,
+.sezione-entrate > span,
+.sezione-spese > span,
+.titolo-categoria > span:not(.ornamento),
+.icona-vuota {
+    display: none !important;
+}
+
+/* Dialogo: la carta resta pulita e il fumetto è più leggero */
+.fumetto-baozzi {
+    background: rgba(255, 252, 240, .58);
+    box-shadow: none;
+}
+
+/* Bandierina dell'obiettivo disegnata in CSS, senza emoji */
+.bandierina-obiettivo {
+    width: 24px;
+    height: 38px;
+    right: 0;
+    bottom: 12px;
+    font-size: 0;
+    transform: none;
+}
+
+.bandierina-obiettivo::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    width: 2px;
+    height: 38px;
+    background: rgba(78, 48, 25, .72);
+}
+
+.bandierina-obiettivo::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 16px;
+    height: 11px;
+    border: 1px solid rgba(78, 48, 25, .65);
+    background:
+        linear-gradient(45deg, rgba(78, 48, 25, .62) 25%, transparent 25%) 0 0 / 8px 8px,
+        linear-gradient(45deg, transparent 75%, rgba(78, 48, 25, .62) 75%) 0 0 / 8px 8px,
+        linear-gradient(45deg, transparent 75%, rgba(78, 48, 25, .62) 75%) 4px -4px / 8px 8px,
+        linear-gradient(45deg, rgba(78, 48, 25, .62) 25%, transparent 25%) 4px -4px / 8px 8px;
+}
+
+/* La pioggia finale usa simboli tipografici, non emoji */
+.denaro-cadente {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: rgba(91, 58, 31, .82);
+}
+
+/* Euro sempre prima della cifra nel riepilogo annuale */
+.pagina-riepilogo-annuale .riga-riepilogo strong {
+    direction: ltr;
+    text-align: right;
+}
