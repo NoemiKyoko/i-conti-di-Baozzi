@@ -1577,6 +1577,7 @@ body.libro-interno-visibile
     display: flex;
     gap: 8px;
     flex: 0 0 auto;
+   margin-right: 14x;
 }
 
 .pulsante-mini-obiettivo {
@@ -1593,14 +1594,14 @@ body.libro-interno-visibile
 .percorso-obiettivo {
     position: relative;
     height: clamp(70px, 10vh, 92px);
-    margin: 4px clamp(8px, 1.5vw, 16px) 0;
+    margin: 12px clamp(8px, 1.5vw, 16px) 0;
 }
 
 .pista-obiettivo {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 19px;
+    bottom: 14px;
     height: 7px;
     border-radius: 999px;
     background:
@@ -1613,18 +1614,18 @@ body.libro-interno-visibile
 
 .bandierina-obiettivo {
     position: absolute;
-    right: -5px;
-    bottom: 17px;
+    right: -3px;
+    bottom: 13px;
     transform: translateY(15%);
-    font-size: clamp(27px, 4.2vh, 42px);
+    font-size: clamp(24px, 3.8vh, 36px);
     line-height: 1;
 }
 
 .baozzi-obiettivo {
     position: absolute;
     left: var(--progresso);
-    bottom: 22px;
-    width: clamp(48px, 8vh, 76px);
+    bottom: 18px;
+    width: clamp(42px, 6.8vh, 64px);
     height: auto;
     transform: translateX(-50%);
     transition: left 850ms cubic-bezier(.22, .8, .25, 1);
@@ -1634,8 +1635,10 @@ body.libro-interno-visibile
 .valori-obiettivo {
     display: flex;
     justify-content: space-between;
+   align-items: center;
     gap: 16px;
-    margin-top: 5px;
+    margin-top: 1px;
+   padding-inline: clamp(8px, 1.5vw, 16px);
     font-size: clamp(13px, 1.8vh, 18px);
 }
 
