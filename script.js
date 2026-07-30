@@ -3869,7 +3869,6 @@ if (moduloObiettivo) {
     );
 }
 
-
 /* ========================================
    AVVIO DELL’APPLICAZIONE
    ======================================== */
@@ -3883,6 +3882,13 @@ aggiornaRiepilogoSpese();
 aggiornaPaginaDesideri();
 
 aggiornaRiepilogoDesideri();
+
+aggiornaPaginaObiettivi();
+
+
+/* ========================================
+   FINE DEL FILE
+   ======================================== */
 
 
 /* ========================================
