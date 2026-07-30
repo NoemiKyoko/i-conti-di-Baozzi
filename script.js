@@ -122,6 +122,8 @@ function vaiAllaPagina(idPagina) {
     ) {
 
         aggiornaRiepilogoDesideri();
+
+aggiornaPaginaObiettivi();
     }
 }
 
@@ -3090,6 +3092,781 @@ function creaRigaTabella(
 
 
     return riga;
+}
+
+
+
+
+/* ========================================
+   PARTE 6 — RISPARMI E OBIETTIVI
+   ======================================== */
+
+const chiaveObiettivi =
+    "conti-baozzi-obiettivi-v1";
+
+const obiettivoCasaPredefinito = {
+    id: "casa",
+    nome: "La nostra casa",
+    raggiunto: 0,
+    traguardo: 0,
+    fisso: true,
+    traguardoFesteggiato: 0
+};
+
+let obiettivi =
+    caricaObiettivi();
+
+let obiettivoInModifica =
+    null;
+
+const elencoObiettivi =
+    document.querySelector(
+        "#elenco-obiettivi"
+    );
+
+const aggiungiObiettivo =
+    document.querySelector(
+        "#aggiungi-obiettivo"
+    );
+
+const contenitoreModuloObiettivo =
+    document.querySelector(
+        "#contenitore-modulo-obiettivo"
+    );
+
+const moduloObiettivo =
+    document.querySelector(
+        "#modulo-obiettivo"
+    );
+
+const titoloModuloObiettivo =
+    document.querySelector(
+        "#titolo-modulo-obiettivo"
+    );
+
+const campoNomeObiettivo =
+    document.querySelector(
+        "#campo-nome-obiettivo"
+    );
+
+const campoRaggiuntoObiettivo =
+    document.querySelector(
+        "#campo-raggiunto-obiettivo"
+    );
+
+const campoTraguardoObiettivo =
+    document.querySelector(
+        "#campo-traguardo-obiettivo"
+    );
+
+const annullaObiettivo =
+    document.querySelector(
+        "#annulla-obiettivo"
+    );
+
+const pioggiaDenaro =
+    document.querySelector(
+        "#pioggia-denaro"
+    );
+
+
+function caricaObiettivi() {
+
+    try {
+
+        const contenuto =
+            localStorage.getItem(
+                chiaveObiettivi
+            );
+
+        if (!contenuto) {
+
+            return [
+                {
+                    ...obiettivoCasaPredefinito
+                }
+            ];
+        }
+
+        const dati =
+            JSON.parse(
+                contenuto
+            );
+
+        if (!Array.isArray(dati)) {
+
+            return [
+                {
+                    ...obiettivoCasaPredefinito
+                }
+            ];
+        }
+
+        const datiPuliti =
+            dati.filter(
+                (obiettivo) =>
+                    obiettivo &&
+                    typeof obiettivo ===
+                        "object"
+            );
+
+        const casaEsistente =
+            datiPuliti.find(
+                (obiettivo) =>
+                    obiettivo.id === "casa"
+            );
+
+        if (!casaEsistente) {
+
+            datiPuliti.unshift(
+                {
+                    ...obiettivoCasaPredefinito
+                }
+            );
+        }
+
+        return datiPuliti;
+
+    } catch (errore) {
+
+        console.error(
+            "Errore nella lettura degli obiettivi:",
+            errore
+        );
+
+        return [
+            {
+                ...obiettivoCasaPredefinito
+            }
+        ];
+    }
+}
+
+
+function salvaObiettivi() {
+
+    try {
+
+        localStorage.setItem(
+            chiaveObiettivi,
+            JSON.stringify(
+                obiettivi
+            )
+        );
+
+    } catch (errore) {
+
+        console.error(
+            "Errore nel salvataggio degli obiettivi:",
+            errore
+        );
+
+        window.alert(
+            "Non è stato possibile salvare gli obiettivi."
+        );
+    }
+}
+
+
+function calcolaPercentualeObiettivo(
+    obiettivo
+) {
+
+    const raggiunto =
+        Number(
+            obiettivo.raggiunto
+        );
+
+    const traguardo =
+        Number(
+            obiettivo.traguardo
+        );
+
+    if (
+        !Number.isFinite(raggiunto) ||
+        !Number.isFinite(traguardo) ||
+        traguardo <= 0
+    ) {
+
+        return 0;
+    }
+
+    return Math.min(
+        100,
+        Math.max(
+            0,
+            raggiunto /
+            traguardo * 100
+        )
+    );
+}
+
+
+function aggiornaPaginaObiettivi() {
+
+    if (!elencoObiettivi) {
+
+        return;
+    }
+
+    elencoObiettivi.innerHTML =
+        "";
+
+    obiettivi.forEach(
+        (obiettivo) => {
+
+            const scheda =
+                document.createElement(
+                    "article"
+                );
+
+            scheda.className =
+                "scheda-obiettivo";
+
+            const testata =
+                document.createElement(
+                    "div"
+                );
+
+            testata.className =
+                "testata-obiettivo";
+
+            const nome =
+                document.createElement(
+                    "h2"
+                );
+
+            nome.className =
+                "nome-obiettivo";
+
+            nome.textContent =
+                `${obiettivo.id === "casa" ? "🏠 " : ""}${obiettivo.nome}`;
+
+            const azioni =
+                document.createElement(
+                    "div"
+                );
+
+            azioni.className =
+                "azioni-obiettivo";
+
+            const modifica =
+                document.createElement(
+                    "button"
+                );
+
+            modifica.type =
+                "button";
+
+            modifica.className =
+                "pulsante-mini-obiettivo";
+
+            modifica.textContent =
+                "Modifica";
+
+            modifica.addEventListener(
+                "click",
+                () => {
+
+                    apriModuloObiettivo(
+                        obiettivo.id
+                    );
+                }
+            );
+
+            azioni.appendChild(
+                modifica
+            );
+
+            if (!obiettivo.fisso) {
+
+                const elimina =
+                    document.createElement(
+                        "button"
+                    );
+
+                elimina.type =
+                    "button";
+
+                elimina.className =
+                    "pulsante-mini-obiettivo";
+
+                elimina.textContent =
+                    "Elimina";
+
+                elimina.addEventListener(
+                    "click",
+                    () => {
+
+                        eliminaObiettivo(
+                            obiettivo.id
+                        );
+                    }
+                );
+
+                azioni.appendChild(
+                    elimina
+                );
+            }
+
+            testata.append(
+                nome,
+                azioni
+            );
+
+            const percorso =
+                document.createElement(
+                    "div"
+                );
+
+            percorso.className =
+                "percorso-obiettivo";
+
+            const percentuale =
+                calcolaPercentualeObiettivo(
+                    obiettivo
+                );
+
+            percorso.style.setProperty(
+                "--progresso",
+                `${percentuale}%`
+            );
+
+            const pista =
+                document.createElement(
+                    "div"
+                );
+
+            pista.className =
+                "pista-obiettivo";
+
+            const baozzi =
+                document.createElement(
+                    "img"
+                );
+
+            baozzi.className =
+                "baozzi-obiettivo";
+
+            baozzi.src =
+                "assets/baozzi-obiettivo.png";
+
+            baozzi.alt =
+                "Baozzi lungo il percorso dell’obiettivo";
+
+            const bandierina =
+                document.createElement(
+                    "span"
+                );
+
+            bandierina.className =
+                "bandierina-obiettivo";
+
+            bandierina.textContent =
+                "🏁";
+
+            percorso.append(
+                pista,
+                baozzi,
+                bandierina
+            );
+
+            const valori =
+                document.createElement(
+                    "div"
+                );
+
+            valori.className =
+                "valori-obiettivo";
+
+            const raggiunto =
+                document.createElement(
+                    "strong"
+                );
+
+            raggiunto.textContent =
+                formattaEuro(
+                    Number(
+                        obiettivo.raggiunto
+                    ) || 0
+                );
+
+            const traguardo =
+                document.createElement(
+                    "strong"
+                );
+
+            traguardo.textContent =
+                Number(
+                    obiettivo.traguardo
+                ) > 0
+                    ? formattaEuro(
+                        Number(
+                            obiettivo.traguardo
+                        )
+                    )
+                    : "Imposta il traguardo";
+
+            valori.append(
+                raggiunto,
+                traguardo
+            );
+
+            scheda.append(
+                testata,
+                percorso,
+                valori
+            );
+
+            elencoObiettivi.appendChild(
+                scheda
+            );
+        }
+    );
+}
+
+
+function apriModuloObiettivo(
+    id = null
+) {
+
+    if (
+        !contenitoreModuloObiettivo ||
+        !moduloObiettivo
+    ) {
+
+        return;
+    }
+
+    obiettivoInModifica =
+        id;
+
+    const obiettivo =
+        id
+            ? obiettivi.find(
+                (voce) =>
+                    voce.id === id
+            )
+            : null;
+
+    titoloModuloObiettivo.textContent =
+        obiettivo
+            ? "Modifica obiettivo"
+            : "Nuovo obiettivo";
+
+    campoNomeObiettivo.value =
+        obiettivo
+            ? obiettivo.nome
+            : "";
+
+    campoRaggiuntoObiettivo.value =
+        obiettivo
+            ? obiettivo.raggiunto
+            : "";
+
+    campoTraguardoObiettivo.value =
+        obiettivo &&
+        Number(obiettivo.traguardo) > 0
+            ? obiettivo.traguardo
+            : "";
+
+    contenitoreModuloObiettivo
+        .classList.remove(
+            "nascosto"
+        );
+
+    aggiungiObiettivo
+        .classList.add(
+            "nascosto"
+        );
+
+    window.setTimeout(
+        () => {
+
+            campoNomeObiettivo.focus();
+        },
+        100
+    );
+}
+
+
+function chiudiModuloObiettivo() {
+
+    if (!contenitoreModuloObiettivo) {
+
+        return;
+    }
+
+    contenitoreModuloObiettivo
+        .classList.add(
+            "nascosto"
+        );
+
+    aggiungiObiettivo
+        .classList.remove(
+            "nascosto"
+        );
+
+    moduloObiettivo.reset();
+
+    obiettivoInModifica =
+        null;
+}
+
+
+function eliminaObiettivo(
+    id
+) {
+
+    const obiettivo =
+        obiettivi.find(
+            (voce) =>
+                voce.id === id
+        );
+
+    if (
+        !obiettivo ||
+        obiettivo.fisso
+    ) {
+
+        return;
+    }
+
+    const conferma =
+        window.confirm(
+            `Eliminare l’obiettivo “${obiettivo.nome}”?`
+        );
+
+    if (!conferma) {
+
+        return;
+    }
+
+    obiettivi =
+        obiettivi.filter(
+            (voce) =>
+                voce.id !== id
+        );
+
+    salvaObiettivi();
+
+    aggiornaPaginaObiettivi();
+}
+
+
+function festeggiaObiettivo() {
+
+    if (!pioggiaDenaro) {
+
+        return;
+    }
+
+    pioggiaDenaro.innerHTML =
+        "";
+
+    const simboli =
+        ["🪙", "🪙", "🪙", "💶"];
+
+    const quantita =
+        30;
+
+    for (
+        let indice = 0;
+        indice < quantita;
+        indice += 1
+    ) {
+
+        const elemento =
+            document.createElement(
+                "span"
+            );
+
+        elemento.className =
+            "denaro-cadente";
+
+        elemento.textContent =
+            simboli[
+                Math.floor(
+                    Math.random() *
+                    simboli.length
+                )
+            ];
+
+        elemento.style.setProperty(
+            "--x",
+            `${Math.random() * 100}%`
+        );
+
+        elemento.style.setProperty(
+            "--dimensione",
+            `${22 + Math.random() * 22}px`
+        );
+
+        elemento.style.setProperty(
+            "--durata",
+            `${2.2 + Math.random() * 1.5}s`
+        );
+
+        elemento.style.setProperty(
+            "--ritardo",
+            `${Math.random() * .8}s`
+        );
+
+        elemento.style.setProperty(
+            "--deriva",
+            `${-55 + Math.random() * 110}px`
+        );
+
+        elemento.style.setProperty(
+            "--rotazione",
+            `${-240 + Math.random() * 480}deg`
+        );
+
+        pioggiaDenaro.appendChild(
+            elemento
+        );
+    }
+
+    window.setTimeout(
+        () => {
+
+            pioggiaDenaro.innerHTML =
+                "";
+        },
+        4800
+    );
+}
+
+
+if (aggiungiObiettivo) {
+
+    aggiungiObiettivo.addEventListener(
+        "click",
+        () => {
+
+            apriModuloObiettivo();
+        }
+    );
+}
+
+
+if (annullaObiettivo) {
+
+    annullaObiettivo.addEventListener(
+        "click",
+        chiudiModuloObiettivo
+    );
+}
+
+
+if (moduloObiettivo) {
+
+    moduloObiettivo.addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+            const nome =
+                campoNomeObiettivo
+                    .value
+                    .trim();
+
+            const raggiunto =
+                Number(
+                    campoRaggiuntoObiettivo
+                        .value
+                );
+
+            const traguardo =
+                Number(
+                    campoTraguardoObiettivo
+                        .value
+                );
+
+            if (
+                !nome ||
+                !Number.isFinite(raggiunto) ||
+                raggiunto < 0 ||
+                !Number.isFinite(traguardo) ||
+                traguardo <= 0
+            ) {
+
+                return;
+            }
+
+            let deveFesteggiare =
+                false;
+
+            if (obiettivoInModifica) {
+
+                const indice =
+                    obiettivi.findIndex(
+                        (voce) =>
+                            voce.id ===
+                            obiettivoInModifica
+                    );
+
+                if (indice === -1) {
+
+                    return;
+                }
+
+                const precedente =
+                    obiettivi[indice];
+
+                const traguardoFesteggiato =
+                    Number(
+                        precedente
+                            .traguardoFesteggiato
+                    ) || 0;
+
+                deveFesteggiare =
+                    raggiunto >= traguardo &&
+                    traguardoFesteggiato !==
+                        traguardo;
+
+                obiettivi[indice] = {
+                    ...precedente,
+                    nome,
+                    raggiunto,
+                    traguardo,
+                    traguardoFesteggiato:
+                        deveFesteggiare
+                            ? traguardo
+                            : traguardoFesteggiato
+                };
+
+            } else {
+
+                deveFesteggiare =
+                    raggiunto >= traguardo;
+
+                obiettivi.push({
+                    id: creaId(),
+                    nome,
+                    raggiunto,
+                    traguardo,
+                    fisso: false,
+                    traguardoFesteggiato:
+                        deveFesteggiare
+                            ? traguardo
+                            : 0
+                });
+            }
+
+            salvaObiettivi();
+
+            chiudiModuloObiettivo();
+
+            aggiornaPaginaObiettivi();
+
+            if (deveFesteggiare) {
+
+                festeggiaObiettivo();
+            }
+        }
+    );
 }
 
 

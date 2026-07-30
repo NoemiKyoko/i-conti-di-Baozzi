@@ -1872,11 +1872,15 @@
 
             </section>
 
+            <!-- ====================================
+                 CAPITOLO V — RISPARMI E OBIETTIVI
+                 ==================================== -->
+
             <section
                 id="risparmi"
                 class="pagina">
 
-                <div class="pagina-carta pagina-decantazione">
+                <div class="pagina-carta pagina-operativa pagina-risparmi">
 
                     <header class="titolo-pagina">
 
@@ -1888,19 +1892,148 @@
 
                     </header>
 
-                    <p>
-                        Qui nasceranno le barre dei vostri obiettivi.
-                    </p>
+                    <div
+                        id="elenco-obiettivi"
+                        class="elenco-obiettivi"
+                        aria-live="polite">
+                    </div>
 
                     <button
-                        class="pulsante-secondario"
-                        type="button"
-                        data-vai="indice">
+                        id="aggiungi-obiettivo"
+                        class="pulsante-libro aggiungi-obiettivo"
+                        type="button">
 
-                        Torna all’indice
+                        + Aggiungi un obiettivo
 
                     </button>
 
+                    <div
+                        id="contenitore-modulo-obiettivo"
+                        class="contenitore-modulo-obiettivo nascosto">
+
+                        <form id="modulo-obiettivo">
+
+                            <h2 id="titolo-modulo-obiettivo">
+                                Nuovo obiettivo
+                            </h2>
+
+                            <label>
+
+                                Nome dell’obiettivo
+
+                                <input
+                                    id="campo-nome-obiettivo"
+                                    type="text"
+                                    maxlength="55"
+                                    placeholder="Es. Viaggio in Giappone"
+                                    required>
+
+                            </label>
+
+                            <label>
+
+                                Importo già raggiunto
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="campo-raggiunto-obiettivo"
+                                        type="number"
+                                        min="0"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <label>
+
+                                Traguardo
+
+                                <div class="campo-importo">
+
+                                    <span>€</span>
+
+                                    <input
+                                        id="campo-traguardo-obiettivo"
+                                        type="number"
+                                        min="0.01"
+                                        step="0.01"
+                                        inputmode="decimal"
+                                        placeholder="0,00"
+                                        required>
+
+                                </div>
+
+                            </label>
+
+                            <div class="azioni-modulo">
+
+                                <button
+                                    class="pulsante-libro"
+                                    type="submit">
+
+                                    Salva
+
+                                </button>
+
+                                <button
+                                    id="annulla-obiettivo"
+                                    class="pulsante-secondario"
+                                    type="button">
+
+                                    Annulla
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="navigazione-capitolo">
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="desideri">
+
+                            ◁ Capitolo precedente
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="indice">
+
+                            Torna all’indice
+
+                        </button>
+
+                        <button
+                            class="pulsante-secondario"
+                            type="button"
+                            data-vai="protezione">
+
+                            Capitolo successivo ▷
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div
+                    id="pioggia-denaro"
+                    class="pioggia-denaro"
+                    aria-hidden="true">
                 </div>
 
             </section>
