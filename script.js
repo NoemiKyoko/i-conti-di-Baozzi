@@ -6143,6 +6143,9 @@ aggiornaPaginaDocumenti();
 
 aggiornaPaginaAbbonamenti();
 
+aggiornaRiepilogoAnnuale();
+
+
 aggiornaRiepilogoDesideri();
 
 aggiornaPaginaObiettivi();
