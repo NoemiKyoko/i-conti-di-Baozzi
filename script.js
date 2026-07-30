@@ -90,43 +90,48 @@ function vaiAllaPagina(idPagina) {
     */
 
     if (
-        idPagina ===
-        "riepilogo-casa"
-    ) {
+    idPagina ===
+    "riepilogo-casa"
+) {
 
-        aggiornaRiepilogoCasa();
-    }
-
-
-    if (
-        idPagina ===
-        "riepilogo-entrate"
-    ) {
-
-        aggiornaRiepilogoEntrate();
-    }
-
-
-    if (
-        idPagina ===
-        "riepilogo-spese"
-    ) {
-
-        aggiornaRiepilogoSpese();
-    }
-
-
-    if (
-        idPagina ===
-        "riepilogo-desideri"
-    ) {
-
-        aggiornaRiepilogoDesideri();
-
-aggiornaPaginaObiettivi();
-    }
+    aggiornaRiepilogoCasa();
 }
 
+
+if (
+    idPagina ===
+    "riepilogo-entrate"
+) {
+
+    aggiornaRiepilogoEntrate();
+}
+
+
+if (
+    idPagina ===
+    "riepilogo-spese"
+) {
+
+    aggiornaRiepilogoSpese();
+}
+
+
+if (
+    idPagina ===
+    "riepilogo-desideri"
+) {
+
+    aggiornaRiepilogoDesideri();
+}
+
+
+if (
+    idPagina ===
+    "riepilogo-annuale"
+) {
+
+    aggiornaRiepilogoAnnuale();
+}
 
 /* ========================================
    IL LIBRO ESCE DALLO SCAFFALE
