@@ -2897,3 +2897,35 @@ body.libro-interno-visibile
             );
     }
 }
+/* ========================================
+   CORREZIONE ALLINEAMENTO RIEPILOGO ANNUALE
+   ======================================== */
+
+.scheda-riepilogo-annuale {
+    width: min(78%, 700px);
+    margin: 0 auto;
+}
+
+.riepilogo-righe {
+    width: 100%;
+}
+
+.riga-riepilogo {
+    padding-left: clamp(8px, 1.5vw, 16px);
+    padding-right: clamp(8px, 1.5vw, 16px);
+}
+
+.nota-annuale {
+    width: min(88%, 620px);
+    margin: 0 auto;
+}
+
+#riepilogo-nota {
+    display: block;
+    width: 100%;
+}
+
+.pagina-riepilogo-annuale .navigazione-capitolo {
+    width: min(82%, 720px);
+    margin-inline: auto;
+}
