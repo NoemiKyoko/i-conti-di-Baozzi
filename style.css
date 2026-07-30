@@ -3183,3 +3183,122 @@ body.libro-interno-visibile
     justify-content: center;
     margin-top: clamp(12px, 2vh, 20px);
 }
+
+/* ========================================
+   CORREZIONI FINALI — CENTRAGGIO E ULTIMA PAGINA
+   ======================================== */
+
+/* La pagina resta sempre centrata nella finestra. */
+.pagina,
+.pagina.attiva {
+    left: 50%;
+    top: 50%;
+    margin: 0;
+}
+
+/* Contenuti dei capitoli centrati nella carta. */
+.elenco-sezioni,
+.scelte-desideri,
+.azioni-pagina {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ultima pagina: tutto deve rientrare senza scorrere. */
+#riepilogo-annuale .pagina-carta {
+    height: min(94vh, 840px);
+    min-height: 0;
+    max-height: 94vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-top: clamp(22px, 3vh, 38px);
+    padding-bottom: clamp(18px, 2.5vh, 30px);
+}
+
+#riepilogo-annuale .titolo-pagina {
+    margin-bottom: clamp(6px, 1vh, 12px);
+}
+
+#riepilogo-annuale .titolo-pagina h1 {
+    margin-block: 2px;
+}
+
+#riepilogo-annuale .scheda-riepilogo-annuale {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    width: min(78%, 700px);
+    margin: 0 auto;
+}
+
+#riepilogo-annuale .scheda-riepilogo-annuale > h2 {
+    margin: 0 0 clamp(8px, 1.2vh, 14px);
+    font-size: clamp(27px, 3.8vh, 40px);
+}
+
+#riepilogo-annuale .riepilogo-righe {
+    gap: 0;
+}
+
+#riepilogo-annuale .riga-riepilogo {
+    padding: clamp(4px, .65vh, 7px) clamp(8px, 1.5vw, 16px);
+}
+
+#riepilogo-annuale .riga-riepilogo strong {
+    min-width: 6.5em;
+    text-align: right;
+    direction: ltr;
+}
+
+#riepilogo-annuale .separatore-riepilogo {
+    margin: clamp(8px, 1.2vh, 13px) auto;
+}
+
+#riepilogo-annuale .nota-annuale {
+    gap: clamp(4px, .7vh, 7px);
+}
+
+#riepilogo-annuale #riepilogo-nota {
+    min-height: clamp(64px, 9vh, 92px);
+    max-height: clamp(64px, 9vh, 92px);
+    resize: none;
+}
+
+#riepilogo-annuale .azioni-modulo {
+    margin-top: clamp(5px, .8vh, 9px);
+}
+
+#riepilogo-annuale .navigazione-finale {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(4px, .7vh, 8px);
+}
+
+/* Su schermi più bassi riduciamo ancora gli spazi, senza scroll. */
+@media (max-height: 720px) {
+    #riepilogo-annuale .pagina-carta {
+        padding-top: 18px;
+        padding-bottom: 16px;
+    }
+
+    #riepilogo-annuale .titolo-pagina {
+        margin-bottom: 4px;
+    }
+
+    #riepilogo-annuale .scheda-riepilogo-annuale > h2 {
+        margin-bottom: 6px;
+        font-size: 28px;
+    }
+
+    #riepilogo-annuale .riga-riepilogo {
+        padding-block: 3px;
+    }
+
+    #riepilogo-annuale #riepilogo-nota {
+        min-height: 58px;
+        max-height: 58px;
+        line-height: 27px;
+    }
+}
