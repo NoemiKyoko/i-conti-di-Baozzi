@@ -3868,7 +3868,814 @@ if (moduloObiettivo) {
         }
     );
 }
+/* ========================================
+   PARTE 7 — DOCUMENTI
+   ======================================== */
 
+const chiaveArchivioDocumenti =
+    "conti-baozzi-documenti-v1";
+
+let archivioDocumenti =
+    caricaElenco(
+        chiaveArchivioDocumenti
+    );
+
+let documentoInModifica =
+    null;
+
+
+/* ========================================
+   ELEMENTI DEL CAPITOLO
+   ======================================== */
+
+const documentiStatoVuoto =
+    document.querySelector(
+        "#documenti-stato-vuoto"
+    );
+
+const documentiElenco =
+    document.querySelector(
+        "#documenti-elenco"
+    );
+
+const documentiSchede =
+    document.querySelector(
+        "#documenti-schede"
+    );
+
+
+const documentiAggiungiPrimo =
+    document.querySelector(
+        "#documenti-aggiungi-primo"
+    );
+
+const documentiAggiungiAltro =
+    document.querySelector(
+        "#documenti-aggiungi-altro"
+    );
+
+
+const documentiContenitoreModulo =
+    document.querySelector(
+        "#documenti-contenitore-modulo"
+    );
+
+const documentiModulo =
+    document.querySelector(
+        "#documenti-modulo"
+    );
+
+const documentiTitoloModulo =
+    document.querySelector(
+        "#documenti-titolo-modulo"
+    );
+
+
+const documentiCampoTitolo =
+    document.querySelector(
+        "#documenti-campo-titolo"
+    );
+
+const documentiCampoCategoria =
+    document.querySelector(
+        "#documenti-campo-categoria"
+    );
+
+const documentiCampoData =
+    document.querySelector(
+        "#documenti-campo-data"
+    );
+
+const documentiCampoScadenza =
+    document.querySelector(
+        "#documenti-campo-scadenza"
+    );
+
+const documentiCampoLink =
+    document.querySelector(
+        "#documenti-campo-link"
+    );
+
+const documentiCampoNote =
+    document.querySelector(
+        "#documenti-campo-note"
+    );
+
+const documentiAnnulla =
+    document.querySelector(
+        "#documenti-annulla"
+    );
+
+
+/* ========================================
+   VISUALIZZAZIONE DEI DOCUMENTI
+   ======================================== */
+
+function aggiornaPaginaDocumenti() {
+
+    if (
+        !documentiStatoVuoto ||
+        !documentiElenco ||
+        !documentiSchede
+    ) {
+
+        return;
+    }
+
+
+    chiudiModuloDocumenti();
+
+
+    documentiSchede.innerHTML =
+        "";
+
+
+    if (
+        archivioDocumenti.length === 0
+    ) {
+
+        documentiStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
+
+        documentiElenco
+            .classList.add(
+                "nascosto"
+            );
+
+        return;
+    }
+
+
+    documentiStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    documentiElenco
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    const documentiOrdinati =
+        [...archivioDocumenti].sort(
+            (primo, secondo) => {
+
+                const confrontoCategoria =
+                    primo.categoria.localeCompare(
+                        secondo.categoria,
+                        "it"
+                    );
+
+
+                if (
+                    confrontoCategoria !== 0
+                ) {
+
+                    return confrontoCategoria;
+                }
+
+
+                return primo.titolo.localeCompare(
+                    secondo.titolo,
+                    "it"
+                );
+            }
+        );
+
+
+    documentiOrdinati.forEach(
+        (documento) => {
+
+            const scheda =
+                creaSchedaDocumento(
+                    documento
+                );
+
+
+            documentiSchede.appendChild(
+                scheda
+            );
+        }
+    );
+}
+
+
+/* ========================================
+   CREAZIONE DI UNA SCHEDA
+   ======================================== */
+
+function creaSchedaDocumento(
+    documento
+) {
+
+    const scheda =
+        document.createElement(
+            "article"
+        );
+
+    scheda.className =
+        "scheda-documento";
+
+
+    const testata =
+        document.createElement(
+            "div"
+        );
+
+    testata.className =
+        "testata-documento";
+
+
+    const intestazione =
+        document.createElement(
+            "div"
+        );
+
+    intestazione.className =
+        "intestazione-documento";
+
+
+    const titolo =
+        document.createElement(
+            "h2"
+        );
+
+    titolo.className =
+        "titolo-documento";
+
+    titolo.textContent =
+        documento.titolo;
+
+
+    const categoria =
+        document.createElement(
+            "span"
+        );
+
+    categoria.className =
+        "categoria-documento";
+
+    categoria.textContent =
+        documento.categoria;
+
+
+    intestazione.append(
+        titolo,
+        categoria
+    );
+
+
+    testata.appendChild(
+        intestazione
+    );
+
+
+    const dettagli =
+        document.createElement(
+            "div"
+        );
+
+    dettagli.className =
+        "dettagli-documento";
+
+
+    if (documento.data) {
+
+        const data =
+            document.createElement(
+                "span"
+            );
+
+        data.className =
+            "data-documento";
+
+        data.textContent =
+            `Data: ${formattaData(
+                documento.data
+            )}`;
+
+
+        dettagli.appendChild(
+            data
+        );
+    }
+
+
+    if (documento.scadenza) {
+
+        const scadenza =
+            document.createElement(
+                "span"
+            );
+
+        scadenza.className =
+            "scadenza-documento";
+
+        scadenza.textContent =
+            `Scadenza: ${formattaData(
+                documento.scadenza
+            )}`;
+
+
+        dettagli.appendChild(
+            scadenza
+        );
+    }
+
+
+    if (documento.note) {
+
+        const note =
+            document.createElement(
+                "span"
+            );
+
+        note.className =
+            "note-documento";
+
+        note.textContent =
+            documento.note;
+
+
+        dettagli.appendChild(
+            note
+        );
+    }
+
+
+    const azioni =
+        document.createElement(
+            "div"
+        );
+
+    azioni.className =
+        "azioni-documento";
+
+
+    const apri =
+        document.createElement(
+            "a"
+        );
+
+    apri.className =
+        "pulsante-documento";
+
+    apri.href =
+        documento.link;
+
+    apri.target =
+        "_blank";
+
+    apri.rel =
+        "noopener noreferrer";
+
+    apri.textContent =
+        "Apri documento";
+
+
+    const modifica =
+        document.createElement(
+            "button"
+        );
+
+    modifica.className =
+        "pulsante-documento";
+
+    modifica.type =
+        "button";
+
+    modifica.textContent =
+        "Modifica";
+
+
+    modifica.addEventListener(
+        "click",
+        () => {
+
+            apriModuloDocumenti(
+                documento.id
+            );
+        }
+    );
+
+
+    const elimina =
+        document.createElement(
+            "button"
+        );
+
+    elimina.className =
+        "pulsante-documento";
+
+    elimina.type =
+        "button";
+
+    elimina.textContent =
+        "Elimina";
+
+
+    elimina.addEventListener(
+        "click",
+        () => {
+
+            eliminaDocumento(
+                documento.id
+            );
+        }
+    );
+
+
+    azioni.append(
+        apri,
+        modifica,
+        elimina
+    );
+
+
+    scheda.append(
+        testata,
+        dettagli,
+        azioni
+    );
+
+
+    return scheda;
+}
+
+
+/* ========================================
+   APERTURA DEL MODULO
+   ======================================== */
+
+function apriModuloDocumenti(
+    id = null
+) {
+
+    if (
+        !documentiContenitoreModulo ||
+        !documentiModulo
+    ) {
+
+        return;
+    }
+
+
+    documentoInModifica =
+        id;
+
+
+    const documento =
+        id
+            ? archivioDocumenti.find(
+                (voce) =>
+
+                    voce.id === id
+            )
+            : null;
+
+
+    documentiTitoloModulo.textContent =
+        documento
+            ? "Modifica documento"
+            : "Nuovo documento";
+
+
+    documentiModulo.reset();
+
+
+    documentiCampoTitolo.value =
+        documento
+            ? documento.titolo
+            : "";
+
+    documentiCampoCategoria.value =
+        documento
+            ? documento.categoria
+            : "";
+
+    documentiCampoData.value =
+        documento
+            ? documento.data
+            : "";
+
+    documentiCampoScadenza.value =
+        documento
+            ? documento.scadenza
+            : "";
+
+    documentiCampoLink.value =
+        documento
+            ? documento.link
+            : "";
+
+    documentiCampoNote.value =
+        documento
+            ? documento.note
+            : "";
+
+
+    documentiStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    documentiElenco
+        .classList.add(
+            "nascosto"
+        );
+
+    documentiContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    window.setTimeout(
+        () => {
+
+            documentiCampoTitolo.focus();
+        },
+        120
+    );
+}
+
+
+/* ========================================
+   CHIUSURA DEL MODULO
+   ======================================== */
+
+function chiudiModuloDocumenti() {
+
+    if (
+        documentiContenitoreModulo
+    ) {
+
+        documentiContenitoreModulo
+            .classList.add(
+                "nascosto"
+            );
+    }
+
+
+    documentoInModifica =
+        null;
+}
+
+
+/* ========================================
+   PULSANTI DEL MODULO
+   ======================================== */
+
+[
+    documentiAggiungiPrimo,
+    documentiAggiungiAltro
+].forEach(
+    (pulsante) => {
+
+        if (pulsante) {
+
+            pulsante.addEventListener(
+                "click",
+                () => {
+
+                    apriModuloDocumenti();
+                }
+            );
+        }
+    }
+);
+
+
+if (documentiAnnulla) {
+
+    documentiAnnulla.addEventListener(
+        "click",
+        aggiornaPaginaDocumenti
+    );
+}
+
+
+/* ========================================
+   SALVATAGGIO DEL DOCUMENTO
+   ======================================== */
+
+if (documentiModulo) {
+
+    documentiModulo.addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+
+            const titolo =
+                documentiCampoTitolo
+                    .value
+                    .trim();
+
+            const categoria =
+                documentiCampoCategoria
+                    .value;
+
+            const data =
+                documentiCampoData
+                    .value;
+
+            const scadenza =
+                documentiCampoScadenza
+                    .value;
+
+            const linkScritto =
+                documentiCampoLink
+                    .value
+                    .trim();
+
+            const note =
+                documentiCampoNote
+                    .value
+                    .trim();
+
+
+            if (
+                !titolo ||
+                !categoria ||
+                !linkScritto
+            ) {
+
+                window.alert(
+                    "Inserisci titolo, categoria e link del documento."
+                );
+
+                return;
+            }
+
+
+            let linkValido =
+                null;
+
+
+            try {
+
+                linkValido =
+                    new URL(
+                        linkScritto
+                    );
+
+            } catch (errore) {
+
+                window.alert(
+                    "Il collegamento inserito non è valido."
+                );
+
+                return;
+            }
+
+
+            if (
+                ![
+                    "http:",
+                    "https:"
+                ].includes(
+                    linkValido.protocol
+                )
+            ) {
+
+                window.alert(
+                    "Il collegamento deve iniziare con http o https."
+                );
+
+                return;
+            }
+
+
+            const datiDocumento = {
+
+                titolo:
+                    titolo,
+
+                categoria:
+                    categoria,
+
+                data:
+                    data,
+
+                scadenza:
+                    scadenza,
+
+                link:
+                    linkValido.href,
+
+                note:
+                    note
+            };
+
+
+            if (documentoInModifica) {
+
+                const indice =
+                    archivioDocumenti
+                        .findIndex(
+                            (documento) =>
+
+                                documento.id ===
+                                documentoInModifica
+                        );
+
+
+                if (indice === -1) {
+
+                    return;
+                }
+
+
+                archivioDocumenti[
+                    indice
+                ] = {
+
+                    ...archivioDocumenti[
+                        indice
+                    ],
+
+                    ...datiDocumento
+                };
+
+            } else {
+
+                archivioDocumenti.push({
+
+                    id:
+                        creaId(),
+
+                    ...datiDocumento
+                });
+            }
+
+
+            salvaArchivio(
+                chiaveArchivioDocumenti,
+                archivioDocumenti
+            );
+
+
+            aggiornaPaginaDocumenti();
+        }
+    );
+}
+
+
+/* ========================================
+   ELIMINAZIONE DEL DOCUMENTO
+   ======================================== */
+
+function eliminaDocumento(
+    id
+) {
+
+    const documento =
+        archivioDocumenti.find(
+            (voce) =>
+
+                voce.id === id
+        );
+
+
+    if (!documento) {
+
+        return;
+    }
+
+
+    const conferma =
+        window.confirm(
+            `Eliminare “${documento.titolo}”?`
+        );
+
+
+    if (!conferma) {
+
+        return;
+    }
+
+
+    archivioDocumenti =
+        archivioDocumenti.filter(
+            (voce) =>
+
+                voce.id !== id
+        );
+
+
+    salvaArchivio(
+        chiaveArchivioDocumenti,
+        archivioDocumenti
+    );
+
+
+    aggiornaPaginaDocumenti();
+}
 /* ========================================
    AVVIO DELL’APPLICAZIONE
    ======================================== */
@@ -3884,11 +4691,6 @@ aggiornaPaginaDesideri();
 aggiornaRiepilogoDesideri();
 
 aggiornaPaginaObiettivi();
-
-
-/* ========================================
-   FINE DEL FILE
-   ======================================== */
 
 
 /* ========================================
