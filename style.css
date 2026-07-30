@@ -3181,7 +3181,5 @@ body.libro-interno-visibile
 .navigazione-finale {
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    margin-top: clamp(24px, 4vh, 40px);
+    margin-top: clamp(12px, 2vh, 20px);
 }
