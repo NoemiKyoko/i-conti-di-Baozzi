@@ -2043,39 +2043,282 @@
 
             </section>
 
+<!-- ====================================
+     CAPITOLO VI — DOCUMENTI
+     ==================================== -->
 
-            <section
-                id="protezione"
-                class="pagina">
+<section
+    id="documenti"
+    class="pagina">
 
-                <div class="pagina-carta pagina-decantazione">
+    <div class="pagina-carta pagina-documenti">
 
-                    <header class="titolo-pagina">
+        <header class="titolo-pagina">
 
-                        <span class="ornamento">❦</span>
+            <span class="ornamento">❦</span>
 
-                        <h1>Protezione e serenità</h1>
+            <h1>Documenti</h1>
 
-                        <span class="ornamento">❦</span>
+            <span class="ornamento">❦</span>
 
-                    </header>
+        </header>
 
-                    <p>
-                        Questo capitolo è pronto a crescere.
-                    </p>
+
+        <!-- ELENCO DEI DOCUMENTI -->
+
+        <div
+            id="documenti-stato-vuoto"
+            class="stato-vuoto documenti-stato-vuoto">
+
+            <p>
+                Qui puoi raccogliere i collegamenti
+                ai documenti importanti della vostra famiglia.
+            </p>
+
+            <button
+                id="documenti-aggiungi-primo"
+                class="pulsante-secondario"
+                type="button">
+
+                + Aggiungi un documento
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="documenti-elenco"
+            class="documenti-elenco nascosto">
+
+            <div
+                id="documenti-schede"
+                class="documenti-schede">
+            </div>
+
+            <button
+                id="documenti-aggiungi-altro"
+                class="pulsante-secondario"
+                type="button">
+
+                + Aggiungi un documento
+
+            </button>
+
+        </div>
+
+
+        <!-- MODULO DOCUMENTO -->
+
+        <div
+            id="documenti-contenitore-modulo"
+            class="documenti-contenitore-modulo nascosto">
+
+            <form
+                id="documenti-modulo">
+
+                <h2 id="documenti-titolo-modulo">
+                    Nuovo documento
+                </h2>
+
+
+                <label>
+
+                    <span>
+                        Titolo del documento
+                    </span>
+
+                    <input
+                        id="documenti-campo-titolo"
+                        name="titolo"
+                        type="text"
+                        placeholder="Es. Polizza della casa"
+                        autocomplete="off"
+                        required>
+
+                </label>
+
+
+                <label>
+
+                    <span>
+                        Categoria
+                    </span>
+
+                    <select
+                        id="documenti-campo-categoria"
+                        name="categoria"
+                        required>
+
+                        <option value="">
+                            Scegli una categoria
+                        </option>
+
+                        <option value="Casa">
+                            Casa
+                        </option>
+
+                        <option value="Auto">
+                            Auto
+                        </option>
+
+                        <option value="Assicurazioni">
+                            Assicurazioni
+                        </option>
+
+                        <option value="Garanzie">
+                            Garanzie
+                        </option>
+
+                        <option value="Contratti">
+                            Contratti
+                        </option>
+
+                        <option value="Salute">
+                            Salute
+                        </option>
+
+                        <option value="Greta">
+                            Greta
+                        </option>
+
+                        <option value="Altro">
+                            Altro
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <div class="documenti-campi-date">
+
+                    <label>
+
+                        <span>
+                            Data
+                        </span>
+
+                        <input
+                            id="documenti-campo-data"
+                            name="data"
+                            type="date">
+
+                    </label>
+
+
+                    <label>
+
+                        <span>
+                            Scadenza
+                        </span>
+
+                        <input
+                            id="documenti-campo-scadenza"
+                            name="scadenza"
+                            type="date">
+
+                    </label>
+
+                </div>
+
+
+                <label>
+
+                    <span>
+                        Link al documento
+                    </span>
+
+                    <input
+                        id="documenti-campo-link"
+                        name="link"
+                        type="url"
+                        inputmode="url"
+                        placeholder="Incolla qui il link di Google Drive"
+                        autocomplete="off"
+                        required>
+
+                </label>
+
+
+                <label>
+
+                    <span>
+                        Note
+                    </span>
+
+                    <textarea
+                        id="documenti-campo-note"
+                        name="note"
+                        rows="4"
+                        placeholder="Informazioni utili o promemoria"></textarea>
+
+                </label>
+
+
+                <div class="azioni-modulo documenti-azioni-modulo">
 
                     <button
                         class="pulsante-secondario"
-                        type="button"
-                        data-vai="indice">
+                        type="submit">
 
-                        Torna all’indice
+                        Salva
+
+                    </button>
+
+                    <button
+                        id="documenti-annulla"
+                        class="pulsante-testo"
+                        type="button">
+
+                        Annulla
 
                     </button>
 
                 </div>
 
-            </section>
+            </form>
+
+        </div>
+
+
+        <!-- NAVIGAZIONE -->
+
+        <div class="navigazione-capitolo">
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="risparmi">
+
+                ◁ Capitolo precedente
+
+            </button>
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="indice">
+
+                Torna all’indice
+
+            </button>
+
+            <button
+                class="pulsante-secondario"
+                type="button"
+                data-vai="note">
+
+                Capitolo successivo ▷
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+            
 
 
             <section
