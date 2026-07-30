@@ -2620,18 +2620,19 @@ function formattaEuro(
     importo
 ) {
 
-    return new Intl.NumberFormat(
-        "it-IT",
-        {
-            style:
-                "currency",
+    const valore =
+        Number(importo) || 0;
 
-            currency:
-                "EUR"
-        }
-    ).format(
-        Number(importo) || 0
-    );
+    const cifra =
+        new Intl.NumberFormat(
+            "it-IT",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ).format(valore);
+
+    return `€ ${cifra}`;
 }
 
 
@@ -5601,12 +5602,12 @@ const riepilogoAnno =
 
 const riepilogoEntrate =
     document.querySelector(
-        "#riepilogo-entrate"
+        "#riepilogo-annuale-entrate"
     );
 
 const riepilogoSpese =
     document.querySelector(
-        "#riepilogo-spese"
+        "#riepilogo-annuale-spese"
     );
 
 const riepilogoRisparmio =

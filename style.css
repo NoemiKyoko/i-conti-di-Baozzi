@@ -3021,3 +3021,156 @@ body.libro-interno-visibile
     direction: ltr;
     text-align: right;
 }
+
+
+/* ========================================
+   REVISIONE V1 — IMPAGINAZIONE COORDINATA
+   ======================================== */
+
+/* Le categorie sono righe di libro, non riquadri da app. */
+.elenco-sezioni,
+.scelte-desideri {
+    width: min(100%, 760px);
+    margin-inline: auto;
+}
+
+.sezione-casa,
+.sezione-entrate,
+.sezione-spese,
+.scelta-desideri {
+    min-width: 0;
+    padding: clamp(12px, 2vh, 19px) clamp(8px, 1.2vw, 14px);
+    border: 0;
+    border-bottom: 1px solid rgba(91, 58, 31, .24);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.sezione-casa:active,
+.sezione-entrate:active,
+.sezione-spese:active,
+.scelta-desideri:active {
+    background: transparent;
+}
+
+.sezione-casa > span,
+.sezione-entrate > span,
+.sezione-spese > span,
+.titolo-categoria > span,
+.icona-vuota {
+    display: none !important;
+}
+
+/* Azioni iniziali sempre centrate nello stesso modo. */
+.azioni-pagina {
+    width: min(100%, 620px);
+    margin-inline: auto;
+}
+
+/* Navigazione inferiore identica in tutti i capitoli. */
+.navigazione-capitolo {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    width: 100%;
+    margin-top: auto;
+}
+
+.navigazione-capitolo button {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+}
+
+/* Riepiloghi: contenuto centrato e importi lontani dalla cornice. */
+#riepilogo-casa .pagina-carta,
+#riepilogo-entrate .pagina-carta,
+#riepilogo-spese .pagina-carta,
+#riepilogo-desideri .pagina-carta {
+    padding-inline: clamp(38px, 6vw, 74px);
+}
+
+#riepilogo-casa .riga-riepilogo,
+#riepilogo-entrate .riga-riepilogo,
+#riepilogo-spese .riga-riepilogo,
+#riepilogo-desideri .riga-riepilogo,
+#riepilogo-casa .totale-capitolo,
+#riepilogo-entrate .totale-capitolo,
+#riepilogo-spese .totale-capitolo,
+#riepilogo-desideri .totale-capitolo {
+    width: min(100%, 720px);
+    margin-inline: auto;
+}
+
+/* Il riepilogo annuale resta una pagina fissa, senza scorrimento. */
+#riepilogo-annuale .pagina-carta {
+    height: min(92vh, 820px);
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-top: clamp(28px, 4vh, 48px);
+    padding-bottom: clamp(24px, 3.5vh, 42px);
+}
+
+#riepilogo-annuale .titolo-pagina {
+    margin-bottom: clamp(10px, 1.5vh, 18px);
+}
+
+#riepilogo-annuale .scheda-riepilogo-annuale {
+    width: min(78%, 700px);
+    margin: 0 auto;
+}
+
+#riepilogo-annuale .scheda-riepilogo-annuale > h2 {
+    margin-bottom: clamp(14px, 2vh, 22px);
+    font-size: clamp(28px, 4vh, 42px);
+}
+
+#riepilogo-annuale .riepilogo-righe {
+    gap: clamp(6px, 1vh, 11px);
+}
+
+#riepilogo-annuale .riga-riepilogo {
+    padding: clamp(5px, .8vh, 8px) clamp(8px, 1.5vw, 16px);
+}
+
+#riepilogo-annuale .riga-riepilogo strong {
+    min-width: 6.5em;
+    text-align: right;
+    direction: ltr;
+}
+
+#riepilogo-annuale .separatore-riepilogo {
+    margin: clamp(12px, 1.8vh, 20px) auto;
+}
+
+#riepilogo-annuale .nota-annuale {
+    gap: clamp(6px, 1vh, 10px);
+}
+
+#riepilogo-annuale #riepilogo-nota {
+    min-height: clamp(96px, 15vh, 145px);
+    max-height: clamp(96px, 15vh, 145px);
+    resize: none;
+}
+
+#riepilogo-annuale .scheda-riepilogo-annuale .azioni-modulo {
+    margin-top: clamp(8px, 1.2vh, 14px);
+}
+
+#riepilogo-annuale .navigazione-capitolo {
+    width: min(82%, 720px);
+    margin-inline: auto;
+    padding-top: clamp(10px, 1.5vh, 18px);
+}
+
+@media (max-width: 560px) {
+    .elenco-sezioni,
+    .scelte-desideri {
+        grid-template-columns: 1fr;
+    }
+
+    #riepilogo-annuale .scheda-riepilogo-annuale {
+        width: 88%;
+    }
+}

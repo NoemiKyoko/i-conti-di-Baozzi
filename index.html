@@ -14,15 +14,6 @@
         rel="stylesheet"
         href="style.css">
 </head>
-<script>
-window.onerror = function (messaggio, sorgente, riga, colonna) {
-    alert(
-        messaggio +
-        "\nRiga: " + riga +
-        "\nColonna: " + colonna
-    );
-};
-</script>
 <body>
 
     <main id="scena">
@@ -223,7 +214,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="luce">
 
-                            <span>💡</span>
+                            <span></span>
                             <strong>Luce</strong>
 
                         </button>
@@ -233,7 +224,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="acqua">
 
-                            <span>💧</span>
+                            <span></span>
                             <strong>Acqua</strong>
 
                         </button>
@@ -243,7 +234,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="gas">
 
-                            <span>🔥</span>
+                            <span></span>
                             <strong>Gas</strong>
 
                         </button>
@@ -253,7 +244,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="internet">
 
-                            <span>📶</span>
+                            <span></span>
                             <strong>Internet</strong>
 
                         </button>
@@ -263,7 +254,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="condominio">
 
-                            <span>🏢</span>
+                            <span></span>
                             <strong>Condominio</strong>
 
                         </button>
@@ -273,7 +264,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="tasse">
 
-                            <span>🧾</span>
+                            <span></span>
                             <strong>Tasse</strong>
 
                         </button>
@@ -283,7 +274,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="manutenzione">
 
-                            <span>🛠️</span>
+                            <span></span>
                             <strong>Manutenzione</strong>
 
                         </button>
@@ -293,7 +284,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-casa="altro">
 
-                            <span>🪴</span>
+                            <span></span>
                             <strong>Acquisti per la casa</strong>
 
                         </button>
@@ -351,7 +342,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                         <div class="titolo-categoria">
 
                             <span id="casa-icona-categoria">
-                                💡
+                                
                             </span>
 
                             <h1 id="casa-titolo-categoria">
@@ -380,7 +371,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             id="casa-icona-stato-vuoto"
                             class="icona-vuota">
 
-                            💡
+                            
 
                         </div>
 
@@ -557,7 +548,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>💡 Luce</span>
+                        <span> Luce</span>
 
                         <strong id="totale-luce">
                             € 0,00
@@ -567,7 +558,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>💧 Acqua</span>
+                        <span> Acqua</span>
 
                         <strong id="totale-acqua">
                             € 0,00
@@ -577,7 +568,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🔥 Gas</span>
+                        <span> Gas</span>
 
                         <strong id="totale-gas">
                             € 0,00
@@ -587,7 +578,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>📶 Internet</span>
+                        <span> Internet</span>
 
                         <strong id="totale-internet">
                             € 0,00
@@ -597,7 +588,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🏢 Condominio</span>
+                        <span> Condominio</span>
 
                         <strong id="totale-condominio">
                             € 0,00
@@ -607,7 +598,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🧾 Tasse</span>
+                        <span> Tasse</span>
 
                         <strong id="totale-tasse">
                             € 0,00
@@ -617,7 +608,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🛠️ Manutenzione</span>
+                        <span> Manutenzione</span>
 
                         <strong id="totale-manutenzione">
                             € 0,00
@@ -627,7 +618,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🪴 Acquisti per la casa</span>
+                        <span> Acquisti per la casa</span>
 
                         <strong id="totale-altro">
                             € 0,00
@@ -699,7 +690,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-entrate="stipendio">
 
-                            <span>💼</span>
+                            <span></span>
                             <strong>Stipendio</strong>
 
                         </button>
@@ -709,7 +700,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-entrate="extra">
 
-                            <span>🎁</span>
+                            <span></span>
                             <strong>Entrate extra</strong>
 
                         </button>
@@ -767,7 +758,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                         <div class="titolo-categoria">
 
                             <span id="entrate-icona-categoria">
-                                💼
+                                
                             </span>
 
                             <h1 id="entrate-titolo-categoria">
@@ -796,7 +787,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             id="entrate-icona-stato-vuoto"
                             class="icona-vuota">
 
-                            💼
+                            
 
                         </div>
 
@@ -973,7 +964,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>💼 Stipendio</span>
+                        <span> Stipendio</span>
 
                         <strong id="totale-stipendio">
                             € 0,00
@@ -983,7 +974,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🎁 Entrate extra</span>
+                        <span> Entrate extra</span>
 
                         <strong id="totale-extra">
                             € 0,00
@@ -1055,7 +1046,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-spese="alimentari">
 
-                            <span>🛒</span>
+                            <span></span>
                             <strong>Spesa alimentare</strong>
 
                         </button>
@@ -1065,7 +1056,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-spese="trasporti">
 
-                            <span>🚗</span>
+                            <span></span>
                             <strong>Auto e trasporti</strong>
 
                         </button>
@@ -1075,7 +1066,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-spese="salute">
 
-                            <span>💊</span>
+                            <span></span>
                             <strong>Salute</strong>
 
                         </button>
@@ -1085,7 +1076,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-spese="greta">
 
-                            <span>💗</span>
+                            <span></span>
                             <strong>Greta</strong>
 
                         </button>
@@ -1095,7 +1086,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             type="button"
                             data-categoria-spese="regali">
 
-                            <span>🎁</span>
+                            <span></span>
                             <strong>Regali</strong>
 
                         </button>
@@ -1154,7 +1145,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                         <div class="titolo-categoria">
 
                             <span id="spese-icona-categoria">
-                                🛒
+                                
                             </span>
 
                             <h1 id="spese-titolo-categoria">
@@ -1195,7 +1186,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
                             id="spese-icona-stato-vuoto"
                             class="icona-vuota">
 
-                            🛒
+                            
 
                         </div>
 
@@ -1372,7 +1363,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🛒 Spesa alimentare</span>
+                        <span> Spesa alimentare</span>
 
                         <strong id="totale-alimentari">
                             € 0,00
@@ -1382,7 +1373,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🚗 Auto e trasporti</span>
+                        <span> Auto e trasporti</span>
 
                         <strong id="totale-trasporti">
                             € 0,00
@@ -1392,7 +1383,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>💊 Salute</span>
+                        <span> Salute</span>
 
                         <strong id="totale-salute">
                             € 0,00
@@ -1402,7 +1393,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>👶 Greta</span>
+                        <span> Greta</span>
 
                         <strong id="totale-greta">
                             € 0,00
@@ -1412,7 +1403,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <div class="riga-riepilogo">
 
-                        <span>🎁 Regali</span>
+                        <span> Regali</span>
 
                         <strong id="totale-regali">
                             € 0,00
@@ -2315,7 +2306,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
             <button
                 class="pulsante-secondario"
                 type="button"
-                data-vai="note">
+                data-vai="abbonamenti">
 
                 Capitolo successivo ▷
 
@@ -2657,7 +2648,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
             <button
                 class="pulsante-secondario"
                 type="button"
-                data-vai="note">
+                data-vai="riepilogo-annuale">
 
                 Capitolo successivo ▷
 
@@ -2705,7 +2696,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <span>Entrate</span>
 
-                    <strong id="riepilogo-entrate">
+                    <strong id="riepilogo-annuale-entrate">
 
                         € 0,00
 
@@ -2718,7 +2709,7 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
                     <span>Spese</span>
 
-                    <strong id="riepilogo-spese">
+                    <strong id="riepilogo-annuale-spese">
 
                         € 0,00
 
@@ -2844,4 +2835,5 @@ window.onerror = function (messaggio, sorgente, riga, colonna) {
 
 </section>
 
-       <script src="script.js?v=6"></script>  
+       <script src="script.js?v=8"></script>
+    <script src="dialogo.js?v=8"></script>
