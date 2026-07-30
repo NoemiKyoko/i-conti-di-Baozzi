@@ -3174,3 +3174,14 @@ body.libro-interno-visibile
         width: 88%;
     }
 }
+/* ========================================
+   ULTIMA PAGINA DEL LIBRO
+   ======================================== */
+
+.navigazione-finale {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: clamp(24px, 4vh, 40px);
+}
