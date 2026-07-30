@@ -4677,6 +4677,902 @@ function eliminaDocumento(
     aggiornaPaginaDocumenti();
 }
 /* ========================================
+   PARTE 8 — ABBONAMENTI
+   ======================================== */
+
+const chiaveArchivioAbbonamenti =
+    "conti-baozzi-abbonamenti-v1";
+
+let archivioAbbonamenti =
+    caricaElenco(
+        chiaveArchivioAbbonamenti
+    );
+
+let abbonamentoInModifica =
+    null;
+
+
+/* ========================================
+   ELEMENTI DEL CAPITOLO
+   ======================================== */
+
+const abbonamentiStatoVuoto =
+    document.querySelector(
+        "#abbonamenti-stato-vuoto"
+    );
+
+const abbonamentiElenco =
+    document.querySelector(
+        "#abbonamenti-elenco"
+    );
+
+const abbonamentiSchede =
+    document.querySelector(
+        "#abbonamenti-schede"
+    );
+
+
+const abbonamentiAggiungiPrimo =
+    document.querySelector(
+        "#abbonamenti-aggiungi-primo"
+    );
+
+const abbonamentiAggiungiAltro =
+    document.querySelector(
+        "#abbonamenti-aggiungi-altro"
+    );
+
+
+const abbonamentiContenitoreModulo =
+    document.querySelector(
+        "#abbonamenti-contenitore-modulo"
+    );
+
+const abbonamentiModulo =
+    document.querySelector(
+        "#abbonamenti-modulo"
+    );
+
+const abbonamentiTitoloModulo =
+    document.querySelector(
+        "#abbonamenti-titolo-modulo"
+    );
+
+
+const abbonamentiCampoNome =
+    document.querySelector(
+        "#abbonamenti-campo-nome"
+    );
+
+const abbonamentiCampoCosto =
+    document.querySelector(
+        "#abbonamenti-campo-costo"
+    );
+
+const abbonamentiFrequenzaMensile =
+    document.querySelector(
+        "#abbonamenti-frequenza-mensile"
+    );
+
+const abbonamentiFrequenzaAnnuale =
+    document.querySelector(
+        "#abbonamenti-frequenza-annuale"
+    );
+
+const abbonamentiCampoGiorno =
+    document.querySelector(
+        "#abbonamenti-campo-giorno"
+    );
+
+const abbonamentiLabelMese =
+    document.querySelector(
+        "#abbonamenti-label-mese"
+    );
+
+const abbonamentiCampoMese =
+    document.querySelector(
+        "#abbonamenti-campo-mese"
+    );
+
+const abbonamentiAnnulla =
+    document.querySelector(
+        "#abbonamenti-annulla"
+    );
+
+
+const abbonamentiTotaleMensile =
+    document.querySelector(
+        "#abbonamenti-totale-mensile"
+    );
+
+const abbonamentiTotaleAnnuale =
+    document.querySelector(
+        "#abbonamenti-totale-annuale"
+    );
+
+
+/* ========================================
+   NOMI DEI MESI
+   ======================================== */
+
+const mesiAbbonamenti = [
+    "",
+    "gennaio",
+    "febbraio",
+    "marzo",
+    "aprile",
+    "maggio",
+    "giugno",
+    "luglio",
+    "agosto",
+    "settembre",
+    "ottobre",
+    "novembre",
+    "dicembre"
+];
+
+
+/* ========================================
+   VISUALIZZAZIONE DELLA PAGINA
+   ======================================== */
+
+function aggiornaPaginaAbbonamenti() {
+
+    if (
+        !abbonamentiStatoVuoto ||
+        !abbonamentiElenco ||
+        !abbonamentiSchede
+    ) {
+
+        return;
+    }
+
+
+    chiudiModuloAbbonamenti();
+
+
+    abbonamentiSchede.innerHTML =
+        "";
+
+
+    if (
+        archivioAbbonamenti.length === 0
+    ) {
+
+        abbonamentiStatoVuoto
+            .classList.remove(
+                "nascosto"
+            );
+
+        abbonamentiElenco
+            .classList.add(
+                "nascosto"
+            );
+
+        aggiornaTotaliAbbonamenti();
+
+        return;
+    }
+
+
+    abbonamentiStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    abbonamentiElenco
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    const abbonamentiOrdinati =
+        [...archivioAbbonamenti].sort(
+            (primo, secondo) =>
+
+                primo.nome.localeCompare(
+                    secondo.nome,
+                    "it"
+                )
+        );
+
+
+    abbonamentiOrdinati.forEach(
+        (abbonamento) => {
+
+            const scheda =
+                creaSchedaAbbonamento(
+                    abbonamento
+                );
+
+
+            abbonamentiSchede.appendChild(
+                scheda
+            );
+        }
+    );
+
+
+    aggiornaTotaliAbbonamenti();
+}
+
+
+/* ========================================
+   CREAZIONE DI UNA SCHEDA
+   ======================================== */
+
+function creaSchedaAbbonamento(
+    abbonamento
+) {
+
+    const scheda =
+        document.createElement(
+            "article"
+        );
+
+    scheda.className =
+        "scheda-abbonamento";
+
+
+    const titolo =
+        document.createElement(
+            "h2"
+        );
+
+    titolo.className =
+        "titolo-abbonamento";
+
+    titolo.textContent =
+        abbonamento.nome;
+
+
+    const costo =
+        document.createElement(
+            "strong"
+        );
+
+    costo.className =
+        "costo-abbonamento";
+
+    costo.textContent =
+        abbonamento.frequenza ===
+            "annuale"
+            ? `${formattaEuro(
+                abbonamento.costo
+            )} / anno`
+            : `${formattaEuro(
+                abbonamento.costo
+            )} / mese`;
+
+
+    const rinnovo =
+        document.createElement(
+            "div"
+        );
+
+    rinnovo.className =
+        "rinnovo-abbonamento";
+
+
+    const etichettaRinnovo =
+        document.createElement(
+            "span"
+        );
+
+    etichettaRinnovo.textContent =
+        "Rinnovo";
+
+
+    const valoreRinnovo =
+        document.createElement(
+            "strong"
+        );
+
+
+    if (
+        abbonamento.frequenza ===
+        "annuale"
+    ) {
+
+        const mese =
+            mesiAbbonamenti[
+                Number(
+                    abbonamento.mese
+                )
+            ] || "";
+
+
+        valoreRinnovo.textContent =
+            `${abbonamento.giorno} ${mese}`;
+
+    } else {
+
+        valoreRinnovo.textContent =
+            `${abbonamento.giorno} di ogni mese`;
+    }
+
+
+    rinnovo.append(
+        etichettaRinnovo,
+        valoreRinnovo
+    );
+
+
+    const azioni =
+        document.createElement(
+            "div"
+        );
+
+    azioni.className =
+        "azioni-abbonamento";
+
+
+    const modifica =
+        document.createElement(
+            "button"
+        );
+
+    modifica.className =
+        "pulsante-abbonamento";
+
+    modifica.type =
+        "button";
+
+    modifica.textContent =
+        "Modifica";
+
+
+    modifica.addEventListener(
+        "click",
+        () => {
+
+            apriModuloAbbonamenti(
+                abbonamento.id
+            );
+        }
+    );
+
+
+    const elimina =
+        document.createElement(
+            "button"
+        );
+
+    elimina.className =
+        "pulsante-abbonamento";
+
+    elimina.type =
+        "button";
+
+    elimina.textContent =
+        "Elimina";
+
+
+    elimina.addEventListener(
+        "click",
+        () => {
+
+            eliminaAbbonamento(
+                abbonamento.id
+            );
+        }
+    );
+
+
+    azioni.append(
+        modifica,
+        elimina
+    );
+
+
+    scheda.append(
+        titolo,
+        costo,
+        rinnovo,
+        azioni
+    );
+
+
+    return scheda;
+}
+
+
+/* ========================================
+   TOTALE MENSILE E ANNUALE
+   ======================================== */
+
+function aggiornaTotaliAbbonamenti() {
+
+    let totaleMensile =
+        0;
+
+    let totaleAnnuale =
+        0;
+
+
+    archivioAbbonamenti.forEach(
+        (abbonamento) => {
+
+            const costo =
+                Number(
+                    abbonamento.costo
+                );
+
+
+            if (
+                !Number.isFinite(costo)
+            ) {
+
+                return;
+            }
+
+
+            if (
+                abbonamento.frequenza ===
+                "annuale"
+            ) {
+
+                totaleAnnuale +=
+                    costo;
+
+            } else {
+
+                totaleMensile +=
+                    costo;
+
+                totaleAnnuale +=
+                    costo * 12;
+            }
+        }
+    );
+
+
+    if (abbonamentiTotaleMensile) {
+
+        abbonamentiTotaleMensile
+            .textContent =
+            formattaEuro(
+                totaleMensile
+            );
+    }
+
+
+    if (abbonamentiTotaleAnnuale) {
+
+        abbonamentiTotaleAnnuale
+            .textContent =
+            formattaEuro(
+                totaleAnnuale
+            );
+    }
+}
+
+
+/* ========================================
+   MESE VISIBILE SOLO PER GLI ANNUALI
+   ======================================== */
+
+function aggiornaCampoMeseAbbonamento() {
+
+    if (
+        !abbonamentiLabelMese ||
+        !abbonamentiCampoMese ||
+        !abbonamentiFrequenzaAnnuale
+    ) {
+
+        return;
+    }
+
+
+    const annuale =
+        abbonamentiFrequenzaAnnuale
+            .checked;
+
+
+    abbonamentiLabelMese
+        .classList.toggle(
+            "nascosto",
+            !annuale
+        );
+
+
+    abbonamentiCampoMese.required =
+        annuale;
+
+
+    if (!annuale) {
+
+        abbonamentiCampoMese.value =
+            "";
+    }
+}
+
+
+/* ========================================
+   APERTURA DEL MODULO
+   ======================================== */
+
+function apriModuloAbbonamenti(
+    id = null
+) {
+
+    if (
+        !abbonamentiContenitoreModulo ||
+        !abbonamentiModulo
+    ) {
+
+        return;
+    }
+
+
+    abbonamentoInModifica =
+        id;
+
+
+    const abbonamento =
+        id
+            ? archivioAbbonamenti.find(
+                (voce) =>
+
+                    voce.id === id
+            )
+            : null;
+
+
+    abbonamentiModulo.reset();
+
+
+    abbonamentiTitoloModulo.textContent =
+        abbonamento
+            ? "Modifica abbonamento"
+            : "Nuovo abbonamento";
+
+
+    abbonamentiCampoNome.value =
+        abbonamento
+            ? abbonamento.nome
+            : "";
+
+    abbonamentiCampoCosto.value =
+        abbonamento
+            ? abbonamento.costo
+            : "";
+
+    abbonamentiCampoGiorno.value =
+        abbonamento
+            ? abbonamento.giorno
+            : "";
+
+    abbonamentiCampoMese.value =
+        abbonamento
+            ? abbonamento.mese || ""
+            : "";
+
+
+    if (
+        abbonamento &&
+        abbonamento.frequenza ===
+            "annuale"
+    ) {
+
+        abbonamentiFrequenzaAnnuale
+            .checked =
+            true;
+
+    } else {
+
+        abbonamentiFrequenzaMensile
+            .checked =
+            true;
+    }
+
+
+    aggiornaCampoMeseAbbonamento();
+
+
+    abbonamentiStatoVuoto
+        .classList.add(
+            "nascosto"
+        );
+
+    abbonamentiElenco
+        .classList.add(
+            "nascosto"
+        );
+
+    abbonamentiContenitoreModulo
+        .classList.remove(
+            "nascosto"
+        );
+
+
+    window.setTimeout(
+        () => {
+
+            abbonamentiCampoNome.focus();
+        },
+        120
+    );
+}
+
+
+/* ========================================
+   CHIUSURA DEL MODULO
+   ======================================== */
+
+function chiudiModuloAbbonamenti() {
+
+    if (
+        abbonamentiContenitoreModulo
+    ) {
+
+        abbonamentiContenitoreModulo
+            .classList.add(
+                "nascosto"
+            );
+    }
+
+
+    abbonamentoInModifica =
+        null;
+}
+
+
+/* ========================================
+   PULSANTI
+   ======================================== */
+
+[
+    abbonamentiAggiungiPrimo,
+    abbonamentiAggiungiAltro
+].forEach(
+    (pulsante) => {
+
+        if (pulsante) {
+
+            pulsante.addEventListener(
+                "click",
+                () => {
+
+                    apriModuloAbbonamenti();
+                }
+            );
+        }
+    }
+);
+
+
+if (abbonamentiAnnulla) {
+
+    abbonamentiAnnulla.addEventListener(
+        "click",
+        aggiornaPaginaAbbonamenti
+    );
+}
+
+
+if (abbonamentiFrequenzaMensile) {
+
+    abbonamentiFrequenzaMensile
+        .addEventListener(
+            "change",
+            aggiornaCampoMeseAbbonamento
+        );
+}
+
+
+if (abbonamentiFrequenzaAnnuale) {
+
+    abbonamentiFrequenzaAnnuale
+        .addEventListener(
+            "change",
+            aggiornaCampoMeseAbbonamento
+        );
+}
+
+
+/* ========================================
+   SALVATAGGIO
+   ======================================== */
+
+if (abbonamentiModulo) {
+
+    abbonamentiModulo.addEventListener(
+        "submit",
+        (evento) => {
+
+            evento.preventDefault();
+
+
+            const nome =
+                abbonamentiCampoNome
+                    .value
+                    .trim();
+
+            const costo =
+                Number(
+                    abbonamentiCampoCosto
+                        .value
+                );
+
+            const frequenza =
+                abbonamentiFrequenzaAnnuale
+                    .checked
+                    ? "annuale"
+                    : "mensile";
+
+            const giorno =
+                Number(
+                    abbonamentiCampoGiorno
+                        .value
+                );
+
+            const mese =
+                frequenza === "annuale"
+                    ? Number(
+                        abbonamentiCampoMese
+                            .value
+                    )
+                    : null;
+
+
+            if (
+                !nome ||
+                !Number.isFinite(costo) ||
+                costo <= 0 ||
+                !Number.isInteger(giorno) ||
+                giorno < 1 ||
+                giorno > 31
+            ) {
+
+                window.alert(
+                    "Inserisci nome, costo e giorno del rinnovo."
+                );
+
+                return;
+            }
+
+
+            if (
+                frequenza === "annuale" &&
+                (
+                    !Number.isInteger(mese) ||
+                    mese < 1 ||
+                    mese > 12
+                )
+            ) {
+
+                window.alert(
+                    "Scegli il mese del rinnovo."
+                );
+
+                return;
+            }
+
+
+            const datiAbbonamento = {
+
+                nome:
+                    nome,
+
+                costo:
+                    costo,
+
+                frequenza:
+                    frequenza,
+
+                giorno:
+                    giorno,
+
+                mese:
+                    mese
+            };
+
+
+            if (abbonamentoInModifica) {
+
+                const indice =
+                    archivioAbbonamenti
+                        .findIndex(
+                            (abbonamento) =>
+
+                                abbonamento.id ===
+                                abbonamentoInModifica
+                        );
+
+
+                if (indice === -1) {
+
+                    return;
+                }
+
+
+                archivioAbbonamenti[
+                    indice
+                ] = {
+
+                    ...archivioAbbonamenti[
+                        indice
+                    ],
+
+                    ...datiAbbonamento
+                };
+
+            } else {
+
+                archivioAbbonamenti.push({
+
+                    id:
+                        creaId(),
+
+                    ...datiAbbonamento
+                });
+            }
+
+
+            salvaArchivio(
+                chiaveArchivioAbbonamenti,
+                archivioAbbonamenti
+            );
+
+
+            aggiornaPaginaAbbonamenti();
+        }
+    );
+}
+
+
+/* ========================================
+   ELIMINAZIONE
+   ======================================== */
+
+function eliminaAbbonamento(
+    id
+) {
+
+    const abbonamento =
+        archivioAbbonamenti.find(
+            (voce) =>
+
+                voce.id === id
+        );
+
+
+    if (!abbonamento) {
+
+        return;
+    }
+
+
+    const conferma =
+        window.confirm(
+            `Eliminare “${abbonamento.nome}”?`
+        );
+
+
+    if (!conferma) {
+
+        return;
+    }
+
+
+    archivioAbbonamenti =
+        archivioAbbonamenti.filter(
+            (voce) =>
+
+                voce.id !== id
+        );
+
+
+    salvaArchivio(
+        chiaveArchivioAbbonamenti,
+        archivioAbbonamenti
+    );
+
+
+    aggiornaPaginaAbbonamenti();
+}
+/* ========================================
    AVVIO DELL’APPLICAZIONE
    ======================================== */
 
@@ -4687,6 +5583,12 @@ aggiornaRiepilogoEntrate();
 aggiornaRiepilogoSpese();
 
 aggiornaPaginaDesideri();
+
+aggiornaPaginaObiettivi();
+
+aggiornaPaginaDocumenti();
+
+aggiornaPaginaAbbonamenti();
 
 aggiornaRiepilogoDesideri();
 
