@@ -414,41 +414,6 @@ textarea {
    margin:0 auto;
    width:min(88%, 760px);
         
-}
-
-.sezione-casa,
-.sezione-entrate,
-.sezione-spese {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    min-height: 56px;
-
-    padding:
-        11px 14px;
-
-    border:
-        1px solid
-        rgba(91, 58, 31, .24);
-
-    border-radius: 8px;
-
-    background:
-        rgba(255, 248, 226, .22);
-
-    color: #4b321f;
-
-    cursor: pointer;
-    text-align: left;
-
-    -webkit-tap-highlight-color: transparent;
-
-    transition:
-        transform 170ms ease,
-        background 170ms ease;
-}
 
 .sezione-casa:active,
 .sezione-entrate:active,
@@ -472,7 +437,41 @@ textarea {
 .sezione-spese strong {
     font-weight: normal;
 }
+.sezione-casa,
+.sezione-entrate,
+.sezione-spese {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    gap: 0;
+
+    min-height: 56px;
+
+    padding:
+        11px 14px;
+
+    border:
+        1px solid
+        rgba(91, 58, 31, .24);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 248, 226, .22);
+
+    color: #4b321f;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 170ms ease,
+        background 170ms ease;
+}
 
 /* Entrate */
 
