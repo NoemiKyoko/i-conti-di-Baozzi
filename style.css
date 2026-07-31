@@ -1786,7 +1786,7 @@ body.libro-interno-visibile
     animation:
         caduta-ginkgo
         var(--durata)
-        cubic-bezier(.35, .02, .45, 1)
+        cubic-bezier(.28, .04, .38, 1)
         var(--ritardo)
         forwards;
 
