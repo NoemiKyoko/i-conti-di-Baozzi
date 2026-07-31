@@ -3021,11 +3021,9 @@ body.libro-interno-visibile
     display: none !important;
 }
 
-/* Dialogo di Baozzi senza riquadro */
+/* Dialogo: la carta resta pulita e il fumetto è più leggero */
 .fumetto-baozzi {
-    background: transparent;
-    border: 0;
-    border-radius: 0;
+    background: rgba(255, 252, 240, .58);
     box-shadow: none;
 }
 
@@ -3355,5 +3353,96 @@ body.libro-interno-visibile
         min-height: 58px;
         max-height: 58px;
         line-height: 27px;
+    }
+}
+
+/* ========================================
+   RIFINITURA DEFINITIVA — DESIDERI E DIALOGO
+   ======================================== */
+
+/* Pagina "Desideri e coccole": due colonne davvero equilibrate. */
+#desideri .scelte-desideri {
+    width: min(88%, 760px);
+    margin-inline: auto;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    column-gap:
+        clamp(22px, 3vw, 38px);
+}
+
+#desideri .scelta-desideri {
+    align-items: center;
+
+    min-width: 0;
+
+    padding:
+        clamp(14px, 2vh, 20px)
+        clamp(10px, 1.5vw, 16px);
+
+    text-align: center;
+}
+
+#desideri .scelta-desideri strong,
+#desideri .scelta-desideri span {
+    width: 100%;
+    text-align: center;
+}
+
+#desideri .scelta-desideri span {
+    max-width: 29ch;
+    margin-inline: auto;
+}
+
+#desideri .azioni-pagina {
+    margin-top:
+        clamp(18px, 2.5vh, 28px);
+}
+
+
+/* Dialogo di Baozzi:
+   avviciniamo il testo alla parte visibile della panchina. */
+#dialogo-baozzi .baozzi-scena {
+    margin-bottom:
+        clamp(-150px, -10vh, -90px);
+}
+
+#dialogo-baozzi .fumetto-baozzi {
+    margin-top:
+        clamp(52px, 5.5vh, 76px);
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#dialogo-baozzi .azioni-baozzi {
+    margin-top:
+        clamp(52px, 5.5vh, 76px);
+}
+
+
+/* Su schermi stretti manteniamo una sola colonna
+   e riduciamo leggermente le distanze verticali. */
+@media (max-width: 560px) {
+
+    #desideri .scelte-desideri {
+        width: 92%;
+
+        grid-template-columns:
+            1fr;
+    }
+
+    #dialogo-baozzi .baozzi-scena {
+        margin-bottom:
+            clamp(-120px, -8vh, -72px);
+    }
+
+    #dialogo-baozzi .fumetto-baozzi,
+    #dialogo-baozzi .azioni-baozzi {
+        margin-top:
+            clamp(38px, 4.5vh, 56px);
     }
 }
