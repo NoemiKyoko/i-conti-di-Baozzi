@@ -412,7 +412,7 @@ textarea {
    max-width:990px;
 
    margin:0 auto;
-   width:100%
+   width:min(88%, 760px);
         
 }
 
