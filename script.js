@@ -3127,6 +3127,15 @@ let obiettivi =
 let obiettivoInModifica =
     null;
 
+
+/*
+   Conserva la posizione mostrata di ogni Baozzi.
+   In questo modo, quando un obiettivo cambia,
+   l'animazione parte dalla posizione precedente.
+*/
+const progressiObiettiviVisualizzati =
+    new Map();
+
 const elencoObiettivi =
     document.querySelector(
         "#elenco-obiettivi"
@@ -3435,9 +3444,16 @@ function aggiornaPaginaObiettivi() {
                     obiettivo
                 );
 
+            const percentualePrecedente =
+                progressiObiettiviVisualizzati
+                    .has(obiettivo.id)
+                    ? progressiObiettiviVisualizzati
+                        .get(obiettivo.id)
+                    : 0;
+
             percorso.style.setProperty(
                 "--progresso",
-                `${percentuale}%`
+                `${percentualePrecedente}%`
             );
 
             const pista =
@@ -3528,6 +3544,33 @@ function aggiornaPaginaObiettivi() {
 
             elencoObiettivi.appendChild(
                 scheda
+            );
+
+
+            /*
+               Due fotogrammi permettono al browser
+               di disegnare prima la posizione iniziale
+               e poi animare fino a quella nuova.
+            */
+            window.requestAnimationFrame(
+                () => {
+
+                    window.requestAnimationFrame(
+                        () => {
+
+                            percorso.style.setProperty(
+                                "--progresso",
+                                `${percentuale}%`
+                            );
+
+                            progressiObiettiviVisualizzati
+                                .set(
+                                    obiettivo.id,
+                                    percentuale
+                                );
+                        }
+                    );
+                }
             );
         }
     );

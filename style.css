@@ -3510,3 +3510,50 @@ body.libro-interno-visibile
     content: none !important;
     display: none !important;
 }
+
+/* ========================================
+   ANIMAZIONE DEL PERCORSO DEGLI OBIETTIVI
+   ======================================== */
+
+/*
+   La pista resta visibile come percorso completo.
+   Sopra compare una traccia piena che cresce insieme
+   a Baozzi fino alla percentuale raggiunta.
+*/
+.pista-obiettivo::before {
+    content: "";
+
+    position: absolute;
+    inset:
+        0 auto 0 0;
+
+    width:
+        var(--progresso);
+
+    border-radius:
+        inherit;
+
+    background:
+        rgba(91, 58, 31, .62);
+
+    transition:
+        width 950ms
+        cubic-bezier(.22, .8, .25, 1);
+}
+
+.baozzi-obiettivo {
+    transition:
+        left 950ms
+        cubic-bezier(.22, .8, .25, 1);
+}
+
+
+/* Nessun movimento per chi preferisce animazioni ridotte. */
+@media (prefers-reduced-motion: reduce) {
+
+    .pista-obiettivo::before,
+    .baozzi-obiettivo {
+        transition-duration:
+            1ms;
+    }
+}
