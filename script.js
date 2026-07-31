@@ -50,29 +50,87 @@ let paginaCorrente =
    NAVIGAZIONE TRA LE PAGINE
    ======================================== */
 
-function vaiAllaPagina(idPagina) {
+let girapaginaInCorso =
+    false;
 
-    const nuovaPagina =
-        document.querySelector(
-            `#${idPagina}`
-        );
+let paginaInAttesa =
+    null;
 
-    if (!nuovaPagina) {
 
-        console.warn(
-            `La pagina "${idPagina}" non esiste.`
-        );
+/*
+   Aggiorna i riepiloghi soltanto
+   quando la relativa pagina viene aperta.
+*/
+function aggiornaContenutoPagina(
+    idPagina
+) {
 
-        return;
+    if (
+        idPagina ===
+        "riepilogo-casa"
+    ) {
+
+        aggiornaRiepilogoCasa();
     }
 
 
-    pagine.forEach((pagina) => {
+    if (
+        idPagina ===
+        "riepilogo-entrate"
+    ) {
 
-        pagina.classList.remove(
-            "attiva"
-        );
-    });
+        aggiornaRiepilogoEntrate();
+    }
+
+
+    if (
+        idPagina ===
+        "riepilogo-spese"
+    ) {
+
+        aggiornaRiepilogoSpese();
+    }
+
+
+    if (
+        idPagina ===
+        "riepilogo-desideri"
+    ) {
+
+        aggiornaRiepilogoDesideri();
+    }
+
+
+    if (
+        idPagina ===
+        "riepilogo-annuale"
+    ) {
+
+        aggiornaRiepilogoAnnuale();
+    }
+}
+
+
+/*
+   Mostra una pagina senza animazione.
+   Si usa all'apertura iniziale e quando
+   il dispositivo richiede movimento ridotto.
+*/
+function mostraPaginaSubito(
+    nuovaPagina,
+    idPagina
+) {
+
+    pagine.forEach(
+        (pagina) => {
+
+            pagina.classList.remove(
+                "attiva",
+                "girapagina-uscita",
+                "girapagina-arrivo"
+            );
+        }
+    );
 
 
     nuovaPagina.classList.add(
@@ -84,56 +142,175 @@ function vaiAllaPagina(idPagina) {
         idPagina;
 
 
-    /*
-       I riepiloghi vengono aggiornati
-       soltanto quando vengono aperti.
-    */
+    aggiornaContenutoPagina(
+        idPagina
+    );
+}
+
+
+/* ========================================
+   NAVIGAZIONE TRA LE PAGINE
+   ======================================== */
+
+function vaiAllaPagina(idPagina) {
+
+    const nuovaPagina =
+        document.querySelector(
+            `#${idPagina}`
+        );
+
+
+    if (!nuovaPagina) {
+
+        console.warn(
+            `La pagina "${idPagina}" non esiste.`
+        );
+
+        return;
+    }
+
 
     if (
-    idPagina ===
-    "riepilogo-casa"
-) {
+        idPagina ===
+        paginaCorrente
+    ) {
 
-    aggiornaRiepilogoCasa();
+        return;
+    }
+
+
+    /*
+       Se viene premuto un altro pulsante
+       mentre la carta sta girando, conserviamo
+       soltanto l'ultima destinazione richiesta.
+    */
+    if (girapaginaInCorso) {
+
+        paginaInAttesa =
+            idPagina;
+
+        return;
+    }
+
+
+    const paginaAttuale =
+        document.querySelector(
+            ".pagina.attiva"
+        );
+
+
+    const movimentoRidotto =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    /*
+       La prima pagina del libro compare subito:
+       non esiste ancora un foglio da voltare.
+    */
+    if (
+        !paginaAttuale ||
+        movimentoRidotto
+    ) {
+
+        mostraPaginaSubito(
+            nuovaPagina,
+            idPagina
+        );
+
+        return;
+    }
+
+
+    girapaginaInCorso =
+        true;
+
+
+    nuovaPagina.classList.add(
+        "attiva",
+        "girapagina-arrivo"
+    );
+
+
+    paginaAttuale.classList.add(
+        "girapagina-uscita"
+    );
+
+
+    /*
+       Il doppio fotogramma permette al browser
+       di registrare la posizione iniziale della
+       nuova pagina prima di farla distendere.
+    */
+    window.requestAnimationFrame(
+        () => {
+
+            window.requestAnimationFrame(
+                () => {
+
+                    nuovaPagina.classList.remove(
+                        "girapagina-arrivo"
+                    );
+                }
+            );
+        }
+    );
+
+
+    window.setTimeout(
+        () => {
+
+            paginaAttuale.classList.remove(
+                "attiva",
+                "girapagina-uscita"
+            );
+
+
+            nuovaPagina.classList.remove(
+                "girapagina-arrivo"
+            );
+
+
+            paginaCorrente =
+                idPagina;
+
+
+            aggiornaContenutoPagina(
+                idPagina
+            );
+
+
+            girapaginaInCorso =
+                false;
+
+
+            if (paginaInAttesa) {
+
+                const destinazioneSuccessiva =
+                    paginaInAttesa;
+
+
+                paginaInAttesa =
+                    null;
+
+
+                if (
+                    destinazioneSuccessiva !==
+                    paginaCorrente
+                ) {
+
+                    vaiAllaPagina(
+                        destinazioneSuccessiva
+                    );
+                }
+            }
+
+        },
+        620
+    );
 }
 
-
-if (
-    idPagina ===
-    "riepilogo-entrate"
-) {
-
-    aggiornaRiepilogoEntrate();
-}
-
-
-if (
-    idPagina ===
-    "riepilogo-spese"
-) {
-
-    aggiornaRiepilogoSpese();
-}
-
-
-if (
-    idPagina ===
-    "riepilogo-desideri"
-) {
-
-    aggiornaRiepilogoDesideri();
-}
-
-
-if (
-    idPagina ===
-    "riepilogo-annuale"
-) {
-
-    aggiornaRiepilogoAnnuale();
-}
-
-}
 
 /* ========================================
    IL LIBRO ESCE DALLO SCAFFALE
@@ -3130,8 +3307,7 @@ let obiettivoInModifica =
 
 /*
    Conserva la posizione mostrata di ogni Baozzi.
-   In questo modo, quando un obiettivo cambia,
-   l'animazione parte dalla posizione precedente.
+   L'animazione parte dalla posizione precedente.
 */
 const progressiObiettiviVisualizzati =
     new Map();
