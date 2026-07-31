@@ -1426,20 +1426,56 @@ body.libro-interno-visibile
     filter: drop-shadow(0 14px 18px rgba(67, 41, 21, .15));
 }
 
+/* ========================================
+   FUMETTO DI BAOZZI
+   ======================================== */
+
 .fumetto-baozzi {
     max-width: 34ch;
-    margin-top: clamp(12px, 2vh, 22px);
-    padding: 14px 19px;
-    border: 1px solid rgba(91, 58, 31, .3);
-    border-radius: 18px;
-    background: rgba(255, 252, 240, .86);
-    color: #4b321f;
-    font-size: clamp(15px, 1.9vh, 20px);
+
+    margin-top:
+        clamp(12px, 2vh, 22px);
+
+    padding:
+        8px 10px;
+
+    border: 0;
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    color: #5a3a24;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(21px, 2.7vh, 29px);
+
+    font-style: italic;
+    font-weight: 500;
+
     line-height: 1.55;
+
+    letter-spacing: .015em;
+    word-spacing: .04em;
+
+    text-align: center;
     white-space: pre-line;
+
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 500ms ease, transform 500ms ease;
+
+    transform:
+        translateY(8px);
+
+    transition:
+        opacity 500ms ease,
+        transform 500ms ease;
 }
 
 .fumetto-baozzi.visibile {
