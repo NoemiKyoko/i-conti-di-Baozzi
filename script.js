@@ -4018,12 +4018,12 @@ function festeggiaObiettivo() {
 
                 foglia.style.setProperty(
                     "--durata",
-                    `${3 + Math.random() * .6}s`
+                    `${2.35 + Math.random() * .45}s`
                 );
 
                 foglia.style.setProperty(
                     "--ritardo",
-                    `${Math.random() * 1.25}s`
+                    `${Math.random() * .38}s`
                 );
 
                 foglia.style.setProperty(
@@ -4043,7 +4043,7 @@ function festeggiaObiettivo() {
 
                 foglia.style.setProperty(
                     "--oscillazione",
-                    `${20 + Math.random() * 30}px`
+                    `${16 + Math.random() * 24}px`
                 );
 
                 foglia.style.setProperty(
@@ -4073,11 +4073,11 @@ function festeggiaObiettivo() {
                         "celebrazione-attiva"
                     );
                 },
-                5600
+                3900
             );
 
         },
-        1800
+        1050
     );
 }
 
