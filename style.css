@@ -3021,9 +3021,11 @@ body.libro-interno-visibile
     display: none !important;
 }
 
-/* Dialogo: la carta resta pulita e il fumetto è più leggero */
+/* Dialogo di Baozzi senza riquadro */
 .fumetto-baozzi {
-    background: rgba(255, 252, 240, .58);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
     box-shadow: none;
 }
 
