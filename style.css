@@ -3446,3 +3446,90 @@ body.libro-interno-visibile
             clamp(38px, 4.5vh, 56px);
     }
 }
+
+/* ========================================
+   CORREZIONE DEFINITIVA — SPAZI DEL DIALOGO
+   ======================================== */
+
+/*
+   L'immagine della panchina contiene spazio trasparente nel suo riquadro.
+   Per questo i semplici margin non bastavano: qui ritagliamo visivamente
+   il contenitore e disponiamo la scena dall'alto verso il basso.
+*/
+
+#dialogo-baozzi .pagina-dialogo {
+    justify-content: flex-start;
+
+    padding-top:
+        clamp(34px, 4.5vh, 56px);
+}
+
+#dialogo-baozzi .baozzi-scena {
+    width: 100%;
+
+    height:
+        clamp(285px, 33vh, 350px);
+
+    margin: 0;
+
+    overflow: hidden;
+
+    align-items: flex-start;
+}
+
+#dialogo-baozzi .baozzi-immagine {
+    width:
+        min(100%, 520px);
+
+    max-height: none;
+
+    margin: 0 auto;
+
+    transform:
+        translateY(
+            clamp(-34px, -3.5vh, -18px)
+        );
+}
+
+#dialogo-baozzi .fumetto-baozzi {
+    margin-top:
+        clamp(18px, 2.3vh, 28px);
+
+    padding:
+        0 10px;
+}
+
+#dialogo-baozzi .azioni-baozzi {
+    margin-top:
+        clamp(18px, 2.3vh, 28px);
+}
+
+#dialogo-baozzi .navigazione-dialogo {
+    margin-top: auto;
+}
+
+
+/* iPad e schermi stretti */
+
+@media (max-width: 560px) {
+
+    #dialogo-baozzi .pagina-dialogo {
+        padding-top: 28px;
+    }
+
+    #dialogo-baozzi .baozzi-scena {
+        height:
+            clamp(235px, 29vh, 300px);
+    }
+
+    #dialogo-baozzi .baozzi-immagine {
+        transform:
+            translateY(-18px);
+    }
+
+    #dialogo-baozzi .fumetto-baozzi,
+    #dialogo-baozzi .azioni-baozzi {
+        margin-top:
+            clamp(14px, 2vh, 22px);
+    }
+}
