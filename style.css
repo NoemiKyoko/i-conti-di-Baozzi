@@ -407,8 +407,13 @@ textarea {
     grid-template-columns:
         1fr 1fr;
 
-    gap:
-        clamp(9px, 1.5vh, 16px);
+    gap:22px;
+
+   max-width:990px;
+
+   margin:0 auto;
+   width:100%
+        
 }
 
 .sezione-casa,
