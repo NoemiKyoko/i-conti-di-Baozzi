@@ -23,6 +23,9 @@ const bottoneGiraDedica =
 const libroInterno =
     document.querySelector("#libro-interno");
 
+const polvereLibro =
+    document.querySelector("#polvere-libro");
+
 
 /* ========================================
    PAGINE E PULSANTI
@@ -134,7 +137,19 @@ function mostraPaginaSubito(
 
 
     nuovaPagina.classList.add(
-        "attiva"
+        "attiva",
+        "pagina-assestamento"
+    );
+
+
+    window.setTimeout(
+        () => {
+
+            nuovaPagina.classList.remove(
+                "pagina-assestamento"
+            );
+        },
+        260
     );
 
 
@@ -281,6 +296,22 @@ function vaiAllaPagina(idPagina) {
             );
 
 
+            nuovaPagina.classList.add(
+                "pagina-assestamento"
+            );
+
+
+            window.setTimeout(
+                () => {
+
+                    nuovaPagina.classList.remove(
+                        "pagina-assestamento"
+                    );
+                },
+                260
+            );
+
+
             girapaginaInCorso =
                 false;
 
@@ -313,6 +344,129 @@ function vaiAllaPagina(idPagina) {
 
 
 /* ========================================
+   POLVERE DEL LIBRO
+   ======================================== */
+
+let polvereLibroInCorso =
+    false;
+
+
+function mostraPolvereLibro() {
+
+    if (
+        !polvereLibro ||
+        polvereLibroInCorso
+    ) {
+
+        return;
+    }
+
+
+    const movimentoRidotto =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (movimentoRidotto) {
+
+        return;
+    }
+
+
+    polvereLibroInCorso =
+        true;
+
+    polvereLibro.innerHTML =
+        "";
+
+
+    const quantitaGranelli =
+        18;
+
+
+    for (
+        let indice = 0;
+        indice < quantitaGranelli;
+        indice += 1
+    ) {
+
+        const granello =
+            document.createElement(
+                "span"
+            );
+
+
+        granello.className =
+            "granello-polvere";
+
+
+        granello.style.setProperty(
+            "--x",
+            `${25 + Math.random() * 50}%`
+        );
+
+        granello.style.setProperty(
+            "--y",
+            `${34 + Math.random() * 32}%`
+        );
+
+        granello.style.setProperty(
+            "--dimensione",
+            `${2 + Math.random() * 5}px`
+        );
+
+        granello.style.setProperty(
+            "--deriva-x",
+            `${-34 + Math.random() * 68}px`
+        );
+
+        granello.style.setProperty(
+            "--deriva-y",
+            `${-24 - Math.random() * 42}px`
+        );
+
+        granello.style.setProperty(
+            "--ritardo",
+            `${Math.random() * .18}s`
+        );
+
+        granello.style.setProperty(
+            "--durata",
+            `${.72 + Math.random() * .38}s`
+        );
+
+
+        polvereLibro.appendChild(
+            granello
+        );
+    }
+
+
+    polvereLibro.classList.add(
+        "visibile"
+    );
+
+
+    window.setTimeout(
+        () => {
+
+            polvereLibro.classList.remove(
+                "visibile"
+            );
+
+            polvereLibro.innerHTML =
+                "";
+
+            polvereLibroInCorso =
+                false;
+        },
+        1350
+    );
+}
+
+
+/* ========================================
    IL LIBRO ESCE DALLO SCAFFALE
    ======================================== */
 
@@ -331,6 +485,9 @@ bottonePrendiLibro.addEventListener(
 
         statoIngresso =
             "libro";
+
+
+        mostraPolvereLibro();
 
 
         document.body.classList.add(
