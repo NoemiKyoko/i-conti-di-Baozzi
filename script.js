@@ -3888,79 +3888,196 @@ function festeggiaObiettivo() {
         return;
     }
 
+
+    const movimentoRidotto =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    if (movimentoRidotto) {
+
+        return;
+    }
+
+
+    /*
+       Evita che due celebrazioni si sovrappongano.
+    */
+    if (
+        pioggiaDenaro.classList.contains(
+            "celebrazione-attiva"
+        )
+    ) {
+
+        return;
+    }
+
+
     pioggiaDenaro.innerHTML =
         "";
 
-    const simboli =
-        ["€", "€", "€", "€€"];
+    pioggiaDenaro.classList.add(
+        "celebrazione-attiva"
+    );
 
-    const quantita =
-        30;
 
-    for (
-        let indice = 0;
-        indice < quantita;
-        indice += 1
-    ) {
+    const quantitaFoglie =
+        9;
 
-        const elemento =
-            document.createElement(
-                "span"
-            );
+    const colori =
+        [
+            "#c89b3c",
+            "#d4ad57",
+            "#b9862f",
+            "#d7b968"
+        ];
 
-        elemento.className =
-            "denaro-cadente";
 
-        elemento.textContent =
-            simboli[
-                Math.floor(
-                    Math.random() *
-                    simboli.length
-                )
-            ];
-
-        elemento.style.setProperty(
-            "--x",
-            `${Math.random() * 100}%`
-        );
-
-        elemento.style.setProperty(
-            "--dimensione",
-            `${22 + Math.random() * 22}px`
-        );
-
-        elemento.style.setProperty(
-            "--durata",
-            `${2.2 + Math.random() * 1.5}s`
-        );
-
-        elemento.style.setProperty(
-            "--ritardo",
-            `${Math.random() * .8}s`
-        );
-
-        elemento.style.setProperty(
-            "--deriva",
-            `${-55 + Math.random() * 110}px`
-        );
-
-        elemento.style.setProperty(
-            "--rotazione",
-            `${-240 + Math.random() * 480}deg`
-        );
-
-        pioggiaDenaro.appendChild(
-            elemento
-        );
-    }
-
+    /*
+       Aspettiamo che Baozzi termini il suo percorso
+       verso la bandierina, poi il libro festeggia.
+    */
     window.setTimeout(
         () => {
 
-            pioggiaDenaro.innerHTML =
-                "";
+            for (
+                let indice = 0;
+                indice < quantitaFoglie;
+                indice += 1
+            ) {
+
+                const foglia =
+                    document.createElement(
+                        "span"
+                    );
+
+                foglia.className =
+                    "foglia-ginkgo";
+
+
+                /*
+                   La foglia è vettoriale:
+                   resta nitida su iPad, iPhone e computer.
+                */
+                foglia.innerHTML =
+                    `
+                    <svg
+                        viewBox="0 0 64 78"
+                        aria-hidden="true"
+                        focusable="false">
+
+                        <path
+                            class="ginkgo-lamina"
+                            d="
+                                M32 58
+                                C24 48 11 43 7 31
+                                C3 19 10 8 20 5
+                                C27 3 31 8 32 16
+                                C33 8 37 3 44 5
+                                C54 8 61 19 57 31
+                                C53 43 40 48 32 58
+                                Z">
+                        </path>
+
+                        <path
+                            class="ginkgo-venature"
+                            d="
+                                M32 57
+                                C31 45 31 31 32 16
+                                M31 45
+                                C24 38 18 30 14 20
+                                M33 45
+                                C40 38 46 30 50 20
+                                M31 39
+                                C24 35 19 30 16 25
+                                M33 39
+                                C40 35 45 30 48 25">
+                        </path>
+
+                        <path
+                            class="ginkgo-gambo"
+                            d="
+                                M32 56
+                                C31 64 30 70 29 76">
+                        </path>
+
+                    </svg>
+                    `;
+
+
+                foglia.style.setProperty(
+                    "--x",
+                    `${8 + Math.random() * 84}%`
+                );
+
+                foglia.style.setProperty(
+                    "--dimensione",
+                    `${26 + Math.random() * 22}px`
+                );
+
+                foglia.style.setProperty(
+                    "--durata",
+                    `${1.45 + Math.random() * .55}s`
+                );
+
+                foglia.style.setProperty(
+                    "--ritardo",
+                    `${Math.random() * .38}s`
+                );
+
+                foglia.style.setProperty(
+                    "--deriva",
+                    `${-42 + Math.random() * 84}px`
+                );
+
+                foglia.style.setProperty(
+                    "--rotazione-iniziale",
+                    `${-35 + Math.random() * 70}deg`
+                );
+
+                foglia.style.setProperty(
+                    "--rotazione-finale",
+                    `${180 + Math.random() * 260}deg`
+                );
+
+                foglia.style.setProperty(
+                    "--oscillazione",
+                    `${12 + Math.random() * 22}px`
+                );
+
+                foglia.style.setProperty(
+                    "--colore-foglia",
+                    colori[
+                        Math.floor(
+                            Math.random() *
+                            colori.length
+                        )
+                    ]
+                );
+
+
+                pioggiaDenaro.appendChild(
+                    foglia
+                );
+            }
+
+
+            window.setTimeout(
+                () => {
+
+                    pioggiaDenaro.innerHTML =
+                        "";
+
+                    pioggiaDenaro.classList.remove(
+                        "celebrazione-attiva"
+                    );
+                },
+                2700
+            );
+
         },
-        4800
+        1050
     );
 }
 

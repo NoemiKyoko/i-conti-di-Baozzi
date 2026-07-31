@@ -1731,36 +1731,154 @@ body.libro-interno-visibile
 }
 
 .pioggia-denaro {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.denaro-cadente {
     position: absolute;
-    top: -12vh;
-    left: var(--x);
-    font-size: var(--dimensione);
-    animation: caduta-denaro var(--durata) linear var(--ritardo) forwards;
+    inset: 0;
+
+    z-index: 100;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 180ms ease;
 }
 
-@keyframes caduta-denaro {
+.pioggia-denaro.celebrazione-attiva {
+    opacity: 1;
+}
+
+
+/* ========================================
+   FOGLIE DI GINKGO DORATE
+   ======================================== */
+
+.foglia-ginkgo {
+    position: absolute;
+
+    left:
+        var(--x);
+
+    top:
+        -10%;
+
+    width:
+        var(--dimensione);
+
+    height:
+        calc(
+            var(--dimensione) * 1.22
+        );
+
+    opacity: 0;
+
+    color:
+        var(--colore-foglia);
+
+    filter:
+        drop-shadow(
+            0 3px 3px
+            rgba(70, 45, 20, .16)
+        );
+
+    animation:
+        caduta-ginkgo
+        var(--durata)
+        cubic-bezier(.35, .02, .45, 1)
+        var(--ritardo)
+        forwards;
+
+    transform-origin:
+        50% 10%;
+}
+
+.foglia-ginkgo svg {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+.ginkgo-lamina {
+    fill:
+        currentColor;
+
+    fill-opacity:
+        .9;
+}
+
+.ginkgo-venature,
+.ginkgo-gambo {
+    fill: none;
+
+    stroke:
+        rgba(91, 58, 31, .52);
+
+    stroke-width:
+        1.35;
+
+    stroke-linecap:
+        round;
+}
+
+.ginkgo-gambo {
+    stroke-width:
+        1.7;
+}
+
+
+@keyframes caduta-ginkgo {
+
     0% {
         opacity: 0;
-        transform: translate3d(0, -10vh, 0) rotate(0deg);
+
+        transform:
+            translate3d(
+                0,
+                -8vh,
+                0
+            )
+            rotate(
+                var(--rotazione-iniziale)
+            );
     }
 
     12% {
-        opacity: 1;
+        opacity: .96;
+    }
+
+    48% {
+        transform:
+            translate3d(
+                var(--oscillazione),
+                42vh,
+                0
+            )
+            rotate(
+                calc(
+                    var(--rotazione-iniziale)
+                    + 110deg
+                )
+            );
     }
 
     100% {
         opacity: 0;
-        transform: translate3d(var(--deriva), 115vh, 0) rotate(var(--rotazione));
+
+        transform:
+            translate3d(
+                var(--deriva),
+                94vh,
+                0
+            )
+            rotate(
+                var(--rotazione-finale)
+            );
     }
 }
+
 
 @media (max-width: 560px) {
     .testata-obiettivo {
@@ -1782,7 +1900,7 @@ body.libro-interno-visibile
         transition-duration: 1ms;
     }
 
-    .denaro-cadente {
+    .foglia-ginkgo {
         animation-duration: 1ms;
     }
 }
@@ -3062,12 +3180,7 @@ body.libro-interno-visibile
         linear-gradient(45deg, rgba(78, 48, 25, .62) 25%, transparent 25%) 4px -4px / 8px 8px;
 }
 
-/* La pioggia finale usa simboli tipografici, non emoji */
-.denaro-cadente {
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight: bold;
-    color: rgba(91, 58, 31, .82);
-}
+
 
 /* Euro sempre prima della cifra nel riepilogo annuale */
 .pagina-riepilogo-annuale .riga-riepilogo strong {
