@@ -6504,3 +6504,1065 @@ aggiornaPaginaObiettivi();
 /* ========================================
    FINE DEL FILE
    ======================================== */
+
+/* ========================================
+   PARTE 11 — CORNICI DEI RICORDI
+   ======================================== */
+
+/*
+   Le coordinate sono espresse sui pixel
+   dell'immagine originale della libreria.
+   Il posizionamento viene poi adattato
+   automaticamente anche quando object-fit:
+   cover ritaglia una parte dell'immagine.
+*/
+const configurazioneCorniciRicordi = {
+
+    "alto-sinistra": {
+        esterno: {
+            x: 292,
+            y: 145,
+            larghezza: 122,
+            altezza: 174
+        },
+
+        interno: {
+            x: 316,
+            y: 172,
+            larghezza: 76,
+            altezza: 128
+        }
+    },
+
+    "alto-destra": {
+        esterno: {
+            x: 1038,
+            y: 169,
+            larghezza: 132,
+            altezza: 166
+        },
+
+        interno: {
+            x: 1061,
+            y: 194,
+            larghezza: 86,
+            altezza: 121
+        }
+    },
+
+    "basso-sinistra": {
+        esterno: {
+            x: 393,
+            y: 507,
+            larghezza: 116,
+            altezza: 166
+        },
+
+        interno: {
+            x: 414,
+            y: 532,
+            larghezza: 74,
+            altezza: 121
+        }
+    },
+
+    "basso-destra": {
+        esterno: {
+            x: 1137,
+            y: 541,
+            larghezza: 118,
+            altezza: 192
+        },
+
+        interno: {
+            x: 1159,
+            y: 567,
+            larghezza: 74,
+            altezza: 143
+        }
+    }
+};
+
+
+const nomeDatabaseRicordi =
+    "conti-baozzi-ricordi";
+
+const versioneDatabaseRicordi =
+    1;
+
+const nomeArchivioRicordi =
+    "foto-cornici";
+
+
+const contenitoreCorniciRicordi =
+    document.querySelector(
+        "#cornici-ricordi"
+    );
+
+const bottoniCorniciRicordi =
+    document.querySelectorAll(
+        ".cornice-ricordo"
+    );
+
+const finestraRicordo =
+    document.querySelector(
+        "#finestra-ricordo"
+    );
+
+const chiudiFinestraRicordo =
+    document.querySelector(
+        "#chiudi-finestra-ricordo"
+    );
+
+const annullaFinestraRicordo =
+    document.querySelector(
+        "#annulla-finestra-ricordo"
+    );
+
+const scegliFotoRicordo =
+    document.querySelector(
+        "#scegli-foto-ricordo"
+    );
+
+const rimuoviFotoRicordo =
+    document.querySelector(
+        "#rimuovi-foto-ricordo"
+    );
+
+const selettoreFotoRicordo =
+    document.querySelector(
+        "#selettore-foto-ricordo"
+    );
+
+const fotoRicordoGrande =
+    document.querySelector(
+        "#foto-ricordo-grande"
+    );
+
+const messaggioCorniceVuota =
+    document.querySelector(
+        "#messaggio-cornice-vuota"
+    );
+
+
+let databaseRicordi =
+    null;
+
+let corniceRicordoCorrente =
+    null;
+
+const urlFotoRicordi =
+    new Map();
+
+
+/* ========================================
+   APERTURA DEL DATABASE
+   ======================================== */
+
+function apriDatabaseRicordi() {
+
+    return new Promise(
+        (risolvi, rifiuta) => {
+
+            if (databaseRicordi) {
+
+                risolvi(
+                    databaseRicordi
+                );
+
+                return;
+            }
+
+
+            const richiesta =
+                window.indexedDB.open(
+                    nomeDatabaseRicordi,
+                    versioneDatabaseRicordi
+                );
+
+
+            richiesta.onupgradeneeded =
+                () => {
+
+                    const database =
+                        richiesta.result;
+
+
+                    if (
+                        !database.objectStoreNames
+                            .contains(
+                                nomeArchivioRicordi
+                            )
+                    ) {
+
+                        database.createObjectStore(
+                            nomeArchivioRicordi
+                        );
+                    }
+                };
+
+
+            richiesta.onsuccess =
+                () => {
+
+                    databaseRicordi =
+                        richiesta.result;
+
+
+                    risolvi(
+                        databaseRicordi
+                    );
+                };
+
+
+            richiesta.onerror =
+                () => {
+
+                    rifiuta(
+                        richiesta.error
+                    );
+                };
+        }
+    );
+}
+
+
+/* ========================================
+   LETTURA E SCRITTURA DELLE FOTO
+   ======================================== */
+
+async function leggiFotoRicordo(
+    idCornice
+) {
+
+    const database =
+        await apriDatabaseRicordi();
+
+
+    return new Promise(
+        (risolvi, rifiuta) => {
+
+            const transazione =
+                database.transaction(
+                    nomeArchivioRicordi,
+                    "readonly"
+                );
+
+
+            const archivio =
+                transazione.objectStore(
+                    nomeArchivioRicordi
+                );
+
+
+            const richiesta =
+                archivio.get(
+                    idCornice
+                );
+
+
+            richiesta.onsuccess =
+                () => {
+
+                    risolvi(
+                        richiesta.result ||
+                        null
+                    );
+                };
+
+
+            richiesta.onerror =
+                () => {
+
+                    rifiuta(
+                        richiesta.error
+                    );
+                };
+        }
+    );
+}
+
+
+async function salvaFotoRicordo(
+    idCornice,
+    file
+) {
+
+    const database =
+        await apriDatabaseRicordi();
+
+
+    return new Promise(
+        (risolvi, rifiuta) => {
+
+            const transazione =
+                database.transaction(
+                    nomeArchivioRicordi,
+                    "readwrite"
+                );
+
+
+            const archivio =
+                transazione.objectStore(
+                    nomeArchivioRicordi
+                );
+
+
+            archivio.put(
+                file,
+                idCornice
+            );
+
+
+            transazione.oncomplete =
+                () => {
+
+                    risolvi();
+                };
+
+
+            transazione.onerror =
+                () => {
+
+                    rifiuta(
+                        transazione.error
+                    );
+                };
+        }
+    );
+}
+
+
+async function eliminaFotoRicordo(
+    idCornice
+) {
+
+    const database =
+        await apriDatabaseRicordi();
+
+
+    return new Promise(
+        (risolvi, rifiuta) => {
+
+            const transazione =
+                database.transaction(
+                    nomeArchivioRicordi,
+                    "readwrite"
+                );
+
+
+            const archivio =
+                transazione.objectStore(
+                    nomeArchivioRicordi
+                );
+
+
+            archivio.delete(
+                idCornice
+            );
+
+
+            transazione.oncomplete =
+                () => {
+
+                    risolvi();
+                };
+
+
+            transazione.onerror =
+                () => {
+
+                    rifiuta(
+                        transazione.error
+                    );
+                };
+        }
+    );
+}
+
+
+/* ========================================
+   GESTIONE DEGLI OBJECT URL
+   ======================================== */
+
+function creaUrlFotoRicordo(
+    idCornice,
+    file
+) {
+
+    const urlPrecedente =
+        urlFotoRicordi.get(
+            idCornice
+        );
+
+
+    if (urlPrecedente) {
+
+        URL.revokeObjectURL(
+            urlPrecedente
+        );
+    }
+
+
+    const nuovaUrl =
+        URL.createObjectURL(
+            file
+        );
+
+
+    urlFotoRicordi.set(
+        idCornice,
+        nuovaUrl
+    );
+
+
+    return nuovaUrl;
+}
+
+
+/* ========================================
+   POSIZIONAMENTO RESPONSIVO
+   ======================================== */
+
+function rettangoloImmagineVisibile() {
+
+    const larghezzaContenitore =
+        libreria.clientWidth;
+
+    const altezzaContenitore =
+        libreria.clientHeight;
+
+    const larghezzaNaturale =
+        libreria.naturalWidth;
+
+    const altezzaNaturale =
+        libreria.naturalHeight;
+
+
+    if (
+        !larghezzaNaturale ||
+        !altezzaNaturale
+    ) {
+
+        return null;
+    }
+
+
+    const scala =
+        Math.max(
+            larghezzaContenitore /
+                larghezzaNaturale,
+
+            altezzaContenitore /
+                altezzaNaturale
+        );
+
+
+    const larghezzaDisegnata =
+        larghezzaNaturale *
+        scala;
+
+    const altezzaDisegnata =
+        altezzaNaturale *
+        scala;
+
+
+    return {
+        scala:
+            scala,
+
+        spostamentoX:
+            (
+                larghezzaContenitore -
+                larghezzaDisegnata
+            ) / 2,
+
+        spostamentoY:
+            (
+                altezzaContenitore -
+                altezzaDisegnata
+            ) / 2
+    };
+}
+
+
+function posizionaCorniciRicordi() {
+
+    if (
+        !contenitoreCorniciRicordi
+    ) {
+
+        return;
+    }
+
+
+    const geometria =
+        rettangoloImmagineVisibile();
+
+
+    if (!geometria) {
+
+        return;
+    }
+
+
+    bottoniCorniciRicordi.forEach(
+        (bottone) => {
+
+            const idCornice =
+                bottone.dataset.cornice;
+
+            const configurazione =
+                configurazioneCorniciRicordi[
+                    idCornice
+                ];
+
+
+            if (!configurazione) {
+
+                return;
+            }
+
+
+            const esterno =
+                configurazione.esterno;
+
+            const interno =
+                configurazione.interno;
+
+
+            bottone.style.left =
+                `${
+                    geometria.spostamentoX +
+                    esterno.x *
+                    geometria.scala
+                }px`;
+
+            bottone.style.top =
+                `${
+                    geometria.spostamentoY +
+                    esterno.y *
+                    geometria.scala
+                }px`;
+
+            bottone.style.width =
+                `${
+                    esterno.larghezza *
+                    geometria.scala
+                }px`;
+
+            bottone.style.height =
+                `${
+                    esterno.altezza *
+                    geometria.scala
+                }px`;
+
+
+            const foto =
+                bottone.querySelector(
+                    ".foto-cornice"
+                );
+
+
+            foto.style.left =
+                `${
+                    (
+                        interno.x -
+                        esterno.x
+                    ) /
+                    esterno.larghezza *
+                    100
+                }%`;
+
+            foto.style.top =
+                `${
+                    (
+                        interno.y -
+                        esterno.y
+                    ) /
+                    esterno.altezza *
+                    100
+                }%`;
+
+            foto.style.width =
+                `${
+                    interno.larghezza /
+                    esterno.larghezza *
+                    100
+                }%`;
+
+            foto.style.height =
+                `${
+                    interno.altezza /
+                    esterno.altezza *
+                    100
+                }%`;
+        }
+    );
+}
+
+
+/* ========================================
+   AGGIORNAMENTO VISIVO DELLE CORNICI
+   ======================================== */
+
+async function aggiornaCorniceRicordo(
+    idCornice
+) {
+
+    const bottone =
+        document.querySelector(
+            `.cornice-ricordo[
+                data-cornice="${idCornice}"
+            ]`
+        );
+
+
+    if (!bottone) {
+
+        return null;
+    }
+
+
+    try {
+
+        const file =
+            await leggiFotoRicordo(
+                idCornice
+            );
+
+
+        const foto =
+            bottone.querySelector(
+                ".foto-cornice"
+            );
+
+
+        if (!file) {
+
+            bottone.classList.remove(
+                "con-foto"
+            );
+
+            foto.removeAttribute(
+                "src"
+            );
+
+
+            return null;
+        }
+
+
+        const url =
+            creaUrlFotoRicordo(
+                idCornice,
+                file
+            );
+
+
+        foto.src =
+            url;
+
+        foto.alt =
+            "Ricordo nella cornice";
+
+        foto.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        bottone.classList.add(
+            "con-foto"
+        );
+
+
+        return {
+            file:
+                file,
+
+            url:
+                url
+        };
+
+    } catch (errore) {
+
+        console.error(
+            "Impossibile caricare il ricordo:",
+            errore
+        );
+
+
+        return null;
+    }
+}
+
+
+async function aggiornaTutteLeCornici() {
+
+    for (
+        const bottone
+        of bottoniCorniciRicordi
+    ) {
+
+        await aggiornaCorniceRicordo(
+            bottone.dataset.cornice
+        );
+    }
+}
+
+
+/* ========================================
+   APERTURA E CHIUSURA DELLA FINESTRA
+   ======================================== */
+
+async function apriFinestraRicordo(
+    idCornice,
+    bottone
+) {
+
+    if (
+        statoIngresso !==
+        "scaffale"
+    ) {
+
+        return;
+    }
+
+
+    corniceRicordoCorrente =
+        idCornice;
+
+
+    bottone.classList.add(
+        "apertura-ricordo"
+    );
+
+
+    window.setTimeout(
+        () => {
+
+            bottone.classList.remove(
+                "apertura-ricordo"
+            );
+        },
+        260
+    );
+
+
+    const risultato =
+        await aggiornaCorniceRicordo(
+            idCornice
+        );
+
+
+    if (risultato) {
+
+        fotoRicordoGrande.src =
+            risultato.url;
+
+        fotoRicordoGrande
+            .classList.add(
+                "visibile"
+            );
+
+        messaggioCorniceVuota
+            .classList.add(
+                "nascosto"
+            );
+
+        scegliFotoRicordo.textContent =
+            "Sostituisci il ricordo";
+
+        rimuoviFotoRicordo
+            .classList.remove(
+                "nascosto"
+            );
+
+    } else {
+
+        fotoRicordoGrande
+            .classList.remove(
+                "visibile"
+            );
+
+        fotoRicordoGrande
+            .removeAttribute(
+                "src"
+            );
+
+        messaggioCorniceVuota
+            .classList.remove(
+                "nascosto"
+            );
+
+        scegliFotoRicordo.textContent =
+            "Scegli una fotografia";
+
+        rimuoviFotoRicordo
+            .classList.add(
+                "nascosto"
+            );
+    }
+
+
+    finestraRicordo.classList.add(
+        "aperta"
+    );
+
+    finestraRicordo.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    scegliFotoRicordo.focus();
+}
+
+
+function chiudiRicordo() {
+
+    finestraRicordo.classList.remove(
+        "aperta"
+    );
+
+    finestraRicordo.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    selettoreFotoRicordo.value =
+        "";
+
+
+    corniceRicordoCorrente =
+        null;
+}
+
+
+/* ========================================
+   EVENTI DELLE CORNICI
+   ======================================== */
+
+bottoniCorniciRicordi.forEach(
+    (bottone) => {
+
+        bottone.addEventListener(
+            "click",
+            () => {
+
+                apriFinestraRicordo(
+                    bottone.dataset.cornice,
+                    bottone
+                );
+            }
+        );
+    }
+);
+
+
+scegliFotoRicordo.addEventListener(
+    "click",
+    () => {
+
+        selettoreFotoRicordo.click();
+    }
+);
+
+
+selettoreFotoRicordo.addEventListener(
+    "change",
+    async () => {
+
+        const file =
+            selettoreFotoRicordo
+                .files[0];
+
+
+        if (
+            !file ||
+            !corniceRicordoCorrente
+        ) {
+
+            return;
+        }
+
+
+        if (
+            !file.type.startsWith(
+                "image/"
+            )
+        ) {
+
+            window.alert(
+                "Scegli un file immagine."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            await salvaFotoRicordo(
+                corniceRicordoCorrente,
+                file
+            );
+
+
+            const bottone =
+                document.querySelector(
+                    `.cornice-ricordo[
+                        data-cornice="${
+                            corniceRicordoCorrente
+                        }"
+                    ]`
+                );
+
+
+            await apriFinestraRicordo(
+                corniceRicordoCorrente,
+                bottone
+            );
+
+        } catch (errore) {
+
+            console.error(
+                "Impossibile salvare la fotografia:",
+                errore
+            );
+
+
+            window.alert(
+                "Non sono riuscito a salvare questa fotografia."
+            );
+        }
+    }
+);
+
+
+rimuoviFotoRicordo.addEventListener(
+    "click",
+    async () => {
+
+        if (!corniceRicordoCorrente) {
+
+            return;
+        }
+
+
+        const conferma =
+            window.confirm(
+                "Rimuovere questo ricordo dalla cornice?"
+            );
+
+
+        if (!conferma) {
+
+            return;
+        }
+
+
+        try {
+
+            const idCornice =
+                corniceRicordoCorrente;
+
+
+            await eliminaFotoRicordo(
+                idCornice
+            );
+
+
+            const url =
+                urlFotoRicordi.get(
+                    idCornice
+                );
+
+
+            if (url) {
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+                urlFotoRicordi.delete(
+                    idCornice
+                );
+            }
+
+
+            await aggiornaCorniceRicordo(
+                idCornice
+            );
+
+
+            chiudiRicordo();
+
+        } catch (errore) {
+
+            console.error(
+                "Impossibile rimuovere il ricordo:",
+                errore
+            );
+        }
+    }
+);
+
+
+chiudiFinestraRicordo.addEventListener(
+    "click",
+    chiudiRicordo
+);
+
+
+annullaFinestraRicordo.addEventListener(
+    "click",
+    chiudiRicordo
+);
+
+
+document.addEventListener(
+    "keydown",
+    (evento) => {
+
+        if (
+            evento.key ===
+            "Escape" &&
+            finestraRicordo
+                .classList.contains(
+                    "aperta"
+                )
+        ) {
+
+            chiudiRicordo();
+        }
+    }
+);
+
+
+/* ========================================
+   AVVIO DELLE CORNICI
+   ======================================== */
+
+if (libreria.complete) {
+
+    posizionaCorniciRicordi();
+
+} else {
+
+    libreria.addEventListener(
+        "load",
+        posizionaCorniciRicordi
+    );
+}
+
+
+window.addEventListener(
+    "resize",
+    posizionaCorniciRicordi
+);
+
+
+aggiornaTutteLeCornici();

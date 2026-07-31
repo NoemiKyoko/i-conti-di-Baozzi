@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css?v=12">
+        href="style.css?v=14">
 </head>
 <body>
 
@@ -26,6 +26,145 @@
             id="libreria"
             src="libreria.png.PNG"
             alt="Libreria Baozzi">
+
+        <!-- ========================================
+             CORNICI DEI RICORDI
+             Le coordinate vengono calcolate dal JS
+             in base all'immagine realmente visibile.
+             ======================================== -->
+
+        <div
+            id="cornici-ricordi"
+            aria-label="Cornici dei ricordi">
+
+            <button
+                class="cornice-ricordo"
+                type="button"
+                data-cornice="alto-sinistra"
+                aria-label="Apri la cornice in alto a sinistra">
+
+                <img
+                    class="foto-cornice"
+                    alt=""
+                    aria-hidden="true">
+
+            </button>
+
+            <button
+                class="cornice-ricordo"
+                type="button"
+                data-cornice="alto-destra"
+                aria-label="Apri la cornice in alto a destra">
+
+                <img
+                    class="foto-cornice"
+                    alt=""
+                    aria-hidden="true">
+
+            </button>
+
+            <button
+                class="cornice-ricordo"
+                type="button"
+                data-cornice="basso-sinistra"
+                aria-label="Apri la cornice in basso a sinistra">
+
+                <img
+                    class="foto-cornice"
+                    alt=""
+                    aria-hidden="true">
+
+            </button>
+
+            <button
+                class="cornice-ricordo"
+                type="button"
+                data-cornice="basso-destra"
+                aria-label="Apri la cornice in basso a destra">
+
+                <img
+                    class="foto-cornice"
+                    alt=""
+                    aria-hidden="true">
+
+            </button>
+
+        </div>
+
+
+        <section
+            id="finestra-ricordo"
+            aria-hidden="true"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titolo-finestra-ricordo">
+
+            <button
+                id="chiudi-finestra-ricordo"
+                class="sfondo-finestra-ricordo"
+                type="button"
+                aria-label="Chiudi il ricordo">
+            </button>
+
+            <div class="pannello-ricordo">
+
+                <h2 id="titolo-finestra-ricordo">
+                    Un ricordo
+                </h2>
+
+                <div class="anteprima-ricordo">
+
+                    <img
+                        id="foto-ricordo-grande"
+                        alt="Fotografia custodita nella cornice">
+
+                    <p id="messaggio-cornice-vuota">
+                        Questa cornice non custodisce ancora un ricordo.
+                    </p>
+
+                </div>
+
+                <div class="azioni-ricordo">
+
+                    <button
+                        id="scegli-foto-ricordo"
+                        class="pulsante-libro"
+                        type="button">
+
+                        Scegli una fotografia
+
+                    </button>
+
+                    <button
+                        id="rimuovi-foto-ricordo"
+                        class="pulsante-secondario nascosto"
+                        type="button">
+
+                        Rimuovi il ricordo
+
+                    </button>
+
+                    <button
+                        id="annulla-finestra-ricordo"
+                        class="pulsante-secondario"
+                        type="button">
+
+                        Chiudi
+
+                    </button>
+
+                </div>
+
+                <input
+                    id="selettore-foto-ricordo"
+                    class="selettore-foto-nascosto"
+                    type="file"
+                    accept="image/*">
+
+            </div>
+
+        </section>
+
 
         <img
             id="libro"
@@ -2774,7 +2913,7 @@
 
     </main>
 
-    <script src="script.js?v=12"></script>
+    <script src="script.js?v=14"></script>
     <script src="dialogo.js?v=9"></script>
 
 </body>

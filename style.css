@@ -3645,3 +3645,320 @@ body.libro-interno-visibile
             1ms;
     }
 }
+
+/* ========================================
+   CORNICI DEI RICORDI — LIBRERIA
+   ======================================== */
+
+#cornici-ricordi {
+    position: absolute;
+    inset: 0;
+
+    z-index: 7;
+
+    pointer-events: none;
+}
+
+.cornice-ricordo {
+    position: absolute;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    border: 0;
+    border-radius: 2px;
+
+    background: transparent;
+
+    cursor: pointer;
+    pointer-events: auto;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transform:
+        translateZ(0)
+        scale(1);
+
+    transform-origin:
+        center;
+
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
+}
+
+.cornice-ricordo:active,
+.cornice-ricordo.apertura-ricordo {
+    transform:
+        translateY(-4px)
+        scale(1.035);
+
+    filter:
+        drop-shadow(
+            0 10px 10px
+            rgba(54, 35, 19, .24)
+        );
+}
+
+.foto-cornice {
+    position: absolute;
+
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    user-select: none;
+    -webkit-user-drag: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 420ms ease;
+}
+
+.cornice-ricordo.con-foto
+.foto-cornice {
+    display: block;
+    opacity: 1;
+}
+
+
+/* Durante l'apertura del libro le cornici non interferiscono. */
+
+body.libro-davanti
+#cornici-ricordi,
+body.dedica-visibile
+#cornici-ricordi,
+body.dedica-in-giro
+#cornici-ricordi,
+body.libro-interno-visibile
+#cornici-ricordi {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   FINESTRA DEL RICORDO
+   ======================================== */
+
+#finestra-ricordo {
+    position: fixed;
+    inset: 0;
+
+    z-index: 80;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        clamp(20px, 4vw, 44px);
+
+    visibility: hidden;
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity 320ms ease,
+        visibility 0s linear 320ms;
+}
+
+#finestra-ricordo.aperta {
+    visibility: visible;
+    pointer-events: auto;
+
+    opacity: 1;
+
+    transition-delay:
+        0s;
+}
+
+.sfondo-finestra-ricordo {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    background:
+        rgba(38, 27, 18, .48);
+
+    backdrop-filter:
+        blur(4px);
+
+    cursor: pointer;
+}
+
+.pannello-ricordo {
+    position: relative;
+
+    width:
+        min(86vw, 470px);
+
+    max-height:
+        86vh;
+
+    overflow: auto;
+
+    padding:
+        clamp(26px, 4.5vh, 42px)
+        clamp(22px, 4vw, 38px);
+
+    border:
+        10px solid
+        rgba(155, 103, 49, .92);
+
+    outline:
+        1px solid
+        rgba(79, 48, 24, .55);
+
+    background:
+        rgba(250, 237, 202, .98);
+
+    color:
+        #4b321f;
+
+    box-shadow:
+        0 24px 44px
+        rgba(25, 17, 10, .34);
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform:
+        translateY(18px)
+        scale(.86);
+
+    transition:
+        opacity 380ms ease,
+        transform 480ms
+        cubic-bezier(.22, .8, .25, 1);
+}
+
+#finestra-ricordo.aperta
+.pannello-ricordo {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.pannello-ricordo h2 {
+    margin:
+        0 0
+        clamp(18px, 3vh, 28px);
+
+    font-size:
+        clamp(24px, 3.8vh, 38px);
+
+    font-weight: normal;
+}
+
+.anteprima-ricordo {
+    display: grid;
+    place-items: center;
+
+    min-height:
+        clamp(230px, 42vh, 430px);
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(79, 48, 24, .24);
+
+    background:
+        rgba(255, 249, 228, .68);
+}
+
+#foto-ricordo-grande {
+    display: none;
+
+    width: 100%;
+    max-height:
+        min(54vh, 520px);
+
+    object-fit: contain;
+}
+
+#foto-ricordo-grande.visibile {
+    display: block;
+}
+
+#messaggio-cornice-vuota {
+    max-width: 25ch;
+
+    padding: 24px;
+
+    font-size:
+        clamp(16px, 2.2vh, 21px);
+
+    line-height: 1.55;
+}
+
+.azioni-ricordo {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+        10px 16px;
+
+    margin-top:
+        clamp(20px, 3vh, 30px);
+}
+
+.selettore-foto-nascosto {
+    position: fixed;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   SCHERMI STRETTI
+   ======================================== */
+
+@media (max-width: 560px) {
+
+    .pannello-ricordo {
+        width: 92vw;
+
+        border-width: 8px;
+    }
+
+    .anteprima-ricordo {
+        min-height: 230px;
+    }
+}
+
+
+/* ========================================
+   MOVIMENTO RIDOTTO
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cornice-ricordo,
+    #finestra-ricordo,
+    .pannello-ricordo,
+    .foto-cornice {
+        transition-duration: 1ms;
+    }
+}
