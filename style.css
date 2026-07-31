@@ -3021,9 +3021,9 @@ body.libro-interno-visibile
     display: none !important;
 }
 
-/* Dialogo: la carta resta pulita e il fumetto è più leggero */
+/* Dialogo di Baozzi: nessun riquadro dietro al testo */
 .fumetto-baozzi {
-    background: rgba(255, 252, 240, .58);
+    background: transparent;
     box-shadow: none;
 }
 
@@ -3484,4 +3484,29 @@ body.libro-interno-visibile
         margin-top:
             clamp(34px, 4vh, 48px);
     }
+}
+
+/* ========================================
+   CORREZIONE DEFINITIVA — SFONDO DIALOGO BAOZZI
+   ======================================== */
+
+#dialogo-baozzi .fumetto-baozzi,
+#dialogo-baozzi .fumetto-baozzi p,
+#dialogo-baozzi #testo-baozzi {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+}
+
+#dialogo-baozzi .fumetto-baozzi::before,
+#dialogo-baozzi .fumetto-baozzi::after,
+#dialogo-baozzi #testo-baozzi::before,
+#dialogo-baozzi #testo-baozzi::after {
+    content: none !important;
+    display: none !important;
 }
