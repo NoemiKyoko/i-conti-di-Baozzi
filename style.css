@@ -3400,100 +3400,49 @@ body.libro-interno-visibile
         clamp(18px, 2.5vh, 28px);
 }
 
-
-/* Dialogo di Baozzi:
-   avviciniamo il testo alla parte visibile della panchina. */
-#dialogo-baozzi .baozzi-scena {
-    margin-bottom:
-        clamp(-150px, -10vh, -90px);
-}
-
-#dialogo-baozzi .fumetto-baozzi {
-    margin-top:
-        clamp(52px, 5.5vh, 76px);
-
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-}
-
-#dialogo-baozzi .azioni-baozzi {
-    margin-top:
-        clamp(52px, 5.5vh, 76px);
-}
-
-
-/* Su schermi stretti manteniamo una sola colonna
-   e riduciamo leggermente le distanze verticali. */
-@media (max-width: 560px) {
-
-    #desideri .scelte-desideri {
-        width: 92%;
-
-        grid-template-columns:
-            1fr;
-    }
-
-    #dialogo-baozzi .baozzi-scena {
-        margin-bottom:
-            clamp(-120px, -8vh, -72px);
-    }
-
-    #dialogo-baozzi .fumetto-baozzi,
-    #dialogo-baozzi .azioni-baozzi {
-        margin-top:
-            clamp(38px, 4.5vh, 56px);
-    }
-}
-
 /* ========================================
-   CORREZIONE DEFINITIVA — SPAZI DEL DIALOGO
+   DIALOGO DI BAOZZI — POSIZIONE CORRETTA
    ======================================== */
 
 /*
-   L'immagine della panchina contiene spazio trasparente nel suo riquadro.
-   Per questo i semplici margin non bastavano: qui ritagliamo visivamente
-   il contenitore e disponiamo la scena dall'alto verso il basso.
+   Manteniamo l'immagine completa: niente ritaglio e niente spostamento
+   verso l'alto. Avviciniamo invece gli elementi successivi usando
+   soltanto il margine inferiore della scena.
 */
 
 #dialogo-baozzi .pagina-dialogo {
     justify-content: flex-start;
 
     padding-top:
-        clamp(34px, 4.5vh, 56px);
+        clamp(52px, 6vh, 76px);
 }
 
 #dialogo-baozzi .baozzi-scena {
     width: 100%;
+    height: auto;
 
-    height:
-        clamp(285px, 33vh, 350px);
+    margin: 0 0
+        clamp(-125px, -10vh, -92px);
 
-    margin: 0;
+    overflow: visible;
 
-    overflow: hidden;
-
-    align-items: flex-start;
+    align-items: center;
 }
 
 #dialogo-baozzi .baozzi-immagine {
     width:
         min(100%, 520px);
 
-    max-height: none;
+    max-height: 40vh;
 
     margin: 0 auto;
 
-    transform:
-        translateY(
-            clamp(-34px, -3.5vh, -18px)
-        );
+    transform: none;
 }
 
 #dialogo-baozzi .fumetto-baozzi {
     margin-top:
-        clamp(18px, 2.3vh, 28px);
+        clamp(18px, 2.2vh, 28px);
 
     padding:
         0 10px;
@@ -3501,7 +3450,7 @@ body.libro-interno-visibile
 
 #dialogo-baozzi .azioni-baozzi {
     margin-top:
-        clamp(18px, 2.3vh, 28px);
+        clamp(44px, 5vh, 64px);
 }
 
 #dialogo-baozzi .navigazione-dialogo {
@@ -3514,22 +3463,25 @@ body.libro-interno-visibile
 @media (max-width: 560px) {
 
     #dialogo-baozzi .pagina-dialogo {
-        padding-top: 28px;
+        padding-top: 42px;
     }
 
     #dialogo-baozzi .baozzi-scena {
-        height:
-            clamp(235px, 29vh, 300px);
+        margin-bottom:
+            clamp(-105px, -8vh, -76px);
     }
 
     #dialogo-baozzi .baozzi-immagine {
-        transform:
-            translateY(-18px);
+        max-height: 34vh;
     }
 
-    #dialogo-baozzi .fumetto-baozzi,
-    #dialogo-baozzi .azioni-baozzi {
+    #dialogo-baozzi .fumetto-baozzi {
         margin-top:
             clamp(14px, 2vh, 22px);
+    }
+
+    #dialogo-baozzi .azioni-baozzi {
+        margin-top:
+            clamp(34px, 4vh, 48px);
     }
 }
