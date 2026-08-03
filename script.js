@@ -6685,16 +6685,16 @@ const configurazioneCorniciRicordi = {
 
     "basso-destra": {
         esterno: {
-            x: 1137,
+            x: 985,
             y: 541,
-            larghezza: 118,
+            larghezza: 142,
             altezza: 192
         },
 
         interno: {
-            x: 1159,
+            x: 1007,
             y: 567,
-            larghezza: 74,
+            larghezza: 96,
             altezza: 143
         }
     }
