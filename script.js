@@ -5976,6 +5976,29 @@ const salvaRiepilogoAnnuale =
         "#salva-riepilogo-annuale"
     );
 
+const riepilogoMese =
+    document.querySelector(
+        "#riepilogo-mese"
+    );
+
+const riepilogoMeseEntrate =
+    document.querySelector(
+        "#riepilogo-mese-entrate"
+    );
+
+const riepilogoMeseSpese =
+    document.querySelector(
+        "#riepilogo-mese-spese"
+    );
+
+const riepilogoMeseRisparmio =
+    document.querySelector(
+        "#riepilogo-mese-risparmio"
+    );
+
+let meseRiepilogoScelto =
+    null;
+
 
 /* ========================================
    ANNO VISUALIZZATO
@@ -6226,6 +6249,301 @@ function totaleAnnualeElenco(
 
 
 /* ========================================
+   TOTALI DI UN SINGOLO MESE
+   Leggono gli archivi esistenti senza
+   modificarne struttura o contenuto.
+   ======================================== */
+
+function appartieneAlMese(
+    registrazione,
+    anno,
+    mese
+) {
+
+    if (
+        !registrazione ||
+        !registrazione.data
+    ) {
+
+        return false;
+    }
+
+
+    const prefisso =
+        `${anno}-${String(
+            mese + 1
+        ).padStart(
+            2,
+            "0"
+        )}-`;
+
+
+    return String(
+        registrazione.data
+    ).startsWith(
+        prefisso
+    );
+}
+
+
+function totaleMensileArchivio(
+    archivio,
+    anno,
+    mese
+) {
+
+    if (
+        !archivio ||
+        typeof archivio !== "object"
+    ) {
+
+        return 0;
+    }
+
+
+    return Object.values(
+        archivio
+    ).reduce(
+        (
+            totaleArchivio,
+            registrazioni
+        ) => {
+
+            if (!Array.isArray(registrazioni)) {
+
+                return totaleArchivio;
+            }
+
+
+            return totaleArchivio +
+                registrazioni.reduce(
+                    (
+                        totale,
+                        registrazione
+                    ) => {
+
+                        if (
+                            !appartieneAlMese(
+                                registrazione,
+                                anno,
+                                mese
+                            )
+                        ) {
+
+                            return totale;
+                        }
+
+
+                        const importo =
+                            Number(
+                                registrazione.importo
+                            );
+
+
+                        return Number.isFinite(importo)
+                            ? totale + importo
+                            : totale;
+                    },
+                    0
+                );
+        },
+        0
+    );
+}
+
+
+function totaleMensileElenco(
+    elenco,
+    anno,
+    mese
+) {
+
+    if (!Array.isArray(elenco)) {
+
+        return 0;
+    }
+
+
+    return elenco.reduce(
+        (
+            totale,
+            registrazione
+        ) => {
+
+            if (
+                !appartieneAlMese(
+                    registrazione,
+                    anno,
+                    mese
+                )
+            ) {
+
+                return totale;
+            }
+
+
+            const importo =
+                Number(
+                    registrazione.importo
+                );
+
+
+            return Number.isFinite(importo)
+                ? totale + importo
+                : totale;
+        },
+        0
+    );
+}
+
+
+function ultimoMeseConMovimenti(
+    anno
+) {
+
+    for (
+        let mese = 11;
+        mese >= 0;
+        mese -= 1
+    ) {
+
+        const entrate =
+            totaleMensileArchivio(
+                archivioEntrate,
+                anno,
+                mese
+            );
+
+
+        const spese =
+            totaleMensileArchivio(
+                archivioCasa,
+                anno,
+                mese
+            ) +
+            totaleMensileArchivio(
+                archivioSpese,
+                anno,
+                mese
+            ) +
+            totaleMensileElenco(
+                archivioDesideri,
+                anno,
+                mese
+            );
+
+
+        if (
+            entrate !== 0 ||
+            spese !== 0
+        ) {
+
+            return mese;
+        }
+    }
+
+
+    return new Date().getMonth();
+}
+
+
+function aggiornaRiepilogoMensile(
+    anno
+) {
+
+    if (
+        !riepilogoMese ||
+        !riepilogoMeseEntrate ||
+        !riepilogoMeseSpese ||
+        !riepilogoMeseRisparmio
+    ) {
+
+        return;
+    }
+
+
+    if (meseRiepilogoScelto === null) {
+
+        meseRiepilogoScelto =
+            ultimoMeseConMovimenti(
+                anno
+            );
+    }
+
+
+    riepilogoMese.value =
+        String(
+            meseRiepilogoScelto
+        );
+
+
+    const totaleEntrateMese =
+        totaleMensileArchivio(
+            archivioEntrate,
+            anno,
+            meseRiepilogoScelto
+        );
+
+
+    const totaleSpeseMese =
+        totaleMensileArchivio(
+            archivioCasa,
+            anno,
+            meseRiepilogoScelto
+        ) +
+        totaleMensileArchivio(
+            archivioSpese,
+            anno,
+            meseRiepilogoScelto
+        ) +
+        totaleMensileElenco(
+            archivioDesideri,
+            anno,
+            meseRiepilogoScelto
+        );
+
+
+    riepilogoMeseEntrate.textContent =
+        formattaEuroConSimboloPrima(
+            totaleEntrateMese
+        );
+
+
+    riepilogoMeseSpese.textContent =
+        formattaEuroConSimboloPrima(
+            totaleSpeseMese
+        );
+
+
+    riepilogoMeseRisparmio.textContent =
+        formattaEuroConSimboloPrima(
+            totaleEntrateMese -
+            totaleSpeseMese
+        );
+}
+
+
+if (riepilogoMese) {
+
+    riepilogoMese.addEventListener(
+        "change",
+        () => {
+
+            meseRiepilogoScelto =
+                Number(
+                    riepilogoMese.value
+                );
+
+
+            aggiornaRiepilogoMensile(
+                annoRiepilogoCorrente()
+            );
+        }
+    );
+}
+
+
+/* ========================================
    CONTEGGIO DEGLI OBIETTIVI RAGGIUNTI
    ======================================== */
 
@@ -6410,6 +6728,11 @@ function aggiornaRiepilogoAnnuale() {
         String(
             numeroDocumenti
         );
+
+
+    aggiornaRiepilogoMensile(
+        anno
+    );
 
 
     if (riepilogoNota) {
